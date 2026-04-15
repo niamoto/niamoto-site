@@ -1,0 +1,267 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Button from "@/components/Button.astro";
+import Pill from "@/components/Pill.astro";
+
+const stats = [
+  { value: "3,417", label: "taxa catalogued" },
+  { value: "128,540", label: "occurrences indexed" },
+  { value: "412", label: "forest plots" },
+  { value: "1,284", label: "endemic species tracked" },
+];
+
+const insideThePortal = [
+  {
+    title: "Taxons — 3,417 species with maps and statistics",
+    image: "/showcase/nc-taxons.png",
+    caption: "Taxon pages with occurrence maps, field stats, and phenology",
+  },
+  {
+    title: "Plots — 412 inventory locations across the territory",
+    image: null,
+    caption: "Spatial inventory network with per-plot summaries",
+  },
+  {
+    title: "Methodology — reproducible science, documented inline",
+    image: null,
+    caption: "Method pages embedded in the portal itself",
+  },
+];
+
+const techStack = [
+  "Python · DuckDB · Pandas",
+  "Leaflet · Plotly · Mapbox",
+  "Jinja2 · Tailwind CSS",
+  "Static hosting + CI",
+];
+---
+
+<BaseLayout
+  title="Portail de la forêt de Nouvelle-Calédonie — Niamoto Showcase"
+  description="A reference ecological portal for New Caledonia's forests — built on Niamoto, maintained by Province Nord, Province Sud, IRD, and IAC."
+>
+  <Header active="showcase" />
+
+  <!-- Breadcrumb -->
+  <nav class="bg-canvas px-6 py-3">
+    <div class="mx-auto max-w-[1200px] text-sm text-stone">
+      <a href="/showcase/nouvelle-caledonie" class="hover:text-ink">Showcase</a>
+      <span class="mx-2">/</span>
+      <span class="text-ink">Nouvelle-Calédonie Forest Portal</span>
+    </div>
+  </nav>
+
+  <!-- Hero 50/50 -->
+  <section class="bg-canvas">
+    <div class="mx-auto grid max-w-[1400px] grid-cols-1 lg:grid-cols-2">
+      <div class="flex flex-col justify-center px-6 py-20 lg:px-20">
+        <Pill variant="leaf" class="self-start">● Active since 2024</Pill>
+        <h1 class="mt-5 text-[44px] font-bold leading-[1.1] tracking-[-0.02em] text-ink">
+          Portail de la forêt de Nouvelle-Calédonie
+        </h1>
+        <p class="mt-4 text-lg leading-relaxed text-stone">
+          A reference ecological portal for New Caledonia's forests — built on
+          Niamoto, maintained by Province Nord, Province Sud, IRD, and IAC.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <Button variant="primary" href="https://niamoto.nc" size="md">
+            Visit the portal →
+          </Button>
+          <Button variant="outline" href="/documentation" size="md">
+            Build yours with Niamoto
+          </Button>
+        </div>
+      </div>
+
+      <div class="relative bg-[#1B1F2A] p-6 lg:p-10">
+        <div class="overflow-hidden rounded-[12px] shadow-[0_16px_44px_rgba(15,23,42,0.4)]">
+          <!-- Fake macOS chrome -->
+          <div class="flex items-center gap-1.5 bg-[#2A2D38] px-4 py-3">
+            <span class="h-3 w-3 rounded-full bg-[#FF5F57]"></span>
+            <span class="h-3 w-3 rounded-full bg-[#FEBC2E]"></span>
+            <span class="h-3 w-3 rounded-full bg-[#28C840]"></span>
+            <span class="ml-4 font-mono text-xs text-stone-light">
+              niamoto.nc
+            </span>
+          </div>
+          <img
+            src="/showcase/nc-home.png"
+            alt="Portail de la forêt de Nouvelle-Calédonie"
+            class="block w-full"
+            loading="eager"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats band -->
+  <section class="border-y border-border bg-white py-16">
+    <div
+      class="mx-auto grid max-w-[1200px] grid-cols-2 gap-y-8 px-6 md:grid-cols-4"
+    >
+      {
+        stats.map((s, i) => (
+          <div
+            class:list={[
+              "text-center",
+              i > 0 && "md:border-l md:border-border",
+            ]}
+          >
+            <div class="font-mono text-5xl font-bold text-forest-green">
+              {s.value}
+            </div>
+            <div class="mt-2 text-sm text-stone">{s.label}</div>
+          </div>
+        ))
+      }
+    </div>
+    <p class="mt-8 text-center font-mono text-xs text-stone opacity-60">
+      Data updated Q1 2026 — source: Herbier de Nouvelle-Calédonie, Endemia,
+      IRD
+    </p>
+  </section>
+
+  <!-- Inside the portal -->
+  <section class="bg-canvas py-24">
+    <div class="mx-auto max-w-[1200px] px-6">
+      <div class="mb-12 text-center">
+        <h2 class="text-[32px] font-bold text-ink">Inside the portal</h2>
+        <p class="mt-2 text-[15px] text-stone">
+          Three page types power the portal — each generated automatically from
+          the underlying data.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        {
+          insideThePortal.map((item) => (
+            <div class="overflow-hidden rounded-[12px] bg-white shadow-[0_4px_12px_rgba(15,23,42,0.06)]">
+              <div class="aspect-[16/10] bg-surface-low">
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    class="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-forest-green/10 to-steel-blue/10">
+                    <span class="font-mono text-xs text-stone">
+                      Screenshot pending
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div class="p-5">
+                <h3 class="text-base font-semibold text-ink">{item.title}</h3>
+                <p class="mt-1 text-sm text-stone">{item.caption}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section class="py-20">
+    <div class="mx-auto max-w-[800px] px-6">
+      <div class="relative">
+        <span
+          class="absolute -left-4 -top-6 font-serif text-7xl leading-none text-forest-green/30"
+          aria-hidden="true">“</span
+        >
+        <blockquote class="text-2xl font-medium italic leading-relaxed text-ink">
+          Niamoto turned a decade of forest data into a living portal.
+          Researchers, managers, and the public all read the same source of
+          truth.
+        </blockquote>
+        <footer class="mt-4 text-sm text-stone">
+          — <span class="italic">[Nom du responsable scientifique]</span>,
+          Institut Agronomique néo-Calédonien
+        </footer>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical details -->
+  <section class="bg-canvas py-24">
+    <div class="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-6 md:grid-cols-[3fr_2fr]">
+      <div>
+        <h2 class="text-[28px] font-bold text-ink">How it's built</h2>
+        <p class="mt-4 text-base leading-relaxed text-ink/85">
+          The portal is a static site generated by Niamoto. Data is pulled from
+          CSV exports of the research databases, transformed through a stack of
+          14 plugins, and rendered to HTML with the <span class="font-mono"
+            >static_website</span
+          > exporter. Total build time: 4 minutes on a laptop.
+        </p>
+        <ul class="mt-6 space-y-3 text-sm">
+          {
+            [
+              "14 Transformer plugins in the pipeline",
+              "8 Widget types (maps, charts, tables)",
+              "Bilingual (FR / EN) with per-language routing",
+              "Hosted on static hosting with automated redeploys",
+            ].map((item) => (
+              <li class="flex items-start gap-3">
+                <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-forest-green" />
+                <span class="text-ink/85">{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="rounded-[12px] bg-white p-6 shadow-[0_4px_12px_rgba(15,23,42,0.06)]">
+        <h4 class="font-mono text-[11px] font-semibold uppercase tracking-wider text-stone">
+          Stack
+        </h4>
+        <ul class="mt-4 space-y-3 text-sm text-ink">
+          {
+            techStack.map((tech) => (
+              <li class="flex items-center gap-2 font-mono">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                {tech}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Other portals -->
+  <section class="bg-canvas pb-24">
+    <div class="mx-auto max-w-[1200px] px-6">
+      <h3 class="mb-6 text-xl font-bold text-ink">Other portals</h3>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {
+          [
+            { name: "Congo Basin Forest Portal", subtitle: "Gabon – Cameroun" },
+            { name: "Amazonian Flora Portal", subtitle: "Guyane" },
+          ].map((portal) => (
+            <div class="flex items-start gap-4 rounded-[12px] bg-white p-5 opacity-75 shadow-[0_4px_12px_rgba(15,23,42,0.06)]">
+              <div class="flex h-16 w-24 shrink-0 items-center justify-center rounded-[6px] bg-surface-low">
+                <span class="font-mono text-[10px] text-stone">2026</span>
+              </div>
+              <div class="flex-1">
+                <Pill variant="steel">● Upcoming 2026</Pill>
+                <h4 class="mt-2 text-base font-semibold text-ink">
+                  {portal.name}
+                </h4>
+                <p class="text-sm text-stone">{portal.subtitle}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm add *)",
+      "Bash(echo \"exit=$?\")",
+      "Read(//tmp/**)",
+      "Bash(pnpm view *)",
+      "Bash(pnpm build *)",
+      "Bash(git add *)",
+      "Bash(git init *)",
+      "Bash(git checkout *)",
+      "Bash(git commit *)",
+      "Bash(echo \"first commit exit=$?\")",
+      "Bash(echo \"branch exit=$?\")"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "daymon"
+  ]
+}

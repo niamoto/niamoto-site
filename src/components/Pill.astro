@@ -1,0 +1,20 @@
+---
+export interface Props {
+  variant?: "leaf" | "steel" | "neutral";
+  class?: string;
+}
+
+const { variant = "neutral", class: className = "" } = Astro.props;
+
+const variantClass = {
+  leaf: "bg-[rgba(75,175,80,0.12)] text-forest-green",
+  steel: "bg-steel-blue-tint text-steel-blue",
+  neutral: "bg-surface-low text-stone",
+}[variant];
+---
+
+<span
+  class={`inline-flex items-center gap-1.5 rounded-[999px] px-3 py-1 text-xs font-semibold tracking-wide ${variantClass} ${className}`}
+>
+  <slot />
+</span>
