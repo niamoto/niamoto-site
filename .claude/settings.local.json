@@ -11,7 +11,9 @@
       "Bash(git checkout *)",
       "Bash(git commit *)",
       "Bash(echo \"first commit exit=$?\")",
-      "Bash(echo \"branch exit=$?\")"
+      "Bash(echo \"branch exit=$?\")",
+      "Bash(pnpm dev *)",
+      "Bash(echo \"started PID=$!\")"
     ]
   },
   "enableAllProjectMcpServers": true,
