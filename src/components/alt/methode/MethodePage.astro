@@ -1,0 +1,173 @@
+---
+import AltLayout from "@/layouts/AltLayout.astro";
+import IslandNav from "@/components/alt/shared/IslandNav.astro";
+import ButtonInButton from "@/components/alt/shared/ButtonInButton.astro";
+import FunderGrid from "@/components/alt/shared/FunderGrid.astro";
+import StaggeredReveal from "@/components/alt/motion/StaggeredReveal.tsx";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import HeroBento from "./HeroBento.astro";
+import type { Locale } from "@/i18n/config";
+import enCopy from "@/i18n/alt/methode.en";
+import frCopy from "@/i18n/alt/methode.fr";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = locale === "fr" ? frCopy : enCopy;
+---
+
+<AltLayout
+  theme="methode"
+  locale={locale}
+  title={t.meta.title}
+  description={t.meta.description}
+  slug="methode"
+>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <IslandNav locale={locale} slug="methode" />
+
+  <main id="main">
+    <HeroBento
+      locale={locale}
+      eyebrow={t.hero.eyebrow}
+      titleLines={t.hero.title}
+      sub={t.hero.sub}
+      cta={t.hero.cta}
+      ctaSecondary={t.hero.ctaSecondary}
+      bento={t.bento}
+    />
+
+    <section class="meth-pillars">
+      <div class="meth-pillars__inner">
+        <h2 class="display meth-pillars__heading">{t.pillars.heading}</h2>
+        <StaggeredReveal client:visible stagger={0.1} y={18} as="div" className="meth-pillars__grid">
+          {t.pillars.items.map((p) => (
+            <article class="meth-pillar">
+              <span class="meth-pillar__kicker">{p.kicker}</span>
+              <h3 class="meth-pillar__title">{p.title}</h3>
+              <p class="meth-pillar__body">{p.body}</p>
+            </article>
+          ))}
+        </StaggeredReveal>
+      </div>
+    </section>
+
+    <section class="meth-closing">
+      <div class="meth-closing__inner">
+        <FadeUpOnView client:visible>
+          <h2 class="display meth-closing__title">{t.closing.title}</h2>
+          <p class="meth-closing__body">{t.closing.body}</p>
+          <div class="meth-closing__cta">
+            <ButtonInButton variant="primary" href="https://github.com/niamoto/niamoto" target="_blank" rel="noopener">
+              {t.closing.ctaPrimary}
+            </ButtonInButton>
+            <ButtonInButton variant="secondary" href="/documentation">
+              {t.closing.ctaSecondary}
+            </ButtonInButton>
+          </div>
+        </FadeUpOnView>
+
+        <FadeUpOnView client:visible delay={0.1} className="meth-closing__funders">
+          <FunderGrid heading={t.funders.heading} />
+        </FadeUpOnView>
+      </div>
+    </section>
+  </main>
+</AltLayout>
+
+<style>
+  .meth-pillars {
+    width: 100%;
+    padding: 5rem 1.5rem;
+    border-top: 1px solid var(--c-hairline);
+  }
+  .meth-pillars__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .meth-pillars__heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--c-ink);
+    letter-spacing: -0.03em;
+    margin-bottom: 3rem;
+    max-width: 24ch;
+  }
+  .meth-pillars__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+    border-top: 1px solid var(--c-hairline);
+  }
+  .meth-pillar {
+    padding: 2rem 1.5rem 0 0;
+    border-right: 1px solid var(--c-hairline);
+  }
+  .meth-pillar:last-child {
+    border-right: none;
+  }
+  .meth-pillar__kicker {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    color: var(--c-accent);
+    letter-spacing: 0.14em;
+  }
+  .meth-pillar__title {
+    margin: 0.6rem 0 0.85rem;
+    font-family: var(--f-display);
+    font-size: 1.25rem;
+    color: var(--c-ink);
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+  .meth-pillar__body {
+    margin: 0;
+    color: var(--c-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 42ch;
+  }
+  .meth-closing {
+    padding: 5rem 1.5rem;
+    border-top: 1px solid var(--c-hairline);
+  }
+  .meth-closing__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+  .meth-closing__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--c-ink);
+    max-width: 18ch;
+  }
+  .meth-closing__body {
+    margin-top: 1rem;
+    max-width: 50ch;
+    color: var(--c-muted);
+    font-size: 1rem;
+  }
+  .meth-closing__cta {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+  .meth-closing__funders {
+    width: 100%;
+    border-top: 1px solid var(--c-hairline);
+    padding-top: 2.5rem;
+  }
+  @media (max-width: 900px) {
+    .meth-pillars__grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .meth-pillar {
+      border-right: none;
+      border-bottom: 1px solid var(--c-hairline);
+      padding: 1.75rem 0;
+    }
+    .meth-pillar:last-child { border-bottom: none; }
+  }
+</style>

@@ -1,0 +1,125 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import ButtonInButton from "@/components/alt/shared/ButtonInButton.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import TerminalCard from "./TerminalCard.astro";
+import LiveStatsCard from "./LiveStatsCard.astro";
+import PortalMiniGrid from "./PortalMiniGrid.astro";
+import type { Locale } from "@/i18n/config";
+
+interface Props {
+  locale: Locale;
+  eyebrow: string;
+  titleLines: readonly string[];
+  sub: string;
+  cta: string;
+  ctaSecondary: string;
+  bento: {
+    terminal: { kicker: string; lines: readonly string[] };
+    stats: { kicker: string; items: readonly { value: number; label: string; suffix?: string }[] };
+    portals: { kicker: string; items: readonly { code: string; name: string; status: "active" | "upcoming" }[] };
+  };
+}
+
+const { locale, eyebrow, titleLines, sub, cta, ctaSecondary, bento } = Astro.props;
+---
+
+<section class="meth-hero">
+  <div class="meth-hero__inner">
+    <FadeUpOnView client:visible className="meth-hero__copy">
+      <EyebrowTag variant="outlined" class="meth-hero__eyebrow">{eyebrow}</EyebrowTag>
+      <h1 class="display meth-hero__title">
+        {titleLines.map((line, i) => (
+          <span class="meth-hero__line">
+            {line}
+            {i < titleLines.length - 1 ? <br /> : null}
+          </span>
+        ))}
+      </h1>
+      <p class="meth-hero__sub">{sub}</p>
+      <div class="meth-hero__cta">
+        <ButtonInButton variant="primary" href="#install">{cta}</ButtonInButton>
+        <ButtonInButton variant="secondary" href="/documentation">{ctaSecondary}</ButtonInButton>
+      </div>
+    </FadeUpOnView>
+
+    <FadeUpOnView client:visible delay={0.18} className="meth-hero__bento">
+      <div class="meth-bento">
+        <div class="meth-bento__row1">
+          <TerminalCard kicker={bento.terminal.kicker} lines={bento.terminal.lines} />
+        </div>
+        <div class="meth-bento__row2">
+          <LiveStatsCard
+            kicker={bento.stats.kicker}
+            items={bento.stats.items}
+            locale={locale}
+          />
+          <PortalMiniGrid kicker={bento.portals.kicker} items={bento.portals.items} />
+        </div>
+      </div>
+    </FadeUpOnView>
+  </div>
+</section>
+
+<style>
+  .meth-hero {
+    width: 100%;
+    padding: 7rem 1.5rem 5rem;
+  }
+  .meth-hero__inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .meth-hero__eyebrow {
+    margin-bottom: 1.5rem;
+  }
+  .meth-hero__title {
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    color: var(--c-ink);
+    letter-spacing: -0.04em;
+  }
+  .meth-hero__line {
+    display: block;
+  }
+  .meth-hero__sub {
+    margin-top: 1.5rem;
+    color: var(--c-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 38ch;
+  }
+  .meth-hero__cta {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .meth-bento {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .meth-bento__row1 {
+    min-height: 220px;
+  }
+  .meth-bento__row2 {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 0.75rem;
+    min-height: 200px;
+  }
+
+  @media (max-width: 1024px) {
+    .meth-hero__inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .meth-bento__row2 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
