@@ -1,0 +1,182 @@
+---
+/*
+ * BotanicalPlate - a herbarium-style specimen card.
+ * No real photo available; uses a stylized SVG leaf silhouette tinted to
+ * the variant palette + scientific caption block.
+ */
+
+interface Props {
+  genus: string;
+  species: string;
+  family: string;
+  collection: string;
+  note: string;
+  /** Color tone variant. */
+  tone?: "moss" | "terra" | "ink";
+  /** Rotation in degrees for Z-axis cascade. */
+  rotate?: number;
+  /** z-index. */
+  z?: number;
+}
+
+const {
+  genus,
+  species,
+  family,
+  collection,
+  note,
+  tone = "moss",
+  rotate = 0,
+  z = 1,
+} = Astro.props;
+
+// Each plate uses a different SVG silhouette pattern.
+const silhouetteByTone: Record<string, string> = {
+  moss: "leaf-elongated",
+  terra: "leaf-rounded",
+  ink: "leaf-frond",
+};
+const silhouette = silhouetteByTone[tone];
+---
+
+<article
+  class:list={["field-plate", `field-plate--${tone}`]}
+  style={`transform: rotate(${rotate}deg); z-index: ${z};`}
+>
+  <div class="field-plate__inner">
+    <div class="field-plate__art" aria-hidden="true">
+      <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id={`grain-${tone}-${collection}`} width="60" height="60" patternUnits="userSpaceOnUse">
+            <rect width="60" height="60" fill="currentColor" opacity="0.04" />
+          </pattern>
+        </defs>
+        <rect width="200" height="280" fill="currentColor" opacity="0.06" />
+
+        {silhouette === "leaf-elongated" && (
+          <g stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.7" stroke-linecap="round">
+            <path d="M100 30 C 80 80, 75 160, 100 240 C 125 160, 120 80, 100 30 Z" fill="currentColor" fill-opacity="0.06" />
+            <path d="M100 50 L 100 220" />
+            <path d="M100 80 Q 88 90, 80 110" /><path d="M100 80 Q 112 90, 120 110" />
+            <path d="M100 110 Q 86 122, 76 145" /><path d="M100 110 Q 114 122, 124 145" />
+            <path d="M100 140 Q 84 152, 73 175" /><path d="M100 140 Q 116 152, 127 175" />
+            <path d="M100 170 Q 86 180, 80 200" /><path d="M100 170 Q 114 180, 120 200" />
+          </g>
+        )}
+
+        {silhouette === "leaf-rounded" && (
+          <g stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.7" stroke-linecap="round">
+            <path d="M100 40 C 60 60, 50 160, 100 240 C 150 160, 140 60, 100 40 Z" fill="currentColor" fill-opacity="0.06" />
+            <path d="M100 50 C 100 100, 100 180, 100 230" />
+            <path d="M100 90 Q 80 110, 70 140" /><path d="M100 90 Q 120 110, 130 140" />
+            <path d="M100 130 Q 76 150, 64 180" /><path d="M100 130 Q 124 150, 136 180" />
+            <path d="M100 170 Q 84 185, 80 200" /><path d="M100 170 Q 116 185, 120 200" />
+          </g>
+        )}
+
+        {silhouette === "leaf-frond" && (
+          <g stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.7" stroke-linecap="round">
+            <path d="M100 30 L 100 250" />
+            {[60, 80, 100, 120, 140, 160, 180, 200].map((y) => (
+              <>
+                <path d={`M100 ${y} Q 70 ${y - 5}, 50 ${y - 12}`} />
+                <path d={`M100 ${y} Q 130 ${y - 5}, 150 ${y - 12}`} />
+              </>
+            ))}
+          </g>
+        )}
+
+        <rect width="200" height="280" fill={`url(#grain-${tone}-${collection})`} />
+      </svg>
+    </div>
+
+    <div class="field-plate__caption">
+      <p class="field-plate__name">
+        <em>{genus}</em>{" "}<em>{species}</em>
+      </p>
+      <p class="field-plate__family">{family}</p>
+      <p class="field-plate__collection">{collection}</p>
+      <p class="field-plate__note">{note}</p>
+    </div>
+  </div>
+</article>
+
+<style>
+  .field-plate {
+    display: block;
+    width: 280px;
+    transform-origin: center;
+    transition: transform 320ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .field-plate:hover {
+    transform: rotate(0deg) translateY(-4px) !important;
+  }
+  .field-plate__inner {
+    background: var(--c-canvas);
+    border: 1px solid var(--c-hairline);
+    box-shadow: 0 14px 30px color-mix(in srgb, var(--c-ink) 8%, transparent);
+    border-radius: 0.25rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .field-plate__art {
+    aspect-ratio: 5 / 7;
+    background: color-mix(in srgb, var(--c-canvas) 92%, var(--c-ink) 8%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .field-plate--moss .field-plate__art { color: var(--c-accent); }
+  .field-plate--terra .field-plate__art { color: var(--c-accent-alt); }
+  .field-plate--ink .field-plate__art { color: var(--c-ink); }
+  .field-plate__art svg {
+    width: 100%;
+    height: 100%;
+  }
+  .field-plate__caption {
+    padding: 1rem 1rem 1.25rem;
+    border-top: 1px solid var(--c-hairline);
+  }
+  .field-plate__name {
+    margin: 0 0 0.2rem;
+    font-family: var(--f-display);
+    font-variation-settings: var(--fvs-display);
+    font-size: 1.05rem;
+    color: var(--c-ink);
+    letter-spacing: -0.01em;
+  }
+  .field-plate__name em {
+    font-style: italic;
+  }
+  .field-plate__family {
+    margin: 0 0 0.5rem;
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--c-muted);
+  }
+  .field-plate__collection {
+    margin: 0 0 0.55rem;
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    color: var(--c-accent);
+  }
+  .field-plate__note {
+    margin: 0;
+    font-family: var(--f-body);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--c-muted);
+  }
+
+  /* Mobile collapse - rotations neutralised. */
+  @media (max-width: 768px) {
+    .field-plate {
+      transform: none !important;
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+</style>

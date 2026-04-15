@@ -1,0 +1,209 @@
+---
+import BotanicalPlate from "./BotanicalPlate.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+
+interface Plate {
+  genus: string;
+  species: string;
+  family: string;
+  collection: string;
+  note: string;
+  tone: "moss" | "terra" | "ink";
+}
+
+interface Props {
+  intro: string;
+  titleLine1: string;
+  titleLine2: string;
+  sub: string;
+  kickerLeft: string;
+  kickerLeftValue: string;
+  kickerRight: string;
+  kickerRightValue: string;
+  plates: readonly Plate[];
+}
+
+const {
+  intro,
+  titleLine1,
+  titleLine2,
+  sub,
+  kickerLeft,
+  kickerLeftValue,
+  kickerRight,
+  kickerRightValue,
+  plates,
+} = Astro.props;
+
+const rotations = [-3, 4, -2];
+const offsets = [
+  { x: 0, y: 30 },
+  { x: 50, y: 0 },
+  { x: 30, y: 60 },
+];
+---
+
+<section class="fj-hero">
+  <div class="fj-hero__inner">
+    <FadeUpOnView client:visible className="fj-hero__copy">
+      <p class="fj-hero__intro">
+        <em>{intro}</em>
+      </p>
+      <h1 class="display fj-hero__title">
+        <span class="fj-hero__line1">{titleLine1}</span>
+        <br />
+        <span class="fj-hero__line2">{titleLine2}</span>
+      </h1>
+      <p class="fj-hero__sub">{sub}</p>
+
+      <div class="fj-hero__kickers">
+        <div>
+          <span class="fj-hero__kicker-value">{kickerLeftValue}</span>
+          <span class="fj-hero__kicker-label">{kickerLeft}</span>
+        </div>
+        <div>
+          <span class="fj-hero__kicker-value">{kickerRightValue}</span>
+          <span class="fj-hero__kicker-label">{kickerRight}</span>
+        </div>
+      </div>
+    </FadeUpOnView>
+
+    <div class="fj-hero__plates">
+      {plates.map((p, i) => (
+        <div
+          class="fj-hero__plate-slot"
+          style={`transform: translate(${offsets[i].x}px, ${offsets[i].y}px);`}
+        >
+          <FadeUpOnView client:visible delay={0.15 + i * 0.12} y={30}>
+            <BotanicalPlate
+              genus={p.genus}
+              species={p.species}
+              family={p.family}
+              collection={p.collection}
+              note={p.note}
+              tone={p.tone}
+              rotate={rotations[i]}
+              z={i + 1}
+            />
+          </FadeUpOnView>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .fj-hero {
+    width: 100%;
+    padding: 7rem 1.5rem 5rem;
+  }
+  .fj-hero__inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .fj-hero__copy {
+    padding: 1.5rem 0;
+  }
+  .fj-hero__intro {
+    margin: 0 0 1rem;
+    font-family: var(--f-display);
+    font-style: italic;
+    font-variation-settings: "opsz" 144, "wght" 400, "WONK" 1, "SOFT" 100;
+    font-size: 1.25rem;
+    color: var(--c-muted);
+  }
+  .fj-hero__title {
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    color: var(--c-ink);
+  }
+  .fj-hero__line2 {
+    font-style: italic;
+    color: var(--c-accent);
+  }
+  .fj-hero__sub {
+    margin-top: 1.6rem;
+    max-width: 38ch;
+    color: var(--c-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  .fj-hero__kickers {
+    margin-top: 2rem;
+    display: flex;
+    gap: 3rem;
+    border-top: 1px solid var(--c-hairline);
+    padding-top: 1.5rem;
+  }
+  .fj-hero__kickers > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .fj-hero__kicker-value {
+    font-family: var(--f-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.6rem;
+    color: var(--c-accent);
+    line-height: 1;
+  }
+  .fj-hero__kicker-label {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--c-muted);
+  }
+
+  .fj-hero__plates {
+    position: relative;
+    min-height: 480px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .fj-hero__plate-slot {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -140px;
+  }
+  .fj-hero__plate-slot:nth-child(1) {
+    margin-left: -250px;
+  }
+  .fj-hero__plate-slot:nth-child(2) {
+    margin-top: 60px;
+    margin-left: -50px;
+  }
+  .fj-hero__plate-slot:nth-child(3) {
+    margin-top: 130px;
+    margin-left: -180px;
+  }
+
+  @media (max-width: 1024px) {
+    .fj-hero__inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .fj-hero__plates {
+      position: relative;
+      min-height: auto;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .fj-hero__plate-slot,
+    .fj-hero__plate-slot:nth-child(1),
+    .fj-hero__plate-slot:nth-child(2),
+    .fj-hero__plate-slot:nth-child(3) {
+      position: relative;
+      transform: none !important;
+      margin: 0;
+      left: auto;
+      top: auto;
+    }
+  }
+</style>

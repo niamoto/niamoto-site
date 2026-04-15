@@ -1,0 +1,100 @@
+---
+import AltLayout from "@/layouts/AltLayout.astro";
+import IslandNav from "@/components/alt/shared/IslandNav.astro";
+import ButtonInButton from "@/components/alt/shared/ButtonInButton.astro";
+import FunderGrid from "@/components/alt/shared/FunderGrid.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import HeroLayered from "./HeroLayered.astro";
+import FieldNoteBlock from "./FieldNoteBlock.astro";
+import type { Locale } from "@/i18n/config";
+import enCopy from "@/i18n/alt/field-journal.en";
+import frCopy from "@/i18n/alt/field-journal.fr";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = locale === "fr" ? frCopy : enCopy;
+---
+
+<AltLayout
+  theme="field-journal"
+  locale={locale}
+  title={t.meta.title}
+  description={t.meta.description}
+  slug="field-journal"
+>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <IslandNav locale={locale} slug="field-journal" />
+
+  <main id="main">
+    <HeroLayered
+      intro={t.hero.intro}
+      titleLine1={t.hero.titleLine1}
+      titleLine2={t.hero.titleLine2}
+      sub={t.hero.sub}
+      kickerLeft={t.hero.kickerLeft}
+      kickerLeftValue={t.hero.kickerLeftValue}
+      kickerRight={t.hero.kickerRight}
+      kickerRightValue={t.hero.kickerRightValue}
+      plates={t.plates}
+    />
+
+    <FieldNoteBlock heading={t.fieldNotes.heading} items={t.fieldNotes.items} />
+
+    <section class="fj-closing">
+      <div class="fj-closing__inner">
+        <FadeUpOnView client:visible>
+          <h2 class="display fj-closing__title">{t.closing.title}</h2>
+          <p class="fj-closing__body">{t.closing.body}</p>
+          <div class="fj-closing__cta">
+            <ButtonInButton variant="primary" href="https://github.com/niamoto/niamoto" target="_blank" rel="noopener">
+              {t.closing.ctaPrimary}
+            </ButtonInButton>
+            <ButtonInButton variant="secondary" href="/documentation">
+              {t.closing.ctaSecondary}
+            </ButtonInButton>
+          </div>
+        </FadeUpOnView>
+
+        <FadeUpOnView client:visible delay={0.1} className="fj-closing__funders">
+          <FunderGrid heading={t.funders.heading} />
+        </FadeUpOnView>
+      </div>
+    </section>
+  </main>
+</AltLayout>
+
+<style>
+  .fj-closing {
+    width: 100%;
+    padding: 4rem 1.5rem 5rem;
+  }
+  .fj-closing__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+  .fj-closing__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--c-ink);
+    max-width: 22ch;
+  }
+  .fj-closing__body {
+    margin-top: 1rem;
+    max-width: 50ch;
+    color: var(--c-muted);
+    font-size: 1rem;
+  }
+  .fj-closing__cta {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+  .fj-closing__funders {
+    width: 100%;
+    border-top: 1px solid var(--c-hairline);
+    padding-top: 2.5rem;
+  }
+</style>

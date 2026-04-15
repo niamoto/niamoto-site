@@ -1,0 +1,83 @@
+---
+import StaggeredReveal from "@/components/alt/motion/StaggeredReveal.tsx";
+
+interface Note {
+  date: string;
+  body: string;
+}
+
+interface Props {
+  heading: string;
+  items: readonly Note[];
+}
+
+const { heading, items } = Astro.props;
+---
+
+<section class="fj-notes">
+  <div class="fj-notes__inner">
+    <h2 class="display fj-notes__heading">{heading}</h2>
+
+    <StaggeredReveal client:visible stagger={0.12} y={20} as="ol" className="fj-notes__list">
+      {items.map((n) => (
+        <li class="fj-note">
+          <p class="fj-note__date">{n.date}</p>
+          <p class="fj-note__body">{n.body}</p>
+        </li>
+      ))}
+    </StaggeredReveal>
+  </div>
+</section>
+
+<style>
+  .fj-notes {
+    width: 100%;
+    padding: 5rem 1.5rem 4rem;
+  }
+  .fj-notes__inner {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .fj-notes__heading {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    color: var(--c-ink);
+    margin-bottom: 2.5rem;
+    max-width: 18ch;
+  }
+  .fj-notes__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--c-hairline);
+  }
+  .fj-note {
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--c-hairline);
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) 3fr;
+    gap: 2rem;
+  }
+  .fj-note__date {
+    margin: 0;
+    font-family: var(--f-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--c-accent);
+  }
+  .fj-note__body {
+    margin: 0;
+    color: var(--c-ink);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 14, "wght" 400, "WONK" 0, "SOFT" 50;
+    max-width: 60ch;
+  }
+  @media (max-width: 720px) {
+    .fj-note {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+</style>
