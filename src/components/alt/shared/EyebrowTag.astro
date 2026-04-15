@@ -1,0 +1,47 @@
+---
+/*
+ * EyebrowTag — microscopic small-caps badge that precedes major H1/H2.
+ * Pattern from high-end-visual-design §4.C.
+ */
+
+interface Props {
+  /** Visual style. */
+  variant?: "default" | "outlined" | "accent";
+  class?: string;
+}
+
+const { variant = "default", class: extraClass = "" } = Astro.props;
+---
+
+<span class:list={["alt-eyebrow", `alt-eyebrow--${variant}`, extraClass]}>
+  <slot />
+</span>
+
+<style>
+  .alt-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 9999px;
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .alt-eyebrow--default {
+    background: var(--c-surface);
+    color: var(--c-muted);
+  }
+  .alt-eyebrow--outlined {
+    background: transparent;
+    border: 1px solid var(--c-hairline);
+    color: var(--c-muted);
+  }
+  .alt-eyebrow--accent {
+    background: color-mix(in srgb, var(--c-accent) 12%, transparent);
+    color: var(--c-accent);
+  }
+</style>

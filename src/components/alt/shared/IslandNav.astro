@@ -1,0 +1,116 @@
+---
+import type { Locale } from "@/i18n/config";
+import { getShared } from "@/i18n/alt";
+import LanguageSwitch from "./LanguageSwitch.astro";
+
+interface Props {
+  locale: Locale;
+  /** Current variant slug — e.g. "atlas", "field-journal", or "" on dispatcher. */
+  slug?: string;
+  /** Label shown next to the logo. Defaults to "niamoto". */
+  brand?: string;
+}
+
+const { locale, slug = "", brand = "niamoto" } = Astro.props;
+const t = getShared(locale);
+
+const altRoot = locale === "fr" ? "/fr/alt" : "/alt";
+---
+
+<nav class="alt-island-nav" aria-label={brand}>
+  <a class="alt-brand" href={altRoot}>
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 2 a15.3 15.3 0 0 1 4 10 a15.3 15.3 0 0 1 -4 10 a15.3 15.3 0 0 1 -4 -10 a15.3 15.3 0 0 1 4 -10 z" />
+    </svg>
+    <span>{brand}</span>
+  </a>
+
+  <ul class="alt-nav-links">
+    <li>
+      <a href={altRoot}>{t.nav.variantsIndex}</a>
+    </li>
+    <li>
+      <a href={locale === "fr" ? "/fr/documentation" : "/documentation"}>{t.nav.documentation}</a>
+    </li>
+    <li>
+      <a href="https://github.com/niamoto/niamoto" target="_blank" rel="noopener">
+        {t.nav.github}
+      </a>
+    </li>
+    <li class="alt-nav-lang">
+      <LanguageSwitch locale={locale} slug={slug} />
+    </li>
+  </ul>
+</nav>
+
+<style>
+  .alt-island-nav {
+    position: fixed;
+    top: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    height: 52px;
+    padding: 0 0.75rem 0 1.1rem;
+    border-radius: 9999px;
+    border: 1px solid var(--c-hairline);
+    background: color-mix(in srgb, var(--c-canvas) 80%, transparent);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--c-ink) 4%, transparent),
+      0 8px 30px color-mix(in srgb, var(--c-ink) 8%, transparent);
+    color: var(--c-ink);
+  }
+
+  .alt-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--f-display);
+    font-variation-settings: var(--fvs-display);
+    font-size: 0.95rem;
+    letter-spacing: -0.02em;
+    color: var(--c-ink);
+    text-decoration: none;
+  }
+
+  .alt-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .alt-nav-links li a:not(.alt-langswitch) {
+    color: var(--c-muted);
+    text-decoration: none;
+    font-family: var(--f-body);
+    font-size: 0.85rem;
+    transition: color 200ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .alt-nav-links li a:not(.alt-langswitch):hover,
+  .alt-nav-links li a:not(.alt-langswitch):focus-visible {
+    color: var(--c-ink);
+  }
+
+  .alt-nav-lang {
+    margin-left: 0.25rem;
+  }
+
+  /* Mobile collapse — hide secondary links, keep brand + lang switch. */
+  @media (max-width: 640px) {
+    .alt-island-nav {
+      gap: 0.6rem;
+      padding: 0 0.5rem 0 0.9rem;
+    }
+    .alt-nav-links li:not(.alt-nav-lang) {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,121 @@
+---
+/*
+ * FunderGrid — partner logo strip reworked for /alt/.
+ * 9 logos at 50% opacity, lifted to 100% on hover.
+ * Mirrors the order from public/funders/manifest.yaml.
+ */
+
+interface Props {
+  /** Optional title/heading shown above the grid. */
+  heading?: string;
+  /** Variant of presentation. */
+  variant?: "default" | "compact";
+  class?: string;
+}
+
+const { heading, variant = "default", class: extraClass = "" } = Astro.props;
+
+interface Funder {
+  name: string;
+  src: string;
+  url: string;
+}
+
+const funders: Funder[] = [
+  { name: "Province Nord",                   src: "/funders/pn_100.png",        url: "https://www.province-nord.nc" },
+  { name: "Province Sud",                    src: "/funders/ps_100.png",        url: "https://www.province-sud.nc" },
+  { name: "Endemia",                         src: "/funders/endemia_100.png",   url: "https://endemia.nc" },
+  { name: "UMR AMAP",                        src: "/funders/amap_100.png",      url: "https://amap.cirad.fr" },
+  { name: "Herbier de Nouvelle-Caledonie",   src: "/funders/herbarium_100.png", url: "http://publish.plantnet-project.org/project/herbier-noumea" },
+  { name: "IAC",                             src: "/funders/iac_100.png",       url: "https://iac.nc" },
+  { name: "IRD",                             src: "/funders/ird_100.png",       url: "https://nouvelle-caledonie.ird.fr" },
+  { name: "CIRAD",                           src: "/funders/cirad_100.png",     url: "https://www.cirad.fr" },
+  { name: "OFB",                             src: "/funders/ofb_100.png",       url: "https://www.ofb.gouv.fr" },
+];
+---
+
+<section class:list={["alt-funder-grid", `alt-funder-grid--${variant}`, extraClass]}>
+  {heading && <h3 class="alt-funder-grid__heading">{heading}</h3>}
+  <ul class="alt-funder-grid__list">
+    {funders.map((f) => (
+      <li>
+        <a
+          href={f.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={f.name}
+          class="alt-funder-grid__link"
+        >
+          <img src={f.src} alt={f.name} loading="lazy" decoding="async" />
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .alt-funder-grid {
+    width: 100%;
+  }
+  .alt-funder-grid__heading {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--c-muted);
+    margin-bottom: 1.25rem;
+  }
+  .alt-funder-grid__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .alt-funder-grid__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    transition: opacity 240ms cubic-bezier(0.32, 0.72, 0, 1),
+                transform 240ms cubic-bezier(0.32, 0.72, 0, 1);
+    opacity: 0.5;
+  }
+  .alt-funder-grid__link:hover,
+  .alt-funder-grid__link:focus-visible {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+  .alt-funder-grid__link img {
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* Dark variants invert logo brightness on hover for legibility. */
+  [data-theme="methode"] .alt-funder-grid__link img,
+  [data-theme="herbarium"] .alt-funder-grid__link img {
+    filter: grayscale(1) brightness(2) contrast(1.1);
+  }
+
+  .alt-funder-grid--compact .alt-funder-grid__list {
+    gap: 1rem;
+  }
+  .alt-funder-grid--compact .alt-funder-grid__link {
+    height: 32px;
+  }
+
+  @media (max-width: 900px) {
+    .alt-funder-grid__list {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1rem 1.25rem;
+    }
+  }
+  @media (max-width: 480px) {
+    .alt-funder-grid__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
