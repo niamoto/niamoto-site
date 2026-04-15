@@ -1,0 +1,34 @@
+/* V1 Atlas -- cream light / sage profond / rouille
+ * Registre : revue scientifique accessible, atlas botanique. */
+
+[data-theme="atlas"] {
+  --c-canvas: #FDFBF7;
+  --c-ink: #121212;
+  --c-muted: #6B6B66;
+  --c-accent: #516B5A;             /* desaturated sage */
+  --c-accent-alt: #A66B3B;         /* warm rust */
+  --c-surface: rgba(18, 18, 18, 0.025);
+  --c-hairline: rgba(18, 18, 18, 0.09);
+  --c-grain-opacity: 0.028;
+
+  --f-display: "Fraunces Variable", "PP Editorial New", Georgia, serif;
+  --f-body: "Geist Variable", system-ui, -apple-system, sans-serif;
+  --f-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Fraunces axes: light/regular weight, small opsz for body-ish display,
+     wonk off, slight softness. Italic flips on .italic spans inside hero. */
+  --fvs-display: "opsz" 24, "wght" 400, "WONK" 0, "SOFT" 50;
+  --fvs-body: "wght" 400;
+
+  --ls-display: -0.025em;
+  --ls-body: -0.005em;
+  --lh-display: 1.05;
+  --lh-body: 1.6;
+}
+
+/* Italic accent within hero -- keeps weight, flips style only. */
+[data-theme="atlas"] .display em,
+[data-theme="atlas"] .display .italic {
+  font-style: italic;
+  font-variation-settings: "opsz" 24, "wght" 400, "WONK" 0, "SOFT" 50;
+}

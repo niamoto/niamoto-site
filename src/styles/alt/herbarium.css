@@ -1,0 +1,49 @@
+/* V4 Herbarium -- espresso / cream chaud / copper / vert botanique
+ * Registre : herbier vivant num?rique, gravit? mus?e.
+ * Dark mode only. */
+
+[data-theme="herbarium"] {
+  color-scheme: dark;
+
+  --c-canvas: #1A1410;             /* deep espresso */
+  --c-ink: #E8DCC8;                /* warm cream */
+  --c-muted: #A89A84;
+  --c-accent: #B87C4F;             /* copper */
+  --c-accent-alt: #7A8B6F;         /* muted botanical green */
+  --c-surface: rgba(232, 220, 200, 0.04);
+  --c-hairline: rgba(232, 220, 200, 0.13);
+  --c-grain-opacity: 0.045;
+
+  --f-display: "Fraunces Variable", "PP Editorial New", Georgia, serif;
+  --f-body: "Geist Variable", "Neue Haas Grotesk", system-ui, -apple-system, sans-serif;
+  --f-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Fraunces tuned for museum-grade gravity: black weight, large opsz,
+     wonk off (clean), tight softness. Distinct from V1 (light) and V2 (wonk). */
+  --fvs-display: "opsz" 144, "wght" 900, "WONK" 0, "SOFT" 50;
+  --fvs-body: "wght" 400;
+
+  --ls-display: -0.04em;
+  --ls-body: -0.005em;
+  --lh-display: 0.95;
+  --lh-body: 1.6;
+}
+
+/* Specimen frame -- sepia filter on photos, copper hairline. */
+[data-theme="herbarium"] .specimen-photo {
+  filter: sepia(0.28) saturate(0.85) contrast(1.04) brightness(0.97);
+}
+
+[data-theme="herbarium"] .specimen-caption {
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+/* Tabular numbers when shown. */
+[data-theme="herbarium"] .stat-number {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
