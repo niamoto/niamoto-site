@@ -1,0 +1,122 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import ButtonInButton from "@/components/alt/shared/ButtonInButton.astro";
+import FunderGrid from "@/components/alt/shared/FunderGrid.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  body: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
+  discussions: string;
+  changelog: string;
+  fundersHeading: string;
+}
+
+const {
+  eyebrow,
+  title,
+  body,
+  ctaPrimary,
+  ctaSecondary,
+  discussions,
+  changelog,
+  fundersHeading,
+} = Astro.props;
+---
+
+<section class="atlas-closing">
+  <div class="atlas-closing__inner">
+    <FadeUpOnView client:visible className="atlas-closing__manifesto">
+      <EyebrowTag variant="default">{eyebrow}</EyebrowTag>
+      <h2 class="display atlas-closing__title">{title}</h2>
+      <p class="atlas-closing__body">{body}</p>
+
+      <div class="atlas-closing__cta">
+        <ButtonInButton
+          variant="primary"
+          href="https://github.com/niamoto/niamoto"
+          target="_blank"
+          rel="noopener"
+        >
+          {ctaPrimary}
+        </ButtonInButton>
+        <ButtonInButton variant="secondary" href="/documentation">
+          {ctaSecondary}
+        </ButtonInButton>
+      </div>
+
+      <div class="atlas-closing__links">
+        <a href="https://github.com/niamoto/niamoto/discussions" target="_blank" rel="noopener">
+          {discussions}
+        </a>
+        <span aria-hidden="true">·</span>
+        <a href="https://github.com/niamoto/niamoto/releases" target="_blank" rel="noopener">
+          {changelog}
+        </a>
+      </div>
+    </FadeUpOnView>
+
+    <FadeUpOnView client:visible delay={0.1} className="atlas-closing__funders">
+      <FunderGrid heading={fundersHeading} />
+    </FadeUpOnView>
+  </div>
+</section>
+
+<style>
+  .atlas-closing {
+    width: 100%;
+    padding: 6rem 1.5rem 5rem;
+  }
+  .atlas-closing__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4.5rem;
+    align-items: center;
+    text-align: center;
+  }
+  .atlas-closing__title {
+    margin-top: 1.25rem;
+    max-width: 22ch;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--c-ink);
+  }
+  .atlas-closing__body {
+    margin-top: 1rem;
+    max-width: 50ch;
+    color: var(--c-muted);
+    font-size: 1rem;
+  }
+  .atlas-closing__cta {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.65rem;
+  }
+  .atlas-closing__links {
+    margin-top: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--f-mono);
+    font-size: 0.78rem;
+    color: var(--c-muted);
+  }
+  .atlas-closing__links a {
+    color: var(--c-accent);
+    text-decoration: none;
+  }
+  .atlas-closing__links a:hover {
+    text-decoration: underline;
+  }
+  .atlas-closing__funders {
+    width: 100%;
+    border-top: 1px solid var(--c-hairline);
+    padding-top: 2.5rem;
+  }
+</style>

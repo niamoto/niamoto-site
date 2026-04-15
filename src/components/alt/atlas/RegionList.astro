@@ -1,0 +1,175 @@
+---
+import StaggeredReveal from "@/components/alt/motion/StaggeredReveal.tsx";
+
+interface RegionItem {
+  number: string;
+  name: string;
+  sub: string;
+  body: string;
+  partners: string;
+  status: "active" | "upcoming";
+  stat: { value: string; label: string };
+}
+
+interface Props {
+  intro: string;
+  items: readonly RegionItem[];
+}
+
+const { intro, items } = Astro.props;
+---
+
+<aside class="atlas-regions" aria-label="Regions">
+  <p class="atlas-regions__intro">{intro}</p>
+
+  <StaggeredReveal client:visible stagger={0.12} y={20} as="ol" className="atlas-regions__list">
+    {items.map((r) => (
+      <li class={`atlas-region atlas-region--${r.status}`}>
+        <div class="atlas-region__head">
+          <span class="atlas-region__number">{r.number}</span>
+          <span class={`atlas-region__pill atlas-region__pill--${r.status}`}>
+            {r.status === "active" ? "Active" : "Upcoming"}
+          </span>
+        </div>
+        <div class="atlas-region__body">
+          <h3 class="atlas-region__name">{r.name}</h3>
+          <p class="atlas-region__sub">{r.sub}</p>
+          <p class="atlas-region__desc">{r.body}</p>
+          <p class="atlas-region__partners">{r.partners}</p>
+        </div>
+        <div class="atlas-region__stat">
+          <span class="atlas-region__stat-value">{r.stat.value}</span>
+          <span class="atlas-region__stat-label">{r.stat.label}</span>
+        </div>
+      </li>
+    ))}
+  </StaggeredReveal>
+</aside>
+
+<style>
+  .atlas-regions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .atlas-regions__intro {
+    margin: 0 0 0.75rem;
+    color: var(--c-muted);
+    font-size: 0.9rem;
+    font-family: var(--f-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+  .atlas-regions__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--c-hairline);
+  }
+  .atlas-region {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--c-hairline);
+  }
+  .atlas-region__head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .atlas-region__number {
+    font-family: var(--f-mono);
+    font-size: 0.95rem;
+    color: var(--c-muted);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .atlas-region__pill {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 0.5rem;
+    border-radius: 9999px;
+    font-family: var(--f-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    background: var(--c-surface);
+    color: var(--c-muted);
+  }
+  .atlas-region__pill--active {
+    background: color-mix(in srgb, var(--c-accent) 14%, transparent);
+    color: var(--c-accent);
+  }
+  .atlas-region__name {
+    font-family: var(--f-display);
+    font-variation-settings: var(--fvs-display);
+    font-size: 1.4rem;
+    color: var(--c-ink);
+    margin-bottom: 0.2rem;
+  }
+  .atlas-region__sub {
+    margin: 0 0 0.6rem;
+    font-family: var(--f-body);
+    font-size: 0.78rem;
+    color: var(--c-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .atlas-region__desc {
+    margin: 0 0 0.6rem;
+    color: var(--c-ink);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    max-width: 48ch;
+  }
+  .atlas-region__partners {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--c-muted);
+    font-family: var(--f-mono);
+  }
+  .atlas-region__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    min-width: 6.5rem;
+  }
+  .atlas-region__stat-value {
+    font-family: var(--f-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.6rem;
+    color: var(--c-ink);
+    line-height: 1;
+  }
+  .atlas-region__stat-label {
+    margin-top: 0.4rem;
+    font-size: 0.7rem;
+    color: var(--c-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .atlas-region--upcoming {
+    opacity: 0.85;
+  }
+  .atlas-region--upcoming .atlas-region__stat-value {
+    color: var(--c-accent-alt);
+  }
+
+  @media (max-width: 720px) {
+    .atlas-region {
+      grid-template-columns: auto 1fr;
+    }
+    .atlas-region__stat {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      text-align: left;
+    }
+    .atlas-region__stat-label { margin-top: 0; }
+  }
+</style>
