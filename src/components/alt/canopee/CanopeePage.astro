@@ -1,0 +1,51 @@
+---
+import AltLayout from "@/layouts/AltLayout.astro";
+import IslandNav from "@/components/alt/shared/IslandNav.astro";
+import ForestPinController from "./ForestPinController.tsx";
+import Stage1Canopy from "./Stage1Canopy.astro";
+import Stage2Understory from "./Stage2Understory.astro";
+import Stage3Shrub from "./Stage3Shrub.astro";
+import Stage4Herb from "./Stage4Herb.astro";
+import Stage5Soil from "./Stage5Soil.astro";
+import type { Locale } from "@/i18n/config";
+import enCopy from "@/i18n/alt/canopee.en";
+import frCopy from "@/i18n/alt/canopee.fr";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = locale === "fr" ? frCopy : enCopy;
+---
+
+<AltLayout
+  theme="canopee"
+  locale={locale}
+  title={t.meta.title}
+  description={t.meta.description}
+  slug="canopee"
+>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <IslandNav locale={locale} slug="canopee" />
+
+  <ForestPinController client:idle progressLabels={t.progress} />
+
+  <main id="main">
+    <Stage1Canopy
+      title={t.stage1.title}
+      titleEmphasis={t.stage1.titleEmphasis}
+      caption={t.stage1.caption}
+    />
+    <Stage2Understory eyebrow={t.stage2.eyebrow} plateaux={t.stage2.plateaux} />
+    <Stage3Shrub
+      eyebrow={t.stage3.eyebrow}
+      heading={t.stage3.heading}
+      body={t.stage3.body}
+      legend={t.stage3.legend}
+    />
+    <Stage4Herb eyebrow={t.stage4.eyebrow} heading={t.stage4.heading} plugins={t.stage4.plugins} />
+    <Stage5Soil
+      quote={t.stage5.quote}
+      terminal={t.stage5.terminal}
+      ctaPrimary={t.stage5.ctaPrimary}
+    />
+  </main>
+</AltLayout>
