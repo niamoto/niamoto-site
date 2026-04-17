@@ -1,8 +1,8 @@
 # /alt/ Variants — Review
 
-Date: 2026-04-17 (V5/V6/V7 added; V11 Silex added wave 2); first pass 2026-04-15
+Date: 2026-04-17 (V5/V6/V7 added; V11 Silex + V8 Manifeste added wave 2); first pass 2026-04-15
 Branch: `feat/landing-alternatives`
-Status: Eight variants shipped (7 wave 1 + V11 Silex). Build green (22 pages, ~1.45s).
+Status: Nine variants shipped (7 wave 1 + V11 Silex + V8 Manifeste). Build green (24 pages, ~1.45s).
 
 ## What was shipped
 
@@ -18,6 +18,7 @@ Seven landing page variants for niamoto.org under `/alt/*`, bilingual FR/EN, all
 | Portail         | /alt/portail           | /fr/alt/portail           | **Soft Structuralism** | Editorial Split + Rail  |
 | Strate          | /alt/strate            | /fr/alt/strate            | **Soft Structuralism** | Longform Editorial      |
 | Silex (V11)     | /alt/silex             | /fr/alt/silex             | **Minimalism Radical** | Full-scroll 4 verb strates |
+| Manifeste (V8)  | /alt/manifeste         | /fr/alt/manifeste         | **CRO Editorial**      | Asymmetric split manifesto |
 
 Plus the dispatcher at `/alt/` (and `/fr/alt/`) listing all variants with palette swatches in a 3-column grid.
 
@@ -215,6 +216,41 @@ Note: the existing V1–V4 PillarGrid / plate components may have the same laten
 **Strengths**: la plus austère des 13 variantes. Fonctionne comme anti-cheat vs l'empilement de features.
 
 **Weaknesses**: le visiteur qui cherche "install" doit scroller 5 sections pour trouver la commande. OK si on assume le registre manifesto, pas OK pour un visiteur cold.
+
+### V8 Manifeste (Editorial × CRO) — 2026-04-17 pass
+
+Variante CRO éditorial : hero asymétrique Fraunces WONK 1 opsz 144 + épigraphe manuscrite,
+trust-strip 4 citations, 3 piliers I/II/III, bande d'urgence scientifique, closing 3-phrases.
+
+**Palette**: parchment `#F5F1E8`, forest deep `#1F3A29`, copper `#B07636`, near-black `#0F1111`.
+
+**Typo**: Fraunces Variable with `"opsz" 144, "wght" 500, "SOFT" 50, "WONK" 1` (display hero) + Geist Variable (body) + JetBrains Mono Variable (meta/stats). Epigraph uses low-opsz (`"opsz" 14`) for humanist italic character.
+
+**Strengths**: l'aplomb Fraunces WONK donne le poids d'une revue scientifique. Les citations
+sans logos évitent le SaaS, l'épigraphe manuscrite évite le marketing. Le closing 3-phrases
+(2e ligne italic copper) est la signature la plus concise de toutes les variantes.
+
+**Weaknesses**: l'épigraphe peut lire mal si le visiteur n'accorde pas 6 secondes d'attention.
+Les citations fictionnelles sont à valider/remplacer avant prod (validation Philippe Birnbaum /
+équipe Niamoto). Le micro-scribble SVG `stroke-dashoffset` n'animera pas dans les browsers
+qui n'interprètent pas `stroke-dashoffset` dans les `data:` URL inline — fallback = opacité seule.
+
+**QA static build confirmed**:
+- `data-theme="manifeste"` présent sur `<body>` EN + FR.
+- Hero epigraph: "We the undersigned — foresters, botanists…" (EN) / "Nous signataires…" (FR).
+- Piliers I/II/III présents (Open by default / Owned by the scientists / Outlives the grant EN).
+- Piliers FR (Ouvert par défaut / Possédé par les scientifiques / Survit à la subvention).
+- Pulse: "This week: 13 plots were added…" (EN) / "Cette semaine : 13 parcelles ajoutées…" (FR).
+- Closing 3-phrases confirmées EN + FR avec italic copper sur 2e ligne.
+- FunderGrid compact présent dans les deux locales.
+- `<html lang="fr">` + `<link rel="alternate" hreflang="en">` confirmé sur `/fr/alt/manifeste/`.
+
+**Lighthouse**: non exécuté (Chrome non installé sur cet environnement). À ajouter :
+`docs/alt/lighthouse/manifeste-en.html` lors de la prochaine session avec Chrome.
+
+**Citations draft flag**: les 4 citations (Directrice/Herbier IRD, Program lead/CIRAD,
+Data scientist/AMAP, Forest engineer/ANPN) sont rédigées à titre illustratif.
+À remplacer par des citations réelles ou à supprimer avant merge vers main.
 
 ## Known follow-ups
 
