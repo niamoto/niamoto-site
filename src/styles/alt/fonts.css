@@ -23,10 +23,17 @@
 /* JetBrains Mono -- every variant for code/data/captions */
 @import "@fontsource-variable/jetbrains-mono/index.css";
 
-/* Cabinet Grotesk + Satoshi -- V3 M?thode (display + body).
+/* Cabinet Grotesk + Satoshi -- V3 Methode (display + body).
+ * Clash Display                -- V6 Portail display.
  * Fontshare doesn't ship a fontsource package; CDN is acceptable for v1.
  * Future improvement: self-host woff2 + size-adjust. */
-@import url("https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@200,400,500,700,800,900&f[]=satoshi@300,400,500,700,900&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@200,400,500,700,800,900&f[]=satoshi@300,400,500,700,900&f[]=clash-display@200,300,400,500,600,700&display=swap");
 
 /* Plus Jakarta Sans -- V2 Field Journal body */
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+/* V13 Planche -- IM Fell Double Pica SC + Libre Caslon Text */
+/* IM Fell only ships weight 400 (no separate italic file in fontsource). */
+@import "@fontsource/im-fell-double-pica-sc/400.css";
+@import "@fontsource/libre-caslon-text/400.css";
+@import "@fontsource/libre-caslon-text/400-italic.css";

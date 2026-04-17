@@ -23,6 +23,12 @@ importers:
       '@fontsource-variable/jetbrains-mono':
         specifier: ^5.2.8
         version: 5.2.8
+      '@fontsource/im-fell-double-pica-sc':
+        specifier: ^5.2.6
+        version: 5.2.6
+      '@fontsource/libre-caslon-text':
+        specifier: ^5.2.7
+        version: 5.2.7
       '@gsap/react':
         specifier: ^2.1.2
         version: 2.1.2(gsap@3.15.0)(react@19.2.5)
@@ -550,6 +556,12 @@ packages:
 
   '@fontsource-variable/jetbrains-mono@5.2.8':
     resolution: {integrity: sha512-WBA9elru6Jdp5df2mES55wuOO0WIrn3kpXnI4+W2ek5u3ZgLS9XS4gmIlcQhiZOWEKl95meYdvK7xI+ETLCq/Q==}
+
+  '@fontsource/im-fell-double-pica-sc@5.2.6':
+    resolution: {integrity: sha512-6XhBcslemkqe2nr9NZaculjY+zMyI93PU9WUNBJQVxGY4zB4vIF3nWioKom03tlcbzyMEu0WQjSe2tBcDMJGwA==}
+
+  '@fontsource/libre-caslon-text@5.2.7':
+    resolution: {integrity: sha512-popxcrFaQyr1KtVwAxPF3s30ioZwHsASO1Np+w7KbKUw5N57aluimNZWDDNFDKlph536PS8QCpCG4k3Wj7QlyQ==}
 
   '@gsap/react@2.1.2':
     resolution: {integrity: sha512-JqliybO1837UcgH2hVOM4VO+38APk3ECNrsuSM4MuXp+rbf+/2IG2K1YJiqfTcXQHH7XlA0m3ykniFYstfq0Iw==}
@@ -2901,6 +2913,10 @@ snapshots:
   '@fontsource-variable/geist@5.2.8': {}
 
   '@fontsource-variable/jetbrains-mono@5.2.8': {}
+
+  '@fontsource/im-fell-double-pica-sc@5.2.6': {}
+
+  '@fontsource/libre-caslon-text@5.2.7': {}
 
   '@gsap/react@2.1.2(gsap@3.15.0)(react@19.2.5)':
     dependencies:

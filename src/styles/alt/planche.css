@@ -1,4 +1,284 @@
-/* V13 Planche -- populated by docs/plans/2026-04-17-alt-wave2-v13-planche-plan.md. */
+/* V13 Planche -- canvas-design x algorithmic-art.
+ * Scroll horizontal desktop, fallback vertical mobile. Print-ready.
+ * Palette :
+ *   --c-canvas    #EDE4D0   paper cream
+ *   --c-ink       #3F2A18   sepia deep
+ *   --c-muted     #6B563A   sepia mid
+ *   --c-accent    #A03223   madder red (titles, specimen labels)
+ *   --c-accent-alt#232F58   indigo (captions, numerals)
+ */
+
 [data-theme="planche"] {
-  /* tokens TBD */
+  color-scheme: light;
+
+  --c-canvas: #EDE4D0;
+  --c-ink: #3F2A18;
+  --c-muted: #6B563A;
+  --c-accent: #A03223;
+  --c-accent-alt: #232F58;
+  --c-surface: rgba(63, 42, 24, 0.04);
+  --c-hairline: rgba(63, 42, 24, 0.2);
+  --c-grain-opacity: 0.09;
+
+  --f-display: "IM Fell Double Pica SC", "Iowan Old Style", Georgia, serif;
+  --f-body: "Libre Caslon Text", Georgia, serif;
+  --f-mono: "Libre Caslon Text", Georgia, serif;
+
+  --fvs-display: normal;
+  --fvs-body: normal;
+
+  --ls-display: 0.02em;
+  --ls-body: 0.01em;
+  --lh-display: 1.05;
+  --lh-body: 1.55;
+}
+
+/* Heavier paper grain for V13. */
+[data-theme="planche"] .grain-overlay {
+  opacity: 0.09;
+}
+
+/* Page texture -- faux-paper. Layered: base cream + mottled darker + sparse fibers. */
+[data-theme="planche"] body {
+  background-color: var(--c-canvas);
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, rgba(63, 42, 24, 0.08) 50%, transparent 51%),
+    radial-gradient(1px 1px at 80% 60%, rgba(63, 42, 24, 0.1) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 50% 85%, rgba(63, 42, 24, 0.06) 50%, transparent 51%),
+    linear-gradient(180deg, #EDE4D0 0%, #E8DCC3 100%);
+  background-attachment: fixed;
+}
+
+/* Scroll horizontal container. */
+[data-theme="planche"] .planche-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-muted) transparent;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 1rem;
+}
+[data-theme="planche"] .planche-page {
+  position: relative;
+  width: 2400px;
+  min-width: 2400px;
+  height: calc(100dvh - 4rem);
+  min-height: 780px;
+  max-height: 900px;
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 320px 1fr 300px;
+  gap: 3rem;
+  box-sizing: border-box;
+}
+
+/* Left column -- title block. */
+[data-theme="planche"] .planche-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 2rem;
+}
+[data-theme="planche"] .planche-header__eyebrow {
+  font-family: var(--f-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: var(--c-muted);
+  text-transform: uppercase;
+}
+[data-theme="planche"] .planche-header__title {
+  font-family: var(--f-display);
+  font-size: clamp(2.5rem, 3vw, 3.5rem);
+  line-height: 1.05;
+  color: var(--c-accent);
+  margin: 0;
+}
+[data-theme="planche"] .planche-header__title em {
+  font-family: var(--f-body);
+  font-style: italic;
+  color: var(--c-accent-alt);
+  display: block;
+  font-size: 0.7em;
+  margin-top: 0.5rem;
+}
+[data-theme="planche"] .planche-header__number {
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: 2.5rem;
+  color: var(--c-accent-alt);
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+[data-theme="planche"] .planche-header__meta {
+  font-family: var(--f-body);
+  font-style: italic;
+  color: var(--c-muted);
+  line-height: 1.6;
+  max-width: 28ch;
+}
+[data-theme="planche"] .planche-header__meta strong {
+  font-style: normal;
+  color: var(--c-ink);
+}
+
+/* Middle column -- specimens in a quincunx. */
+[data-theme="planche"] .planche-specimens {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+[data-theme="planche"] .planche-specimen {
+  position: absolute;
+  width: 160px;
+  text-align: center;
+  transition: transform 320ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+[data-theme="planche"] .planche-specimen:hover {
+  transform: translateY(-4px) rotate(0deg) !important;
+}
+[data-theme="planche"] .planche-specimen svg {
+  width: 100%;
+  height: 160px;
+  display: block;
+  margin: 0 auto;
+  color: var(--c-ink);
+}
+[data-theme="planche"] .planche-specimen__label {
+  font-family: var(--f-body);
+  font-style: italic;
+  color: var(--c-accent);
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  letter-spacing: 0.02em;
+}
+[data-theme="planche"] .planche-specimen__hint {
+  font-family: var(--f-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  color: var(--c-muted);
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+  opacity: 0;
+  transition: opacity 220ms;
+}
+[data-theme="planche"] .planche-specimen:hover .planche-specimen__hint {
+  opacity: 1;
+}
+
+/* Right column -- field notes. */
+[data-theme="planche"] .planche-notes {
+  font-family: var(--f-body);
+  color: var(--c-ink);
+  padding-top: 2rem;
+  border-left: 1px solid var(--c-hairline);
+  padding-left: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+[data-theme="planche"] .planche-notes__heading {
+  font-family: var(--f-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-accent-alt);
+  margin-bottom: 0.5rem;
+}
+[data-theme="planche"] .planche-notes__item {
+  border-top: 1px solid var(--c-hairline);
+  padding-top: 0.75rem;
+}
+[data-theme="planche"] .planche-notes__item-num {
+  font-family: var(--f-body);
+  font-style: italic;
+  color: var(--c-accent);
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+[data-theme="planche"] .planche-notes__item-body {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--c-ink);
+}
+[data-theme="planche"] .planche-notes__footnote {
+  margin-top: auto;
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: 0.75rem;
+  color: var(--c-muted);
+}
+
+/* Print CTA at the bottom of the viewport. */
+[data-theme="planche"] .planche-print-cta {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 40;
+  background: var(--c-accent);
+  color: var(--c-canvas);
+  font-family: var(--f-body);
+  font-style: italic;
+  padding: 0.75rem 1.25rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(63, 42, 24, 0.2);
+  transition: transform 220ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+[data-theme="planche"] .planche-print-cta:hover {
+  transform: translateY(-2px);
+}
+
+/* Mobile fallback -- vertical stacking. */
+@media (max-width: 900px) {
+  [data-theme="planche"] .planche-viewport {
+    overflow-x: hidden;
+  }
+  [data-theme="planche"] .planche-page {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    grid-template-columns: 1fr;
+    padding: 3rem 1.5rem;
+  }
+  [data-theme="planche"] .planche-specimens {
+    height: 820px;
+  }
+  [data-theme="planche"] .planche-notes {
+    border-left: none;
+    border-top: 1px solid var(--c-hairline);
+    padding-left: 0;
+    padding-top: 2rem;
+  }
+  [data-theme="planche"] .planche-print-cta {
+    position: static;
+    margin: 2rem auto 0;
+    display: block;
+  }
+}
+
+/* PRINT -- A3 landscape. */
+@media print {
+  [data-theme="planche"] .grain-overlay { display: none; }
+  [data-theme="planche"] .planche-print-cta { display: none; }
+  [data-theme="planche"] .planche-viewport {
+    overflow: visible;
+  }
+  [data-theme="planche"] .planche-page {
+    width: 420mm;
+    min-width: 420mm;
+    height: 297mm;
+    min-height: 297mm;
+    max-height: 297mm;
+    padding: 15mm;
+    page-break-after: avoid;
+  }
+  @page {
+    size: A3 landscape;
+    margin: 0;
+  }
+  /* Remove the skip-link + nav from print. */
+  [data-theme="planche"] .skip-link,
+  [data-theme="planche"] nav { display: none; }
 }
