@@ -1,4 +1,243 @@
-/* V10 Sporee -- populated by docs/plans/2026-04-17-alt-wave2-v10-sporee-plan.md. */
+/* V10 Sporee -- algorithmic-art x frontend-design.
+ * Canvas p5.js fullscreen + texte HTML overlay. Seed deterministic.
+ * Palette :
+ *   --c-canvas    #F3EEE2   bone
+ *   --c-ink       #1A1612   near-black warm
+ *   --c-muted     #6B5D4A   muted ochre
+ *   --c-accent    #A34B28   rust
+ *   --c-accent-alt#4A3A6B   spore-violet
+ */
+
 [data-theme="sporee"] {
-  /* tokens TBD */
+  color-scheme: light;
+
+  --c-canvas: #F3EEE2;
+  --c-ink: #1A1612;
+  --c-muted: #6B5D4A;
+  --c-accent: #A34B28;
+  --c-accent-alt: #4A3A6B;
+  --c-surface: rgba(26, 22, 18, 0.04);
+  --c-hairline: rgba(26, 22, 18, 0.14);
+  --c-grain-opacity: 0.04;
+
+  /* Migra = Pangram licence (non acquise). Fallback Fraunces italic opsz 144.
+   * Berkeley Mono = Berkeley licence (non acquise). Fallback JetBrains Mono. */
+  --f-display: "Fraunces Variable", Georgia, serif;
+  --f-body: "Geist Variable", system-ui, -apple-system, sans-serif;
+  --f-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --fvs-display: "opsz" 144, "wght" 800, "SOFT" 50, "WONK" 1;
+  --fvs-body: "wght" 500;
+
+  --ls-display: -0.04em;
+  --ls-body: 0;
+  --lh-display: 0.98;
+  --lh-body: 1.55;
+}
+
+/* Hero -- canvas fullscreen + overlay text. */
+[data-theme="sporee"] .sporee-hero {
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+[data-theme="sporee"] .sporee-hero__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+[data-theme="sporee"] .sporee-hero__canvas canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+[data-theme="sporee"] .sporee-hero__fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/showcase/sporee/fallback.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.85;
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="sporee"] .sporee-hero__canvas { display: none; }
+  [data-theme="sporee"] .sporee-hero__fallback { display: block; }
+}
+
+[data-theme="sporee"] .sporee-hero__overlay {
+  position: relative;
+  z-index: 2;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 10rem 1.5rem 8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+[data-theme="sporee"] .sporee-hero__title {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "wght" 800, "SOFT" 100, "WONK" 1;
+  font-size: clamp(3rem, 8vw, 8rem);
+  line-height: 0.95;
+  color: var(--c-ink);
+  letter-spacing: -0.05em;
+  margin: 0;
+  mix-blend-mode: multiply;
+}
+[data-theme="sporee"] .sporee-hero__title em {
+  font-style: italic;
+  color: var(--c-accent);
+  font-variation-settings: "opsz" 144, "wght" 800, "SOFT" 100, "WONK" 1;
+}
+[data-theme="sporee"] .sporee-hero__sub {
+  font-family: var(--f-body);
+  font-size: 1.15rem;
+  max-width: 52ch;
+  color: var(--c-ink);
+  line-height: 1.55;
+  mix-blend-mode: multiply;
+}
+[data-theme="sporee"] .sporee-hero__controls {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+[data-theme="sporee"] .sporee-hero__control {
+  font-family: var(--f-mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--c-hairline);
+  background: color-mix(in srgb, var(--c-canvas) 85%, transparent);
+  color: var(--c-ink);
+  cursor: pointer;
+  border-radius: 9999px;
+  transition: background 240ms, transform 240ms;
+}
+[data-theme="sporee"] .sporee-hero__control:hover {
+  background: color-mix(in srgb, var(--c-canvas) 100%, transparent);
+  transform: translateY(-1px);
+}
+
+/* Seed badge -- top-right fixed corner. */
+[data-theme="sporee"] .sporee-seed {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 30;
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--c-ink);
+  background: color-mix(in srgb, var(--c-canvas) 90%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--c-hairline);
+  border-radius: 9999px;
+}
+
+/* Flow gallery -- 6 captures 2x3 or 3x2. */
+[data-theme="sporee"] .sporee-gallery {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+}
+[data-theme="sporee"] .sporee-gallery__heading {
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--c-muted);
+  margin-bottom: 2rem;
+}
+[data-theme="sporee"] .sporee-gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 900px) {
+  [data-theme="sporee"] .sporee-gallery__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  [data-theme="sporee"] .sporee-gallery__grid { grid-template-columns: 1fr; }
+}
+[data-theme="sporee"] .sporee-gallery__item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--c-hairline);
+  background: color-mix(in srgb, var(--c-canvas) 90%, var(--c-accent-alt));
+}
+[data-theme="sporee"] .sporee-gallery__item svg,
+[data-theme="sporee"] .sporee-gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+[data-theme="sporee"] .sporee-gallery__caption {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  font-family: var(--f-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--c-ink);
+  background: color-mix(in srgb, var(--c-canvas) 85%, transparent);
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.3rem;
+}
+
+/* Berkeley install card -- craft paper, mono code block. */
+[data-theme="sporee"] .sporee-install-section {
+  padding: 0 1.5rem;
+}
+[data-theme="sporee"] .sporee-install {
+  max-width: 720px;
+  margin: 0 auto 6rem;
+  padding: 2rem 2.5rem;
+  background: color-mix(in srgb, var(--c-canvas) 90%, #D6C8A8);
+  border: 1px solid color-mix(in srgb, var(--c-ink) 18%, transparent);
+  border-radius: 0.5rem;
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--c-ink) 10%, transparent),
+    0 16px 40px color-mix(in srgb, var(--c-ink) 10%, transparent);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='p'><feTurbulence baseFrequency='0.8' numOctaves='1'/><feColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.07  0 0 0 0 0.04  0 0 0 0.1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23p)'/></svg>");
+  background-blend-mode: multiply;
+}
+[data-theme="sporee"] .sporee-install__eyebrow {
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--c-muted);
+  margin: 0 0 0.75rem;
+}
+[data-theme="sporee"] .sporee-install__line {
+  font-family: var(--f-mono);
+  font-size: 1.1rem;
+  color: var(--c-ink);
+  margin: 0.3rem 0;
+}
+[data-theme="sporee"] .sporee-install__line::before {
+  content: "$ ";
+  color: var(--c-accent);
+  margin-right: 0.3rem;
+}
+[data-theme="sporee"] .sporee-install__caption {
+  margin-top: 1.25rem;
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--c-muted);
 }
