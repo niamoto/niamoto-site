@@ -1,4 +1,279 @@
-/* V8 Manifeste -- populated by docs/plans/2026-04-17-alt-wave2-v8-manifeste-plan.md. */
+/* V8 Manifeste -- CRO editorial x high-end visual design
+ * Register: scientific manifesto, publication tradition, literate edition.
+ * Fraunces WONK 1 italic accents, parchment canvas, copper + forest deep accents.
+ *
+ * Palette reasoning:
+ *   --c-canvas      #F5F1E8   parchment warm (not pure white -- reduced fatigue)
+ *   --c-ink         #0F1111   near-black very slightly olive
+ *   --c-muted       #5A584F   warm graphite
+ *   --c-accent      #B07636   copper (CTA primary, urgency, manuscript accents)
+ *   --c-accent-alt  #1F3A29   forest deep (secondary ink, dividers)
+ *   --c-surface     color-mix parchment + ink
+ *   --c-grain-opacity 0.035   light parchment grain
+ */
+
 [data-theme="manifeste"] {
-  /* tokens TBD */
+  color-scheme: light;
+
+  --c-canvas: #F5F1E8;
+  --c-ink: #0F1111;
+  --c-muted: #5A584F;
+  --c-accent: #B07636;
+  --c-accent-alt: #1F3A29;
+  --c-surface: rgba(15, 17, 17, 0.025);
+  --c-hairline: rgba(15, 17, 17, 0.12);
+  --c-grain-opacity: 0.035;
+
+  --f-display: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
+  --f-body: "Geist Variable", system-ui, -apple-system, sans-serif;
+  --f-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Fraunces WONK 1 + opsz 144 + wght 500 -- the central gesture of the variant. */
+  --fvs-display: "opsz" 144, "wght" 500, "SOFT" 50, "WONK" 1;
+  --fvs-body: "wght" 400;
+
+  --ls-display: -0.03em;
+  --ls-body: 0;
+  --lh-display: 1.02;
+  --lh-body: 1.55;
+}
+
+/* Hero asymmetric grid -- epigraph left, title+sub+CTA right. */
+[data-theme="manifeste"] .manifeste-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(0, 2.2fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  [data-theme="manifeste"] .manifeste-hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Epigraph - italic manuscript, low opsz for humanist character. */
+[data-theme="manifeste"] .manifeste-epigraph {
+  font-family: var(--f-display);
+  font-variation-settings: "opsz" 14, "wght" 400, "SOFT" 100, "WONK" 1;
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--c-muted);
+  max-width: 28ch;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--c-hairline);
+}
+[data-theme="manifeste"] .manifeste-epigraph cite {
+  display: block;
+  margin-top: 0.75rem;
+  font-style: normal;
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--c-ink);
+  opacity: 0.6;
+}
+
+/* Monumental Fraunces WONK title. */
+[data-theme="manifeste"] .manifeste-title {
+  font-size: clamp(3rem, 9vw, 9rem);
+  max-width: 14ch;
+  color: var(--c-ink);
+}
+[data-theme="manifeste"] .manifeste-title em {
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "wght" 500, "SOFT" 100, "WONK" 1;
+  color: var(--c-accent);
+}
+
+[data-theme="manifeste"] .manifeste-sub {
+  margin-top: 1.5rem;
+  max-width: 46ch;
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: var(--c-ink);
+  opacity: 0.82;
+}
+
+/* Scholar citations strip -- 4 in 2x2 desktop, stack on mobile. */
+[data-theme="manifeste"] .manifeste-citations {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem clamp(2rem, 4vw, 4rem);
+}
+@media (max-width: 720px) {
+  [data-theme="manifeste"] .manifeste-citations {
+    grid-template-columns: 1fr;
+  }
+}
+[data-theme="manifeste"] .manifeste-citation {
+  padding-top: 1rem;
+  border-top: 1px solid var(--c-hairline);
+}
+[data-theme="manifeste"] .manifeste-citation__text {
+  font-family: var(--f-display);
+  font-variation-settings: "opsz" 24, "wght" 400, "SOFT" 50, "WONK" 0;
+  font-size: 1.1rem;
+  line-height: 1.45;
+  color: var(--c-ink);
+}
+[data-theme="manifeste"] .manifeste-citation__author {
+  margin-top: 0.75rem;
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--c-muted);
+}
+[data-theme="manifeste"] .manifeste-citation__author strong {
+  color: var(--c-ink);
+  font-weight: 500;
+}
+
+/* Monograph pillars -- I/II/III with vertical dividers. */
+[data-theme="manifeste"] .manifeste-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+@media (max-width: 900px) {
+  [data-theme="manifeste"] .manifeste-pillars { grid-template-columns: 1fr; }
+}
+[data-theme="manifeste"] .manifeste-pillar {
+  padding: 0 2rem;
+  border-right: 1px solid var(--c-hairline);
+}
+[data-theme="manifeste"] .manifeste-pillar:first-child { padding-left: 0; }
+[data-theme="manifeste"] .manifeste-pillar:last-child  { border-right: none; padding-right: 0; }
+@media (max-width: 900px) {
+  [data-theme="manifeste"] .manifeste-pillar {
+    padding: 2rem 0;
+    border-right: none;
+    border-bottom: 1px solid var(--c-hairline);
+  }
+  [data-theme="manifeste"] .manifeste-pillar:last-child { border-bottom: none; }
+}
+[data-theme="manifeste"] .manifeste-pillar__numeral {
+  font-family: var(--f-display);
+  font-variation-settings: "opsz" 24, "wght" 400, "SOFT" 50, "WONK" 1;
+  font-size: 2.2rem;
+  color: var(--c-accent);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+[data-theme="manifeste"] .manifeste-pillar__title {
+  font-family: var(--f-display);
+  font-variation-settings: "opsz" 144, "wght" 500, "SOFT" 50, "WONK" 0;
+  font-size: 1.8rem;
+  color: var(--c-ink);
+  margin-bottom: 1rem;
+}
+[data-theme="manifeste"] .manifeste-pillar__body {
+  color: var(--c-ink);
+  opacity: 0.78;
+  line-height: 1.6;
+  max-width: 38ch;
+}
+
+/* Pulse band -- scientific urgency, not marketing. */
+[data-theme="manifeste"] .manifeste-pulse {
+  background: var(--c-accent-alt);
+  color: #F5F1E8;
+  padding: 1.25rem 2rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+[data-theme="manifeste"] .manifeste-pulse__body {
+  font-family: var(--f-display);
+  font-variation-settings: "opsz" 24, "wght" 400, "SOFT" 50, "WONK" 1;
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  max-width: 60ch;
+}
+[data-theme="manifeste"] .manifeste-pulse__meta {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(245, 241, 232, 0.7);
+}
+
+/* CTA buttons -- copper primary + ghost. Micro-scribble on hover. */
+[data-theme="manifeste"] .manifeste-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  font-family: var(--f-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  transition:
+    transform 320ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 320ms cubic-bezier(0.32, 0.72, 0, 1),
+    background-color 320ms cubic-bezier(0.32, 0.72, 0, 1);
+  position: relative;
+}
+[data-theme="manifeste"] .manifeste-cta--primary {
+  background: var(--c-accent);
+  color: var(--c-canvas);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--c-accent-alt) 25%, transparent);
+}
+[data-theme="manifeste"] .manifeste-cta--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--c-accent-alt) 35%, transparent);
+}
+[data-theme="manifeste"] .manifeste-cta--ghost {
+  background: transparent;
+  color: var(--c-ink);
+  border: 1px solid var(--c-hairline);
+}
+[data-theme="manifeste"] .manifeste-cta--ghost:hover {
+  border-color: var(--c-ink);
+  background: var(--c-surface);
+}
+
+/* Micro-scribble -- animated SVG stroke-dash under the primary CTA on hover. */
+[data-theme="manifeste"] .manifeste-cta--primary::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 0.2rem;
+  height: 6px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 6' fill='none' stroke='%23F5F1E8' stroke-width='1.5' stroke-linecap='round'><path d='M2 3 Q 15 1 30 3 T 60 3 T 90 3 T 118 3' stroke-dasharray='180' stroke-dashoffset='180'/></svg>") no-repeat center / contain;
+  opacity: 0;
+  transition: opacity 200ms, stroke-dashoffset 520ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+[data-theme="manifeste"] .manifeste-cta--primary:hover::after {
+  opacity: 1;
+}
+
+/* Closing manifesto -- 3 phrases in display, centered. */
+[data-theme="manifeste"] .manifeste-closing {
+  text-align: center;
+  max-width: 28ch;
+  margin: 0 auto;
+}
+[data-theme="manifeste"] .manifeste-closing__line {
+  font-family: var(--f-display);
+  font-variation-settings: "opsz" 144, "wght" 500, "SOFT" 50, "WONK" 1;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.1;
+  color: var(--c-ink);
+  display: block;
+}
+[data-theme="manifeste"] .manifeste-closing__line:nth-child(2) {
+  font-style: italic;
+  color: var(--c-accent);
+}
+[data-theme="manifeste"] .manifeste-closing__line + .manifeste-closing__line {
+  margin-top: 0.5rem;
 }
