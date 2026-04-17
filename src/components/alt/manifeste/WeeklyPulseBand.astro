@@ -1,0 +1,24 @@
+---
+// V8 Manifeste -- scientific urgency band. Forest-deep background, italic parchment text.
+interface Props { body: string; meta: string }
+const { body, meta } = Astro.props;
+---
+
+<section class="manifeste-pulse-section" aria-label="Weekly pulse">
+  <div class="manifeste-pulse-section__inner">
+    <div class="manifeste-pulse">
+      <p class="manifeste-pulse__body">{body}</p>
+      <p class="manifeste-pulse__meta">{meta}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .manifeste-pulse-section {
+    padding: 0 1.5rem 6rem;
+  }
+  .manifeste-pulse-section__inner {
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+</style>

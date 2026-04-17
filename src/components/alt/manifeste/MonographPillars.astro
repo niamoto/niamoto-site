@@ -1,0 +1,41 @@
+---
+// V8 Manifeste -- 3 monograph pillars I/II/III with vertical dividers.
+interface Item { numeral: string; title: string; body: string }
+interface Props { eyebrow: string; items: readonly Item[] }
+const { eyebrow, items } = Astro.props;
+---
+
+<section class="manifeste-pillars-section" aria-labelledby="pillars-eyebrow">
+  <div class="manifeste-pillars-section__inner">
+    <p id="pillars-eyebrow" class="manifeste-pillars-section__eyebrow display">{eyebrow}</p>
+    <div class="manifeste-pillars">
+      {items.map((it) => (
+        <article class="manifeste-pillar">
+          <p class="manifeste-pillar__numeral">{it.numeral}</p>
+          <h2 class="manifeste-pillar__title">{it.title}</h2>
+          <p class="manifeste-pillar__body">{it.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .manifeste-pillars-section {
+    padding: 2rem 1.5rem 6rem;
+    background: var(--c-surface);
+  }
+  .manifeste-pillars-section__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 4rem 0;
+  }
+  .manifeste-pillars-section__eyebrow {
+    font-size: 0.78rem;
+    font-family: var(--f-mono);
+    color: var(--c-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 2.5rem;
+  }
+</style>
