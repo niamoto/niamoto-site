@@ -18,7 +18,21 @@ const altRoot = isFr ? "/fr/alt" : "/alt";
 
 interface VariantCard {
   slug: string;
-  theme: "atlas" | "field-journal" | "methode" | "herbarium";
+  theme:
+    | "atlas"
+    | "field-journal"
+    | "methode"
+    | "herbarium"
+    | "observatory"
+    | "portail"
+    | "strate"
+    | "manifeste"
+    | "cockpit"
+    | "silex"
+    | "sporee"
+    | "canopee"
+    | "planche";
+  wave: "alt" | "lab";
   swatches: string[];
   font: string;
   layout: { en: string; fr: string };
@@ -26,9 +40,11 @@ interface VariantCard {
 }
 
 const variants: VariantCard[] = [
+  // ---- Wave 1 (existing) ----
   {
     slug: "atlas",
     theme: "atlas",
+    wave: "alt",
     swatches: ["#FDFBF7", "#516B5A", "#A66B3B", "#121212"],
     font: "Fraunces (light, italic accent) + Geist",
     layout: { en: "Editorial Split", fr: "Editorial Split" },
@@ -37,6 +53,7 @@ const variants: VariantCard[] = [
   {
     slug: "field-journal",
     theme: "field-journal",
+    wave: "alt",
     swatches: ["#F5EEE0", "#3E5F45", "#B8633C", "#0F0F0F"],
     font: "Fraunces (semibold, wonk) + Plus Jakarta Sans",
     layout: { en: "Z-Axis Cascade", fr: "Z-Axis Cascade" },
@@ -45,6 +62,7 @@ const variants: VariantCard[] = [
   {
     slug: "methode",
     theme: "methode",
+    wave: "alt",
     swatches: ["#1E2822", "#E8E2D0", "#C08A3E", "#7CA0A8"],
     font: "Cabinet Grotesk + Satoshi",
     layout: { en: "Asymmetrical Bento", fr: "Bento asymetrique" },
@@ -53,20 +71,114 @@ const variants: VariantCard[] = [
   {
     slug: "herbarium",
     theme: "herbarium",
+    wave: "alt",
     swatches: ["#1A1410", "#E8DCC8", "#B87C4F", "#7A8B6F"],
     font: "Fraunces (black, opsz 144) + Geist",
     layout: { en: "Editorial Split + Z-Axis", fr: "Editorial Split + Z-Axis" },
     url: `${altRoot}/herbarium`,
   },
+  {
+    slug: "observatory",
+    theme: "observatory",
+    wave: "alt",
+    swatches: ["#070908", "#E6EBE7", "#6BD99B", "#7FA7C4"],
+    font: "Geist Variable + JetBrains Mono",
+    layout: { en: "Ethereal Glass Bento", fr: "Bento verre ethere" },
+    url: `${altRoot}/observatory`,
+  },
+  {
+    slug: "portail",
+    theme: "portail",
+    wave: "alt",
+    swatches: ["#F7F4EE", "#3A4F42", "#AE6A3B", "#121414"],
+    font: "Clash Display + Geist",
+    layout: { en: "Soft Structuralism Split", fr: "Editorial doux + rail portail" },
+    url: `${altRoot}/portail`,
+  },
+  {
+    slug: "strate",
+    theme: "strate",
+    wave: "alt",
+    swatches: ["#EFEBE2", "#4B6150", "#8A6D3D", "#1A1815"],
+    font: "Fraunces (display) + Geist",
+    layout: { en: "Longform Editorial", fr: "Longform editorial" },
+    url: `${altRoot}/strate`,
+  },
+
+  // ---- Wave 2 Alt (Niamoto-compatible) ----
+  {
+    slug: "manifeste",
+    theme: "manifeste",
+    wave: "alt",
+    swatches: ["#F5F1E8", "#1F3A29", "#B07636", "#0F1111"],
+    font: "Fraunces (WONK 1) + Geist + JetBrains Mono",
+    layout: { en: "CRO Editorial", fr: "CRO editorial" },
+    url: `${altRoot}/manifeste`,
+  },
+  {
+    slug: "cockpit",
+    theme: "cockpit",
+    wave: "alt",
+    swatches: ["#0B1220", "#F2F2ED", "#4BAF50", "#E9A53A"],
+    font: "Geist Variable + JetBrains Mono",
+    layout: { en: "Live Dashboard Bento", fr: "Bento dashboard vivant" },
+    url: `${altRoot}/cockpit`,
+  },
+  {
+    slug: "silex",
+    theme: "silex",
+    wave: "alt",
+    swatches: ["#F7F5F0", "#3A3835", "#5C7051", "#5C7051"],
+    font: "Geist Mono (light) + Fraunces (light)",
+    layout: { en: "Radical Minimal", fr: "Minimal radical" },
+    url: `${altRoot}/silex`,
+  },
+
+  // ---- Wave 2 Lab (off-rule) ----
+  {
+    slug: "sporee",
+    theme: "sporee",
+    wave: "lab",
+    swatches: ["#F3EEE2", "#A34B28", "#4A3A6B", "#1A1612"],
+    font: "Migra Italic (fallback Fraunces) + Berkeley Mono",
+    layout: { en: "Generative p5.js", fr: "Generatif p5.js" },
+    url: `${altRoot}/sporee`,
+  },
+  {
+    slug: "canopee",
+    theme: "canopee",
+    wave: "lab",
+    swatches: ["#0A0E0B", "#5E8255", "#C9A86A", "#D4E0D0"],
+    font: "Fraunces (display) + Geist Mono",
+    layout: { en: "GSAP 5-phase Scroll", fr: "Scroll GSAP 5 phases" },
+    url: `${altRoot}/canopee`,
+  },
+  {
+    slug: "planche",
+    theme: "planche",
+    wave: "lab",
+    swatches: ["#EDE4D0", "#3F2A18", "#232F58", "#A03223"],
+    font: "IM Fell + Caslon Italic",
+    layout: { en: "Horizontal Plate", fr: "Planche horizontale" },
+    url: `${altRoot}/planche`,
+  },
 ];
 
+const wave1 = variants.filter((v) =>
+  ["atlas", "field-journal", "methode", "herbarium", "observatory", "portail", "strate"].includes(v.slug)
+);
+const wave2Alt = variants.filter((v) =>
+  ["manifeste", "cockpit", "silex"].includes(v.slug)
+);
+const wave2Lab = variants.filter((v) => v.wave === "lab");
+
 const titleText = isFr
-  ? "Quatre directions de design pour niamoto.org"
-  : "Four design directions for niamoto.org";
+  ? "Treize directions de design pour niamoto.org"
+  : "Thirteen design directions for niamoto.org";
 
 const introText = isFr
-  ? "Chaque variante explore une famille typographique, une palette et une composition différentes, dans le même registre Editorial Luxury. Choisissez-en une, ou cherchez à toutes les combiner."
-  : "Each variant explores a different typographic family, palette and composition, all in the same Editorial Luxury register. Pick one, or hybridise across.";
+  ? "Vague I : sept variantes compatibles avec l'identité Niamoto. Vague II : six explorations plus libres, dont trois en laboratoire hors-règle. Les deux vagues partagent le même contenu ; chacune applique une grammaire visuelle différente."
+  : "Wave I: seven variants compatible with Niamoto's identity. Wave II: six looser explorations, three of which break the editorial rule. Both waves share the same subject; each applies a different visual grammar.";
 ---
 
 <AltLayout
@@ -74,8 +186,8 @@ const introText = isFr
   locale={locale}
   title={isFr ? "Niamoto - Variantes de design" : "Niamoto - Design variants"}
   description={isFr
-    ? "Quatre variantes de landing page pour le site Niamoto. Atlas, Carnet de terrain, Methode, Herbier."
-    : "Four landing page variants for the Niamoto site. Atlas, Field Journal, Methode, Herbarium."}
+    ? "Treize variantes de landing page pour le site Niamoto, en deux vagues de design."
+    : "Thirteen landing page variants for the Niamoto site, in two design waves."}
   slug=""
 >
   <a href="#main" class="skip-link">Skip to content</a>
@@ -98,35 +210,110 @@ const introText = isFr
       </div>
     </FadeUpOnView>
 
-    <StaggeredReveal client:visible stagger={0.1} y={20} as="ul" className="dispatcher__grid">
-      {variants.map((v) => (
-        <li class={`dispatcher-card dispatcher-card--${v.slug}`} data-card-theme={v.theme}>
-          <a href={v.url} class="dispatcher-card__link" aria-label={t.variantNames[v.slug as keyof typeof t.variantNames]}>
-            <div class="dispatcher-card__preview" aria-hidden="true">
-              <div class="dispatcher-card__swatches">
-                {v.swatches.map((c) => (
-                  <span class="dispatcher-card__swatch" style={`background: ${c};`}></span>
-                ))}
+    <section class="dispatcher__section" aria-labelledby="wave1-heading">
+      <div class="dispatcher__section-head">
+        <EyebrowTag variant="outlined">{t.waveLabels.wave1Eyebrow}</EyebrowTag>
+        <p id="wave1-heading" class="dispatcher__section-heading">{t.waveLabels.wave1Heading}</p>
+      </div>
+      <StaggeredReveal client:visible stagger={0.08} y={16} as="ul" className="dispatcher__grid">
+        {wave1.map((v) => (
+          <li class={`dispatcher-card dispatcher-card--${v.slug}`} data-card-theme={v.theme}>
+            <a href={v.url} class="dispatcher-card__link" aria-label={t.variantNames[v.slug as keyof typeof t.variantNames]}>
+              <div class="dispatcher-card__preview" aria-hidden="true">
+                <div class="dispatcher-card__swatches">
+                  {v.swatches.map((c) => (
+                    <span class="dispatcher-card__swatch" style={`background: ${c};`}></span>
+                  ))}
+                </div>
+                <span class="dispatcher-card__layout">{isFr ? v.layout.fr : v.layout.en}</span>
               </div>
-              <span class="dispatcher-card__layout">{isFr ? v.layout.fr : v.layout.en}</span>
-            </div>
+              <div class="dispatcher-card__meta">
+                <h2 class="dispatcher-card__name">
+                  {t.variantNames[v.slug as keyof typeof t.variantNames]}
+                </h2>
+                <p class="dispatcher-card__tagline">
+                  {t.variantTaglines[v.slug as keyof typeof t.variantTaglines]}
+                </p>
+                <p class="dispatcher-card__font">{v.font}</p>
+                <span class="dispatcher-card__view">
+                  {t.cta.explore} <span aria-hidden="true">&rarr;</span>
+                </span>
+              </div>
+            </a>
+          </li>
+        ))}
+      </StaggeredReveal>
+    </section>
 
-            <div class="dispatcher-card__meta">
-              <h2 class="dispatcher-card__name">
-                {t.variantNames[v.slug as keyof typeof t.variantNames]}
-              </h2>
-              <p class="dispatcher-card__tagline">
-                {t.variantTaglines[v.slug as keyof typeof t.variantTaglines]}
-              </p>
-              <p class="dispatcher-card__font">{v.font}</p>
-              <span class="dispatcher-card__view">
-                {t.cta.explore} <span aria-hidden="true">&rarr;</span>
-              </span>
-            </div>
-          </a>
-        </li>
-      ))}
-    </StaggeredReveal>
+    <section class="dispatcher__section" aria-labelledby="wave2alt-heading">
+      <div class="dispatcher__section-head">
+        <EyebrowTag variant="outlined">{t.waveLabels.wave2AltEyebrow}</EyebrowTag>
+        <p id="wave2alt-heading" class="dispatcher__section-heading">{t.waveLabels.wave2AltHeading}</p>
+      </div>
+      <StaggeredReveal client:visible stagger={0.08} y={16} as="ul" className="dispatcher__grid">
+        {wave2Alt.map((v) => (
+          <li class={`dispatcher-card dispatcher-card--${v.slug}`} data-card-theme={v.theme}>
+            <a href={v.url} class="dispatcher-card__link" aria-label={t.variantNames[v.slug as keyof typeof t.variantNames]}>
+              <div class="dispatcher-card__preview" aria-hidden="true">
+                <div class="dispatcher-card__swatches">
+                  {v.swatches.map((c) => (
+                    <span class="dispatcher-card__swatch" style={`background: ${c};`}></span>
+                  ))}
+                </div>
+                <span class="dispatcher-card__layout">{isFr ? v.layout.fr : v.layout.en}</span>
+              </div>
+              <div class="dispatcher-card__meta">
+                <h2 class="dispatcher-card__name">
+                  {t.variantNames[v.slug as keyof typeof t.variantNames]}
+                </h2>
+                <p class="dispatcher-card__tagline">
+                  {t.variantTaglines[v.slug as keyof typeof t.variantTaglines]}
+                </p>
+                <p class="dispatcher-card__font">{v.font}</p>
+                <span class="dispatcher-card__view">
+                  {t.cta.explore} <span aria-hidden="true">&rarr;</span>
+                </span>
+              </div>
+            </a>
+          </li>
+        ))}
+      </StaggeredReveal>
+    </section>
+
+    <section class="dispatcher__section" aria-labelledby="wave2lab-heading">
+      <div class="dispatcher__section-head">
+        <EyebrowTag variant="outlined">{t.waveLabels.wave2Eyebrow}</EyebrowTag>
+        <p id="wave2lab-heading" class="dispatcher__section-heading">{t.waveLabels.wave2Heading}</p>
+      </div>
+      <StaggeredReveal client:visible stagger={0.08} y={16} as="ul" className="dispatcher__grid">
+        {wave2Lab.map((v) => (
+          <li class={`dispatcher-card dispatcher-card--${v.slug}`} data-card-theme={v.theme}>
+            <a href={v.url} class="dispatcher-card__link" aria-label={t.variantNames[v.slug as keyof typeof t.variantNames]}>
+              <div class="dispatcher-card__preview" aria-hidden="true">
+                <div class="dispatcher-card__swatches">
+                  {v.swatches.map((c) => (
+                    <span class="dispatcher-card__swatch" style={`background: ${c};`}></span>
+                  ))}
+                </div>
+                <span class="dispatcher-card__layout">{isFr ? v.layout.fr : v.layout.en}</span>
+              </div>
+              <div class="dispatcher-card__meta">
+                <h2 class="dispatcher-card__name">
+                  {t.variantNames[v.slug as keyof typeof t.variantNames]}
+                </h2>
+                <p class="dispatcher-card__tagline">
+                  {t.variantTaglines[v.slug as keyof typeof t.variantTaglines]}
+                </p>
+                <p class="dispatcher-card__font">{v.font}</p>
+                <span class="dispatcher-card__view">
+                  {t.cta.explore} <span aria-hidden="true">&rarr;</span>
+                </span>
+              </div>
+            </a>
+          </li>
+        ))}
+      </StaggeredReveal>
+    </section>
 
     <FadeUpOnView client:visible delay={0.1} className="dispatcher__funders">
       <FunderGrid heading={t.legal.builtWith} variant="compact" />
@@ -134,7 +321,7 @@ const introText = isFr
   </main>
 </AltLayout>
 
-<style>
+<style is:global>
   .dispatcher {
     max-width: 1280px;
     margin: 0 auto;
@@ -163,13 +350,34 @@ const introText = isFr
     gap: 0.5rem;
   }
 
+  /* Section separators */
+  .dispatcher__section {
+    margin-top: 5rem;
+  }
+  .dispatcher__section:first-of-type {
+    margin-top: 0;
+  }
+  .dispatcher__section-head {
+    margin-bottom: 2rem;
+  }
+  .dispatcher__section-heading {
+    font-family: var(--f-display);
+    font-variation-settings: var(--fvs-display);
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    letter-spacing: -0.01em;
+    color: var(--c-ink);
+    max-width: 48ch;
+    margin-top: 1rem;
+    margin-bottom: 0;
+  }
+
   .dispatcher__grid {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
   }
   .dispatcher-card {
     border: 1px solid var(--c-hairline);
@@ -186,7 +394,7 @@ const introText = isFr
   }
   .dispatcher-card__link {
     display: grid;
-    grid-template-columns: 1.05fr 1.4fr;
+    grid-template-rows: 150px 1fr;
     text-decoration: none;
     color: inherit;
     height: 100%;
@@ -198,10 +406,33 @@ const introText = isFr
     gap: 1rem;
     justify-content: space-between;
   }
+
+  /* Wave 1 card preview backgrounds */
   .dispatcher-card--atlas .dispatcher-card__preview { background: #FDFBF7; }
   .dispatcher-card--field-journal .dispatcher-card__preview { background: #F5EEE0; }
   .dispatcher-card--methode .dispatcher-card__preview { background: #1E2822; }
   .dispatcher-card--herbarium .dispatcher-card__preview { background: #1A1410; }
+  .dispatcher-card--observatory .dispatcher-card__preview {
+    background:
+      radial-gradient(18rem 12rem at 18% 82%, rgba(107, 217, 155, 0.22), transparent 62%),
+      radial-gradient(16rem 12rem at 86% 14%, rgba(127, 167, 196, 0.2), transparent 64%),
+      #070908;
+  }
+  .dispatcher-card--portail .dispatcher-card__preview { background: #F7F4EE; }
+  .dispatcher-card--strate .dispatcher-card__preview { background: #EFEBE2; }
+
+  /* Wave 2 card preview backgrounds */
+  .dispatcher-card--manifeste .dispatcher-card__preview { background: #F5F1E8; }
+  .dispatcher-card--cockpit .dispatcher-card__preview { background: #0B1220; }
+  .dispatcher-card--silex .dispatcher-card__preview { background: #F7F5F0; }
+  .dispatcher-card--sporee .dispatcher-card__preview { background: #F3EEE2; }
+  .dispatcher-card--canopee .dispatcher-card__preview {
+    background:
+      radial-gradient(16rem 12rem at 20% 80%, rgba(94, 130, 85, 0.25), transparent 60%),
+      #0A0E0B;
+  }
+  .dispatcher-card--planche .dispatcher-card__preview { background: #EDE4D0; }
+
   .dispatcher-card__swatches {
     display: flex;
     gap: 0.4rem;
@@ -219,12 +450,23 @@ const introText = isFr
     letter-spacing: 0.14em;
     text-transform: uppercase;
   }
+  /* Light preview cards - dark text */
   .dispatcher-card--atlas .dispatcher-card__layout,
-  .dispatcher-card--field-journal .dispatcher-card__layout {
+  .dispatcher-card--field-journal .dispatcher-card__layout,
+  .dispatcher-card--portail .dispatcher-card__layout,
+  .dispatcher-card--strate .dispatcher-card__layout,
+  .dispatcher-card--manifeste .dispatcher-card__layout,
+  .dispatcher-card--silex .dispatcher-card__layout,
+  .dispatcher-card--sporee .dispatcher-card__layout,
+  .dispatcher-card--planche .dispatcher-card__layout {
     color: rgba(0, 0, 0, 0.5);
   }
+  /* Dark preview cards - light text */
   .dispatcher-card--methode .dispatcher-card__layout,
-  .dispatcher-card--herbarium .dispatcher-card__layout {
+  .dispatcher-card--herbarium .dispatcher-card__layout,
+  .dispatcher-card--observatory .dispatcher-card__layout,
+  .dispatcher-card--cockpit .dispatcher-card__layout,
+  .dispatcher-card--canopee .dispatcher-card__layout {
     color: rgba(255, 255, 255, 0.55);
   }
 
@@ -272,15 +514,17 @@ const introText = isFr
     border-top: 1px solid var(--c-hairline);
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1100px) {
+    .dispatcher__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 640px) {
     .dispatcher__grid {
       grid-template-columns: 1fr;
     }
-    .dispatcher-card__link {
-      grid-template-columns: 1fr;
-    }
     .dispatcher-card__preview {
-      min-height: 130px;
+      min-height: 120px;
     }
   }
 </style>
