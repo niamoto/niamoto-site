@@ -1,8 +1,8 @@
 # /alt/ Variants — Review
 
-Date: 2026-04-17 (V5/V6/V7 added; V11 Silex + V8 Manifeste + V9 Cockpit + V13 Planche + V10 Sporée added wave 2); first pass 2026-04-15
+Date: 2026-04-17 (V5/V6/V7 added; V11 Silex + V8 Manifeste + V9 Cockpit + V13 Planche + V10 Sporée + V12 Canopée added wave 2); first pass 2026-04-15
 Branch: `feat/landing-alternatives`
-Status: Twelve variants shipped (7 wave 1 + V11 Silex + V8 Manifeste + V9 Cockpit + V13 Planche + V10 Sporée). Build green (30 pages, ~2.32s).
+Status: Thirteen variants shipped (7 wave 1 + V11 Silex + V8 Manifeste + V9 Cockpit + V13 Planche + V10 Sporée + V12 Canopée). Build green (32 pages, ~2.43s).
 
 ## What was shipped
 
@@ -22,6 +22,7 @@ Seven landing page variants for niamoto.org under `/alt/*`, bilingual FR/EN, all
 | Cockpit (V9)    | /alt/cockpit           | /fr/alt/cockpit           | **KPI Dashboard**      | Bento 4+4+4, sparklines, status rail |
 | Planche (V13)   | /alt/planche           | /fr/alt/planche           | **Canvas × Print**     | Scroll horizontal 2400px, 9 spécimens SVG |
 | Sporée (V10)    | /alt/sporee            | /fr/alt/sporee            | **Algorithmic art**    | Hero p5.js fullscreen, flow field déterministe |
+| Canopée (V12)   | /alt/canopee           | /fr/alt/canopee           | **Cinematic scroll-jack** | GSAP 5 phases pinnées, feuillage → sol |
 
 Plus the dispatcher at `/alt/` (and `/fr/alt/`) listing all variants with palette swatches in a 3-column grid.
 
@@ -320,6 +321,37 @@ Hero p5.js fullscreen, flow field de spores déterministe sur seed = fnv1a(date 
 - Gallery 6 items, SVG inline 80 points chacun, seeds distinctes EN et FR.
 - Install card avec `$ pip install niamoto`, `$ niamoto init`, `$ niamoto run`.
 - Build: 30 pages (+ 2 vs les 28 de la session précédente).
+
+### V12 Canopée (gpt-taste x anti-slop) · /lab/
+
+Scroll-jack cinématique complet, GSAP ScrollTrigger, 5 phases pinnées (canopée → sol). Caméra zoom avant sur feuillage SVG 3 couches, 3 plateaux de sous-bois stacking, 3 lignes stroke-dasharray, 8 plugins sequential, terminal typewriter au sol. Progress rail droite fixe.
+
+**Palette**: night `#0A0E0B` (slight green tint, pas pur `#000`), mist `#D4E0D0`, canopy `#5E8255`, bronze `#C9A86A`. Deux radial-gradients fixed sur `body` (canopy haut-gauche, bronze bas-droit).
+
+**Typo**: Fraunces Variable `opsz` 144 `wght` 700 `SOFT` 50 `WONK` 0 pour le hero (stage 1 titre géant) et stages 2-4 `wght` 500. Geist Variable pour le body. JetBrains Mono Variable pour captions, légendes, plugins, terminal.
+
+**GSAP ScrollTrigger**: 4 stages pinnés (1, 2, 3, 4) + 1 trigger sans pin au stage 5. Total scroll théorique ~1350vh (600 + 150 + 400 + 200). Scrub 0.6 par phase. `ScrollTrigger.refresh()` après installation. Dynamic import (`await import("gsap")`, `await import("gsap/ScrollTrigger")`) dans `useEffect` — GSAP chunk (`ForestPinController.AUqQujuc.js`) n'est référencé que depuis `/alt/canopee/` et `/fr/alt/canopee/`.
+
+**Reduced-motion + mobile (<900px)**: `matchMedia("(min-width: 900px) and (prefers-reduced-motion: no-preference)")` dans le controller. CSS fallback : `.canopy-plugin { opacity: 1; transform: none }`, `.canopy-viz__line { stroke-dashoffset: 0 }`, `.canopy-progress { display: none }`. Scroll vertical linéaire classique sur mobile.
+
+**React StrictMode safety**: `installedRef = useRef(false)` anti-double-install. Cleanup `triggers.forEach(t => t.kill())` + `installedRef.current = false`. `cancelled` flag pour éviter l'init si le composant démonte pendant le dynamic import.
+
+**Strengths**: la plus cinéma des 13 variantes. Le scroll-jack donne un rythme narratif que le scroll normal ne permet pas. Palette night sans gradient AI (anti-slop respecté). Feuillage SVG 3 couches avec parallax donne la profondeur sans assets externes.
+
+**Weaknesses**: scroll-jack peut dérouter — certains visiteurs tenteront d'accélérer à la molette et sentiront la friction. À accepter pour le registre /lab/. Le rail de progression est décoratif, pas cliquable (pourrait être interactif dans un v2). SVG feuillages sont schématiques — une future pass avec de vrais botaniques SVGO serrait plus riche visuellement.
+
+**Perf**: GSAP + ScrollTrigger chargés dynamiquement uniquement depuis `/alt/canopee/`. Impact nul sur les autres 30 pages. Build total : 32 pages, ~2.43s.
+
+**QA static build confirmed**:
+- `data-theme="canopee"` présent sur `<body>` EN + FR.
+- `color-scheme: dark` déclaré dans le scope `[data-theme="canopee"]`.
+- 5 `data-canopy-stage="1"` à `"5"` sur les sections.
+- `data-full-text="pip install niamoto"` sur `.canopy-terminal__text`.
+- Progress labels EN : CANOPY / UNDERSTORY / SHRUB / HERB / SOIL.
+- Progress labels FR : CANOPÉE / SOUS-BOIS / ARBUSTIVE / HERBACÉE / SOL.
+- `<html lang="fr">` + `<link rel="alternate" hreflang="en">` sur `/fr/alt/canopee/`.
+- Fraunces chargé via `fonts.css` existant (`@import "@fontsource-variable/fraunces/full.css"`).
+- ForestPinController chunk référencé uniquement dans les 2 pages canopee.
 
 ## Known follow-ups
 
