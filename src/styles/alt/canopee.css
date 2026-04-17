@@ -1,4 +1,261 @@
-/* V12 Canopee -- populated by docs/plans/2026-04-17-alt-wave2-v12-canopee-plan.md. */
+/* V12 Canopee -- gpt-taste x anti-slop.
+ * GSAP scroll-jack, 5 phases pinnees, camera descend dans la foret.
+ * Palette :
+ *   --c-canvas      #0A0E0B   night, slight green tint (pas pur #000)
+ *   --c-ink         #D4E0D0   mist
+ *   --c-muted       #7C8B7F   muted moss
+ *   --c-accent      #5E8255   canopy
+ *   --c-accent-alt  #C9A86A   understory (bronze)
+ */
+
 [data-theme="canopee"] {
-  /* tokens TBD */
+  color-scheme: dark;
+
+  --c-canvas: #0A0E0B;
+  --c-ink: #D4E0D0;
+  --c-muted: #7C8B7F;
+  --c-accent: #5E8255;
+  --c-accent-alt: #C9A86A;
+  --c-surface: rgba(212, 224, 208, 0.04);
+  --c-hairline: rgba(212, 224, 208, 0.1);
+  --c-grain-opacity: 0.035;
+
+  --f-display: "Fraunces Variable", Georgia, serif;
+  --f-body: "Geist Variable", system-ui, -apple-system, sans-serif;
+  --f-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --fvs-display: "opsz" 144, "wght" 700, "SOFT" 50, "WONK" 0;
+  --fvs-body: "wght" 400;
+
+  --ls-display: -0.05em;
+  --ls-body: -0.005em;
+  --lh-display: 0.98;
+  --lh-body: 1.55;
+}
+
+[data-theme="canopee"] body {
+  background-color: var(--c-canvas);
+  background-image:
+    radial-gradient(52rem 38rem at 20% 10%, rgba(94, 130, 85, 0.12), transparent 65%),
+    radial-gradient(40rem 30rem at 85% 90%, rgba(201, 168, 106, 0.08), transparent 60%);
+  background-attachment: fixed;
+}
+
+/* Stage wrappers -- each pinned, heights set dynamically by ScrollTrigger. */
+[data-theme="canopee"] .canopy-stage {
+  position: relative;
+  min-height: 100dvh;
+  padding: 4rem 1.5rem;
+  overflow: hidden;
+}
+
+/* Stage 1 -- Canopy zoom. */
+[data-theme="canopee"] .canopy-stage--1 .canopy-stage__title {
+  font-family: var(--f-display);
+  font-variation-settings: "opsz" 144, "wght" 700;
+  font-size: clamp(3rem, 10vw, 10rem);
+  color: var(--c-ink);
+  line-height: 0.95;
+  margin: 0;
+  max-width: 14ch;
+}
+[data-theme="canopee"] .canopy-stage--1 .canopy-stage__title em {
+  font-style: italic;
+  color: var(--c-accent-alt);
+}
+[data-theme="canopee"] .canopy-layers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+[data-theme="canopee"] .canopy-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  will-change: transform, opacity;
+}
+[data-theme="canopee"] .canopy-layer svg {
+  width: 120%;
+  height: 120%;
+  color: var(--c-accent);
+}
+[data-theme="canopee"] .canopy-layer--far  { color: color-mix(in srgb, var(--c-accent) 50%, transparent); }
+[data-theme="canopee"] .canopy-layer--mid  { color: color-mix(in srgb, var(--c-accent) 75%, transparent); }
+[data-theme="canopee"] .canopy-layer--near { color: var(--c-accent); }
+
+/* Stage 2 -- Understory plateaux. */
+[data-theme="canopee"] .canopy-stage--2 .canopy-plateau {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--c-hairline);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  will-change: transform;
+}
+@media (max-width: 900px) {
+  [data-theme="canopee"] .canopy-stage--2 .canopy-plateau { grid-template-columns: 1fr; }
+}
+[data-theme="canopee"] .canopy-plateau__title {
+  font-family: var(--f-display);
+  font-variation-settings: "opsz" 144, "wght" 500;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  color: var(--c-ink);
+}
+[data-theme="canopee"] .canopy-plateau__body {
+  color: var(--c-muted);
+  line-height: 1.6;
+}
+[data-theme="canopee"] .canopy-plateau__figure {
+  aspect-ratio: 4 / 3;
+  background: color-mix(in srgb, var(--c-accent) 20%, transparent);
+  border: 1px solid var(--c-hairline);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+[data-theme="canopee"] .canopy-plateau__figure svg {
+  width: 80%;
+  height: 80%;
+  color: var(--c-accent);
+  opacity: 0.7;
+}
+
+/* Stage 3 -- Data-viz stroke-dasharray lines build in on scroll. */
+[data-theme="canopee"] .canopy-stage--3 .canopy-viz {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 3rem;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  [data-theme="canopee"] .canopy-stage--3 .canopy-viz { grid-template-columns: 1fr; }
+}
+[data-theme="canopee"] .canopy-viz__svg {
+  width: 100%;
+  height: 360px;
+}
+[data-theme="canopee"] .canopy-viz__line {
+  fill: none;
+  stroke: var(--c-accent-alt);
+  stroke-width: 1.5;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  stroke-linecap: round;
+}
+[data-theme="canopee"] .canopy-viz__line--secondary {
+  stroke: var(--c-accent);
+}
+
+/* Stage 4 -- Plugins grid sequential. */
+[data-theme="canopee"] .canopy-stage--4 .canopy-plugins {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 900px) {
+  [data-theme="canopee"] .canopy-stage--4 .canopy-plugins { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  [data-theme="canopee"] .canopy-stage--4 .canopy-plugins { grid-template-columns: 1fr; }
+}
+[data-theme="canopee"] .canopy-plugin {
+  padding: 1.25rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-hairline);
+  border-radius: 0.75rem;
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: opacity, transform;
+}
+[data-theme="canopee"] .canopy-plugin__name {
+  font-family: var(--f-mono);
+  font-size: 0.85rem;
+  color: var(--c-accent-alt);
+  margin: 0 0 0.5rem;
+}
+[data-theme="canopee"] .canopy-plugin__body {
+  color: var(--c-ink);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+/* Stage 5 -- Closing + terminal typewriter. */
+[data-theme="canopee"] .canopy-stage--5 {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+[data-theme="canopee"] .canopy-stage--5 .canopy-closing__quote {
+  font-family: var(--f-display);
+  font-variation-settings: "opsz" 144, "wght" 500;
+  font-style: italic;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  color: var(--c-ink);
+  max-width: 24ch;
+  line-height: 1.1;
+  margin: 0 auto 2rem;
+}
+[data-theme="canopee"] .canopy-stage--5 .canopy-terminal {
+  font-family: var(--f-mono);
+  font-size: 1.15rem;
+  color: var(--c-accent);
+  background: color-mix(in srgb, var(--c-accent) 12%, transparent);
+  padding: 1rem 1.5rem;
+  border: 1px solid color-mix(in srgb, var(--c-accent) 35%, transparent);
+  border-radius: 0.5rem;
+  min-height: 2.5rem;
+  display: inline-block;
+}
+[data-theme="canopee"] .canopy-stage--5 .canopy-terminal__cursor {
+  display: inline-block;
+  width: 0.5ch;
+  height: 1em;
+  background: var(--c-accent);
+  vertical-align: middle;
+  margin-left: 0.1em;
+  animation: canopy-blink 1s steps(2) infinite;
+}
+@keyframes canopy-blink {
+  50% { opacity: 0; }
+}
+
+/* Stage markers / progress rail (decorative). */
+[data-theme="canopee"] .canopy-progress {
+  position: fixed;
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+[data-theme="canopee"] .canopy-progress__item {
+  font-family: var(--f-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  opacity: 0.5;
+  transition: opacity 320ms, color 320ms;
+}
+[data-theme="canopee"] .canopy-progress__item--active {
+  color: var(--c-accent-alt);
+  opacity: 1;
+}
+
+/* Reduced-motion : fallback lineaire classique. */
+@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+  [data-theme="canopee"] .canopy-stage { min-height: auto; padding: 4rem 1.5rem; }
+  [data-theme="canopee"] .canopy-viz__line { stroke-dashoffset: 0; }
+  [data-theme="canopee"] .canopy-plugin { opacity: 1; transform: none; }
+  [data-theme="canopee"] .canopy-progress { display: none; }
 }
