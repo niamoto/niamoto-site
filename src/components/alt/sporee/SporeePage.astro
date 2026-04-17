@@ -1,0 +1,71 @@
+---
+import AltLayout from "@/layouts/AltLayout.astro";
+import IslandNav from "@/components/alt/shared/IslandNav.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import SporeCanvas from "./SporeCanvas.tsx";
+import SeedBadge from "./SeedBadge.astro";
+import FlowGallery from "./FlowGallery.astro";
+import BerkeleyInstallCard from "./BerkeleyInstallCard.astro";
+import { seedFrom } from "@/utils/seedFrom";
+import type { Locale } from "@/i18n/config";
+import enCopy from "@/i18n/alt/sporee.en";
+import frCopy from "@/i18n/alt/sporee.fr";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = locale === "fr" ? frCopy : enCopy;
+const today = new Date("2026-04-17"); // date fixe pour reproductibilité du build
+const seed = seedFrom(today, locale);
+const dateISO = today.toISOString().slice(0, 10);
+---
+
+<AltLayout
+  theme="sporee"
+  locale={locale}
+  title={t.meta.title}
+  description={t.meta.description}
+  slug="sporee"
+>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <IslandNav locale={locale} slug="sporee" />
+  <SeedBadge seed={seed} dateISO={dateISO} />
+
+  <main id="main">
+    <section class="sporee-hero" aria-label="Sporée hero">
+      <SporeCanvas client:visible seed={seed} density={0.7} />
+      <div class="sporee-hero__fallback" aria-hidden="true"></div>
+      <div class="sporee-hero__overlay">
+        <h1 class="sporee-hero__title">
+          {t.hero.titleLines[0]}<br/>
+          {t.hero.titleLines[1]} <em>{t.hero.titleEmphasis}</em>
+        </h1>
+        <p class="sporee-hero__sub">{t.hero.sub}</p>
+        <div class="sporee-hero__controls" role="toolbar" aria-label="Canvas controls">
+          <button class="sporee-hero__control" data-spore-control="regenerate">{t.hero.controls.regenerate}</button>
+          <button class="sporee-hero__control" data-spore-control="slow">{t.hero.controls.slow}</button>
+          <button class="sporee-hero__control" data-spore-control="dense">{t.hero.controls.dense}</button>
+        </div>
+      </div>
+    </section>
+
+    <FadeUpOnView client:visible>
+      <FlowGallery heading={t.gallery.heading} items={t.gallery.items} />
+    </FadeUpOnView>
+
+    <FadeUpOnView client:visible>
+      <BerkeleyInstallCard eyebrow={t.install.eyebrow} lines={t.install.lines} caption={t.install.caption} />
+    </FadeUpOnView>
+  </main>
+</AltLayout>
+
+<script>
+  // Câblage des boutons de contrôle du hero vers le canvas p5.
+  // Émet un CustomEvent que SporeCanvas peut écouter via useEffect (non câblé en MVP).
+  // Documenté dans REVIEW.md comme limitation connue.
+  document.querySelectorAll<HTMLButtonElement>('[data-spore-control]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const action = btn.dataset.sporeControl;
+      window.dispatchEvent(new CustomEvent('spore:control', { detail: { action } }));
+    });
+  });
+</script>
