@@ -1,0 +1,16 @@
+---
+interface Props {
+  eyebrow: string;
+  lines: readonly string[];
+  caption: string;
+}
+const { eyebrow, lines, caption } = Astro.props;
+---
+
+<section class="sporee-install-section" aria-label="Install">
+  <div class="sporee-install">
+    <p class="sporee-install__eyebrow">{eyebrow}</p>
+    {lines.map((ln) => <p class="sporee-install__line">{ln}</p>)}
+    <p class="sporee-install__caption">{caption}</p>
+  </div>
+</section>

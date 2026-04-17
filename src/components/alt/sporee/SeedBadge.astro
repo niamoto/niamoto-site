@@ -1,0 +1,11 @@
+---
+import { formatSeed } from "@/utils/seedFrom";
+interface Props { seed: number; dateISO: string }
+const { seed, dateISO } = Astro.props;
+---
+
+<aside class="sporee-seed" aria-label="Deterministic seed of the day">
+  <span>SEED {formatSeed(seed)}</span>
+  <span aria-hidden="true"> · </span>
+  <span>{dateISO}</span>
+</aside>
