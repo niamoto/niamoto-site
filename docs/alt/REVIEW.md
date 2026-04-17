@@ -1,8 +1,8 @@
 # /alt/ Variants — Review
 
-Date: 2026-04-17 (V5/V6/V7 added; V11 Silex + V8 Manifeste added wave 2); first pass 2026-04-15
+Date: 2026-04-17 (V5/V6/V7 added; V11 Silex + V8 Manifeste + V9 Cockpit added wave 2); first pass 2026-04-15
 Branch: `feat/landing-alternatives`
-Status: Nine variants shipped (7 wave 1 + V11 Silex + V8 Manifeste). Build green (24 pages, ~1.45s).
+Status: Ten variants shipped (7 wave 1 + V11 Silex + V8 Manifeste + V9 Cockpit). Build green (26 pages, ~1.47s).
 
 ## What was shipped
 
@@ -19,6 +19,7 @@ Seven landing page variants for niamoto.org under `/alt/*`, bilingual FR/EN, all
 | Strate          | /alt/strate            | /fr/alt/strate            | **Soft Structuralism** | Longform Editorial      |
 | Silex (V11)     | /alt/silex             | /fr/alt/silex             | **Minimalism Radical** | Full-scroll 4 verb strates |
 | Manifeste (V8)  | /alt/manifeste         | /fr/alt/manifeste         | **CRO Editorial**      | Asymmetric split manifesto |
+| Cockpit (V9)    | /alt/cockpit           | /fr/alt/cockpit           | **KPI Dashboard**      | Bento 4+4+4, sparklines, status rail |
 
 Plus the dispatcher at `/alt/` (and `/fr/alt/`) listing all variants with palette swatches in a 3-column grid.
 
@@ -251,6 +252,31 @@ qui n'interprètent pas `stroke-dashoffset` dans les `data:` URL inline — fall
 **Citations draft flag**: les 4 citations (Directrice/Herbier IRD, Program lead/CIRAD,
 Data scientist/AMAP, Forest engineer/ANPN) sont rédigées à titre illustratif.
 À remplacer par des citations réelles ou à supprimer avant merge vers main.
+
+### V9 Cockpit (KPI Dashboard × shadcn-ui) — 2026-04-17 pass
+
+Variante zéro-hero : le visiteur arrive directement sur un bento de 10 KPI tiles + 2 sparklines wide. Fond slate profond (`#0B1220`), ivory, emerald (`#4BAF50`), amber (`#E9A53A`). Aucune dépendance shadcn ajoutée — esthétique reproduite avec des classes CSS scoped `[data-theme="cockpit"]`.
+
+**Architecture**: Bento 4+4+4 orchestré par `CockpitGrid.astro` (4 tiles ligne 1 → 2 sparklines wide ligne 2 → 6 tiles ligne 3). Status rail sticky 240px à droite (desktop) avec 3 portails (NC / Gabon / Guyane). Command palette inline simule `⌘K` (div statique, zéro JS runtime). `font-variant-numeric: tabular-nums` + `font-feature-settings: "tnum", "zero"` appliqués sur toutes les valeurs numériques.
+
+**Sparklines**: SVG inline pur, 12 points de données. Gradient `linearGradient` unique par carte (index passé en prop, format `cockpit-spark-grad-{index}`). Courbe emerald pour commits GitHub, amber pour ajouts taxons. Area remplie en gradient 35% opacity.
+
+**Palette**: slate `#0B1220` / ivory `#F2F2ED` / graphite steel `#8891A4` / emerald `#4BAF50` / amber `#E9A53A`. Radial gradient subtil en background (emerald top-left, amber bottom-right) via `background-attachment: fixed`.
+
+**Strengths**: la seule variante data-forward pure. Aucun copywriting hero à écrire pour convaincre — les chiffres parlent. Le Command Palette inline est le meilleur CTA d'installation de toutes les variantes (3 méthodes d'install + lien docs, layout shadcn reconnaissable). Tabular-nums rigoureux garantit l'alignement sur les colonnes numériques.
+
+**Weaknesses**: données hardcodées au build (fake-realistic). Si Niamoto expose un endpoint stats JSON, un `fetch` au build dans `getStaticPaths()` pourrait remplacer les valeurs fixes — overkill pour une landing marketing mais utile pour une future version "opérationnelle". Guyane est marquée `latency: "—"` (portail pas encore en ligne) — à vérifier périodiquement.
+
+**SVG gradient id**: résolu proprement avec `index` prop sur `SparkCard.astro` — les 2 sparklines utilisent `cockpit-spark-grad-0` et `cockpit-spark-grad-1`, aucun clash.
+
+**QA static build confirmed**:
+- `data-theme="cockpit"` présent sur `<body>` EN + FR.
+- 10 KPI tiles, 2 sparklines, status rail 3 portails, command palette INSTALL + DOCS.
+- Valeurs FR avec espaces insécables (`U+202F`) dans les milliers : `1 208`, `2 713`, `70 412`.
+- `<html lang="fr">` + `<link rel="alternate" hreflang="en">` confirmé sur `/fr/alt/cockpit/`.
+- Build: 26 pages, ~1.47s (vs 24 pages avant V9).
+
+**Lighthouse**: non exécuté (Chrome non installé). À planifier.
 
 ## Known follow-ups
 
