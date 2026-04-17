@@ -221,6 +221,8 @@ Note: the existing V1–V4 PillarGrid / plate components may have the same laten
 
 **Weaknesses**: le visiteur qui cherche "install" doit scroller 5 sections pour trouver la commande. OK si on assume le registre manifesto, pas OK pour un visiteur cold.
 
+**A11y note — pas de `<h1>`**: par choix de design minimaliste, le hero rend la phrase en `<p class="silex-hero__phrase">` plutôt qu'un `<h1>`. Les 4 paliers verbes utilisent chacun un `<h2>`, et la navigation par landmarks (`<main>`, `<section aria-label>`) reste propre. Accepté comme trade-off du registre "radical minimal". Si on souhaite conformité stricte au heading-tree WCAG, habiller la phrase hero d'un `<h1>` visuellement identique.
+
 ### V8 Manifeste (Editorial × CRO) — 2026-04-17 pass
 
 Variante CRO éditorial : hero asymétrique Fraunces WONK 1 opsz 144 + épigraphe manuscrite,

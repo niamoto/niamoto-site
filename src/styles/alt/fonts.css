@@ -1,39 +1,40 @@
 /* -------------------------------------------------------------------------
  * Fonts for /alt/ variants only.
  * Fraunces, Geist, JetBrains Mono are self-hosted via @fontsource-variable.
- * Cabinet Grotesk, Satoshi load from Fontshare CDN (no fontsource package).
+ * Cabinet Grotesk, Satoshi, Clash Display load from Fontshare CDN.
  * Plus Jakarta Sans loads from Google Fonts CDN (V2 body).
+ * IM Fell + Libre Caslon Text via @fontsource (V13 Planche).
  *
- * Variant family-name mapping:
- *   Fraunces            ? "Fraunces Variable"
- *   Geist               ? "Geist Variable"
- *   JetBrains Mono      ? "JetBrains Mono Variable"
- *   Cabinet Grotesk     ? "Cabinet Grotesk" (Fontshare default name)
- *   Satoshi             ? "Satoshi"          (Fontshare)
- *   Plus Jakarta Sans   ? "Plus Jakarta Sans" (Google Fonts)
+ * NOTE on @import order :
+ *   CSS spec says all @import rules must appear BEFORE any other rule
+ *   (including @font-face blocks). @fontsource-variable packages ship
+ *   self-contained CSS that starts with @font-face, so their own @import
+ *   statements here must be LAST in this file, after all remote @import url().
+ *   Inverting this order produces LightningCSS warnings on build.
  * ------------------------------------------------------------------------- */
 
-/* Fraunces -- V1 Atlas, V2 Field Journal, V4 Herbarium */
+/* --- Remote CDN imports FIRST (plain @import url()) --- */
+
+/* Cabinet Grotesk + Satoshi + Clash Display -- V3 Methode, V6 Portail. */
+@import url("https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@200,400,500,700,800,900&f[]=satoshi@300,400,500,700,900&f[]=clash-display@200,300,400,500,600,700&display=swap");
+
+/* Plus Jakarta Sans -- V2 Field Journal body. */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+/* --- Self-hosted @fontsource packages (they ship @font-face) --- */
+
+/* Fraunces -- V1 Atlas, V2 Field Journal, V4 Herbarium, V8 Manifeste, V12 Canopee */
 @import "@fontsource-variable/fraunces/full.css";
 @import "@fontsource-variable/fraunces/full-italic.css";
 
-/* Geist -- V1 Atlas body, V3 M?thode body alt, V4 Herbarium body */
+/* Geist -- V1 Atlas body, V3 Methode body alt, V4 Herbarium body, V9/V10/V11/V12 body */
 @import "@fontsource-variable/geist/index.css";
 
 /* JetBrains Mono -- every variant for code/data/captions */
 @import "@fontsource-variable/jetbrains-mono/index.css";
 
-/* Cabinet Grotesk + Satoshi -- V3 Methode (display + body).
- * Clash Display                -- V6 Portail display.
- * Fontshare doesn't ship a fontsource package; CDN is acceptable for v1.
- * Future improvement: self-host woff2 + size-adjust. */
-@import url("https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@200,400,500,700,800,900&f[]=satoshi@300,400,500,700,900&f[]=clash-display@200,300,400,500,600,700&display=swap");
-
-/* Plus Jakarta Sans -- V2 Field Journal body */
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
-
-/* V13 Planche -- IM Fell Double Pica SC + Libre Caslon Text */
-/* IM Fell only ships weight 400 (no separate italic file in fontsource). */
+/* V13 Planche -- IM Fell Double Pica SC + Libre Caslon Text.
+ * IM Fell only ships weight 400 (no separate italic file in fontsource). */
 @import "@fontsource/im-fell-double-pica-sc/400.css";
 @import "@fontsource/libre-caslon-text/400.css";
 @import "@fontsource/libre-caslon-text/400-italic.css";
