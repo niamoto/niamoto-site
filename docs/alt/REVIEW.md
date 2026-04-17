@@ -1,8 +1,8 @@
 # /alt/ Variants — Review
 
-Date: 2026-04-17 (V5/V6/V7 added; V11 Silex + V8 Manifeste + V9 Cockpit added wave 2); first pass 2026-04-15
+Date: 2026-04-17 (V5/V6/V7 added; V11 Silex + V8 Manifeste + V9 Cockpit + V13 Planche added wave 2); first pass 2026-04-15
 Branch: `feat/landing-alternatives`
-Status: Ten variants shipped (7 wave 1 + V11 Silex + V8 Manifeste + V9 Cockpit). Build green (26 pages, ~1.47s).
+Status: Eleven variants shipped (7 wave 1 + V11 Silex + V8 Manifeste + V9 Cockpit + V13 Planche). Build green (28 pages, ~1.46s).
 
 ## What was shipped
 
@@ -20,6 +20,7 @@ Seven landing page variants for niamoto.org under `/alt/*`, bilingual FR/EN, all
 | Silex (V11)     | /alt/silex             | /fr/alt/silex             | **Minimalism Radical** | Full-scroll 4 verb strates |
 | Manifeste (V8)  | /alt/manifeste         | /fr/alt/manifeste         | **CRO Editorial**      | Asymmetric split manifesto |
 | Cockpit (V9)    | /alt/cockpit           | /fr/alt/cockpit           | **KPI Dashboard**      | Bento 4+4+4, sparklines, status rail |
+| Planche (V13)   | /alt/planche           | /fr/alt/planche           | **Canvas × Print**     | Scroll horizontal 2400px, 9 spécimens SVG |
 
 Plus the dispatcher at `/alt/` (and `/fr/alt/`) listing all variants with palette swatches in a 3-column grid.
 
@@ -277,6 +278,26 @@ Variante zéro-hero : le visiteur arrive directement sur un bento de 10 KPI tile
 - Build: 26 pages, ~1.47s (vs 24 pages avant V9).
 
 **Lighthouse**: non exécuté (Chrome non installé). À planifier.
+
+### V13 Planche (Canvas design × algorithmic art) — 2026-04-17 pass
+
+Scroll horizontal desktop (2400px wide) = planche d'herbier A3 dépliée. 9 plugins en spécimens SVG stylisés, disposés en quinconce avec micro-tilts. Notes de terrain en colonne droite. Print A3 paysage fonctionnel via `@media print` + bouton `window.print()`. Numéro de planche en chiffres romains via `dateToRoman()` (date fixe `2026-04-17` → `XVII · IV · MMXXVI`).
+
+**Typo**: IM Fell Double Pica SC (serif XIXe grainé, auto-hébergé via `@fontsource`) + Libre Caslon Text (fallback Caslon italic). IM Fell n'a pas de variante italic disponible dans fontsource — le fallback CSS `"Iowan Old Style", Georgia` assure l'italic rendering.
+
+**Palette**: paper `#EDE4D0`, sepia `#3F2A18`, madder red `#A03223`, indigo `#232F58`.
+
+**Architecture**: grille CSS 3 colonnes (`320px 1fr 300px`) à 2400px de large. Spécimens en `position: absolute` avec coordonnées `{x, y}` pré-calculées. Fallback mobile `@media (max-width: 900px)` → stack vertical. Print `@page { size: A3 landscape; margin: 0 }`.
+
+**QA static build confirmed**:
+- `data-theme="planche"` présent sur `<body>` EN + FR.
+- 9 spécimens : palm/alga/fern/canopy/sapling/branch/leaf/compound/lichen.
+- `dateToRoman(new Date("2026-04-17"))` → `"XVII · IV · MMXXVI"` (vérifié TypeScript).
+- Build: 28 pages (+ 2 vs les 26 de la session précédente).
+
+**Strengths**: esthétique print rare sur une landing, assumée. Le CTA "Print this page" / "Imprimer cette page" transforme la variante en poster physique. Date romaine ajoute un détail savant. Grain papier en SVG inline (zéro requête réseau).
+
+**Weaknesses**: le scroll horizontal n'est pas intuitif pour tout le monde (affordance manquante — un hint "← scroll to explore →" sous le header serait utile). Les SVG spécimens sont stylisés au trait, pas photo-réels. `@media print` Firefox peut diffèrer de Chrome sur A3 landscape — tester uniquement avec Chrome/Chromium pour l'impression.
 
 ## Known follow-ups
 
