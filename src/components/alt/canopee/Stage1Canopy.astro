@@ -1,0 +1,37 @@
+---
+interface Props { title: string; titleEmphasis: string; caption: string }
+const { title, titleEmphasis, caption } = Astro.props;
+
+// SVG feuillages 3 couches (far, mid, near) avec rotations decalees.
+// Chaque couche repete le meme path en grille horizontale pour remplir l'ecran.
+const leafPaths = [
+  "M 80 40 Q 50 60, 45 90 Q 55 115, 80 110 Q 105 115, 115 90 Q 110 60, 80 40 Z",
+  "M 140 80 Q 110 100, 105 130 Q 115 155, 140 150 Q 165 155, 175 130 Q 170 100, 140 80 Z",
+  "M 220 60 Q 190 80, 185 110 Q 195 135, 220 130 Q 245 135, 255 110 Q 250 80, 220 60 Z",
+];
+const layers: Array<"far" | "mid" | "near"> = ["far", "mid", "near"];
+---
+
+<section class="canopy-stage canopy-stage--1" data-canopy-stage="1" aria-labelledby="canopy-stage-1-title">
+  <div class="canopy-layers" aria-hidden="true">
+    {layers.map((depth, i) => (
+      <div class={`canopy-layer canopy-layer--${depth}`} data-layer-depth={depth}>
+        <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
+          {[0, 1, 2, 3, 4].map((col) => (
+            <g transform={`translate(${col * 120 - 60} 0)`}>
+              {leafPaths.map((d) => (
+                <path d={d} fill="currentColor" fill-opacity={0.4 + 0.15 * i} />
+              ))}
+            </g>
+          ))}
+        </svg>
+      </div>
+    ))}
+  </div>
+  <div style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 20vh 0;">
+    <p style="font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--c-muted); margin: 0 0 2rem;">{caption}</p>
+    <h1 id="canopy-stage-1-title" class="canopy-stage__title">
+      {title} <em>{titleEmphasis}</em>
+    </h1>
+  </div>
+</section>

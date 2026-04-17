@@ -1,0 +1,20 @@
+---
+interface Plugin { name: string; body: string }
+interface Props { eyebrow: string; heading: string; plugins: readonly Plugin[] }
+const { eyebrow, heading, plugins } = Astro.props;
+---
+
+<section class="canopy-stage canopy-stage--4" data-canopy-stage="4" aria-label={eyebrow}>
+  <div style="max-width: 1280px; margin: 0 auto; padding: 6rem 0;">
+    <p style="font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--c-accent-alt); margin-bottom: 2rem;">{eyebrow}</p>
+    <h2 style="font-family: var(--f-display); font-variation-settings: 'opsz' 144, 'wght' 500; font-size: clamp(2rem, 4vw, 3rem); color: var(--c-ink); margin: 0 0 2.5rem; max-width: 22ch;">{heading}</h2>
+    <div class="canopy-plugins">
+      {plugins.map((p) => (
+        <article class="canopy-plugin">
+          <p class="canopy-plugin__name">{p.name}</p>
+          <p class="canopy-plugin__body">{p.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

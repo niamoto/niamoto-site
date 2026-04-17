@@ -1,0 +1,31 @@
+---
+interface LegendItem { label: string; value: string }
+interface Props { eyebrow: string; heading: string; body: string; legend: readonly LegendItem[] }
+const { eyebrow, heading, body, legend } = Astro.props;
+---
+
+<section class="canopy-stage canopy-stage--3" data-canopy-stage="3" aria-label={eyebrow}>
+  <div style="max-width: 1280px; margin: 0 auto; padding: 6rem 0;">
+    <p style="font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--c-accent-alt); margin-bottom: 2rem;">{eyebrow}</p>
+    <div class="canopy-viz">
+      <div>
+        <h2 style="font-family: var(--f-display); font-variation-settings: 'opsz' 144, 'wght' 500; font-size: clamp(2rem, 4vw, 3rem); color: var(--c-ink); margin: 0 0 1.5rem;">{heading}</h2>
+        <p style="color: var(--c-muted); line-height: 1.6; max-width: 40ch;">{body}</p>
+        <ul style="list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          {legend.map((li) => (
+            <li style="padding-top: 0.75rem; border-top: 1px solid var(--c-hairline);">
+              <p style="font-family: var(--f-mono); font-variant-numeric: tabular-nums; font-size: 1.6rem; color: var(--c-accent-alt); margin: 0 0 0.25rem;">{li.value}</p>
+              <p style="font-family: var(--f-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--c-muted); margin: 0;">{li.label}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <svg class="canopy-viz__svg" viewBox="0 0 600 360" aria-hidden="true">
+        <!-- Deux courbes decoratives qui se dessinent via stroke-dasharray au scroll. -->
+        <path class="canopy-viz__line" d="M 30 300 C 120 260, 200 220, 300 200 S 450 160, 570 140" />
+        <path class="canopy-viz__line canopy-viz__line--secondary" d="M 30 320 C 140 290, 220 270, 320 240 S 460 200, 570 180" />
+        <path class="canopy-viz__line" d="M 30 340 C 150 320, 240 300, 340 280 S 480 240, 570 220" />
+      </svg>
+    </div>
+  </div>
+</section>
