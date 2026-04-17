@@ -1,0 +1,18 @@
+---
+interface Props {
+  label: string;
+  value: string;
+  delta?: string;
+  status?: "ok" | "amber" | "muted";
+}
+const { label, value, delta, status = "ok" } = Astro.props;
+const statusClass = status === "ok" ? "" : ` cockpit-tile__status-dot--${status}`;
+const deltaClass = delta?.startsWith("-") ? " cockpit-tile__delta--down" : "";
+---
+
+<article class="cockpit-tile">
+  <span class={`cockpit-tile__status-dot${statusClass}`} aria-label={`Status ${status}`}></span>
+  <p class="cockpit-tile__label">{label}</p>
+  <p class="cockpit-tile__value">{value}</p>
+  {delta && <p class={`cockpit-tile__delta${deltaClass}`}>{delta}</p>}
+</article>

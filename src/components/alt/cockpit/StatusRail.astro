@@ -1,0 +1,28 @@
+---
+interface Row {
+  name: string;
+  latency: string;
+  status: "ok" | "amber" | "muted";
+}
+interface Props {
+  heading: string;
+  rows: readonly Row[];
+}
+const { heading, rows } = Astro.props;
+---
+
+<aside class="cockpit-rail__card">
+  <p class="cockpit-rail__heading">{heading}</p>
+  {rows.map((r) => (
+    <div class="cockpit-rail__row">
+      <span class="cockpit-rail__name">
+        <span
+          class={`cockpit-tile__status-dot cockpit-tile__status-dot--${r.status === "ok" ? "" : r.status}`}
+          style="position: relative; top: 0; right: 0; display: inline-block; margin-right: 0.5rem;"
+        ></span>
+        {r.name}
+      </span>
+      <span class="cockpit-rail__latency">{r.latency}</span>
+    </div>
+  ))}
+</aside>
