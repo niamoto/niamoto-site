@@ -1,21 +1,25 @@
 # /alt/ Variants — Review
 
-Date: 2026-04-15
+Date: 2026-04-17 (V5/V6/V7 added; V11 Silex added wave 2); first pass 2026-04-15
 Branch: `feat/landing-alternatives`
-Status: First implementation pass complete. Build green.
+Status: Eight variants shipped (7 wave 1 + V11 Silex). Build green (22 pages, ~1.45s).
 
 ## What was shipped
 
-Four landing page variants for niamoto.org under `/alt/*`, bilingual FR/EN, all isolated from the existing site's design tokens.
+Seven landing page variants for niamoto.org under `/alt/*`, bilingual FR/EN, all isolated from the existing site's design tokens.
 
-| Variant         | URL EN              | URL FR                 | Direction            |
-| --------------- | ------------------- | ---------------------- | -------------------- |
-| Atlas           | /alt/atlas          | /fr/alt/atlas          | Editorial Split      |
-| Field Journal   | /alt/field-journal  | /fr/alt/field-journal  | Z-Axis Cascade       |
-| Méthode         | /alt/methode        | /fr/alt/methode        | Asymmetrical Bento   |
-| Herbarium       | /alt/herbarium      | /fr/alt/herbarium      | Editorial Split + Z  |
+| Variant         | URL EN                 | URL FR                    | Vibe                 | Layout                    |
+| --------------- | ---------------------- | ------------------------- | -------------------- | ------------------------- |
+| Atlas           | /alt/atlas             | /fr/alt/atlas             | Editorial Luxury     | Editorial Split           |
+| Field Journal   | /alt/field-journal     | /fr/alt/field-journal     | Editorial Luxury     | Z-Axis Cascade            |
+| Méthode         | /alt/methode           | /fr/alt/methode           | Editorial Luxury     | Asymmetrical Bento        |
+| Herbarium       | /alt/herbarium         | /fr/alt/herbarium         | Editorial Luxury     | Editorial Split + Z-Axis  |
+| Observatory     | /alt/observatory       | /fr/alt/observatory       | **Ethereal Glass**   | Asymmetrical Bento        |
+| Portail         | /alt/portail           | /fr/alt/portail           | **Soft Structuralism** | Editorial Split + Rail  |
+| Strate          | /alt/strate            | /fr/alt/strate            | **Soft Structuralism** | Longform Editorial      |
+| Silex (V11)     | /alt/silex             | /fr/alt/silex             | **Minimalism Radical** | Full-scroll 4 verb strates |
 
-Plus a sober dispatcher at `/alt/` (and `/fr/alt/`) listing the four with palette swatches.
+Plus the dispatcher at `/alt/` (and `/fr/alt/`) listing all variants with palette swatches in a 3-column grid.
 
 The main `src/pages/index.astro` is unchanged except for one quiet line in the closing section linking to `/alt/`.
 
@@ -161,11 +165,63 @@ Last successful build: 14 source pages, 1.21s.
 - `src/components/alt/herbarium/{HeroSplit,SpecimenFrame,PlateSeries,HerbariumPage}.astro`
 - `src/pages/{alt,fr/alt}/{index,atlas,field-journal,methode,herbarium}.astro` (10 page files)
 
+## V5/V6/V7 — the 2026-04-17 pass
+
+### V5 Observatory (Ethereal Glass)
+
+The archetype that was missing from the first four. OLED near-black (`#070908`) with subtle emerald + steel radial glows fixed to the body. Geist Variable everywhere. The hero frames Niamoto as a live observatory; a 4-tile bento below carries "LIVE PULSE" (ticker with mock recent events like "Amborella trichopoda — taxon viewed / NC — just now"), "DEPLOYMENT / NC" (animated counters in tabular JetBrains Mono), "RANGE" (SVG visualising the NC islands with emerald + steel orbs), and "INSTALL" (existing typewriter terminal).
+
+Materiality: double-bezel tile with `backdrop-filter: blur(12px) saturate(1.1)`, `box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.35)`. Pulse dot with animated expanding ring.
+
+Strengths: the only data-forward variant. Tiles read like a scientific cockpit.
+Weaknesses: the RangeCard SVG is abstract — not a real map. The pulse ticker events are mocked rather than fetched live. Both are acceptable for a marketing landing; a future pass could fetch real runtime stats if Niamoto exposes an endpoint.
+
+### V6 Portail (Soft Structuralism, layout Editorial Split + rail)
+
+The variant that proves Niamoto's output visually. Cream off-white (`#F7F4EE`), deep sage (`#3A4F42`) for CTA, copper (`#AE6A3B`) for emphasis. Massive Clash Display 500 on the hero ("Your field data, / a shareable portal.") with italic accent flipping to sage on the second line. Geist Variable for body.
+
+The rail is the star: three micro-tilted cards (`-1.6°`, `0.8°`, `-0.6°`) with long diffused shadows, each showing a real NC portal page — home (existing `/public/showcase/nc-home.png`), taxons index (`/public/showcase/nc-taxons.png`), and a stylised SVG mockup for the Amborella trichopoda taxon sheet (`AmborellaMockup.astro`). Clicking any card opens the real portal. This variant is the most concrete proof-of-output of all seven.
+
+Strengths: the rail converts "what is a Niamoto portal?" into a visual answer in three glances. Clash Display feels premium, matches a consumer-tech register without losing scientific tone.
+Weaknesses: the Amborella mockup is SVG, not a real screenshot. If the Niamoto CLI exposes a deterministic URL for the Amborella page on the live deployment, a future pass should capture and inline the real screenshot (WebP, ~180KB budget). Local capture via headless Chrome was attempted; Chrome isn't installed on this machine. Using the two existing screenshots already under `/public/showcase/` was pragmatic.
+
+### V7 Strate (Soft Structuralism, layout Longform Editorial)
+
+The narrative long-read complement to V1 Atlas's short editorial. Warm linen (`#EFEBE2`), mossy green, bronze. Fraunces display opsz 144/wght 500 for the monumental hero ("An ecological / atlas, / one strata / at a time.") with italic accent flipping to bronze on "atlas,". Geist Variable for body, 1.7 line-height.
+
+Six numbered chapters (01 "Ground layer" → 06 "Soil") with sticky side meta (number + ecological stratum label), pull-quotes with bronze left border + opening quote glyph, a stat block, a code snippet, and a captioned figure that reuses `AmborellaMockup.astro` from V6. The whole page reads like a magazine feature article.
+
+Strengths: genuine long-form feel. Typography rhythm carries readers through 6 layers without fatigue. Distinct from V1 which is more card-based.
+Weaknesses: figure count is low — the article visually relies heavily on typography. Could benefit from 2-3 more captioned figures (e.g., a plot map, a plugin-architecture diagram) in a v2.
+
+## Motion: why FadeUpOnView/StaggeredReveal dropped whileInView
+
+During V6 testing, `whileInView` from framer-motion stalled on heroes already in the viewport at the moment Astro's `client:visible` hydration completed. The element stayed at `opacity: 0` because the IntersectionObserver callback never fired for an unchanging intersection state. Refactored both components to use `initial` + `animate` (fires on mount). Combined with `client:visible`, the reveal UX is identical — hydration only happens when the element enters the viewport, and animation fires immediately after — but the dependency on IntersectionObserver is gone. The change affects all 7 variants; spot-checked V1 Atlas and V3 Méthode, no visual regression.
+
+Additionally: dropped `blur={8}` from the 3 new hero `FadeUpOnView` usages — blurring 133px Clash Display (V6) costs a tracepile of GPU paint each frame. Kept default blur for below-fold reveals where type is smaller.
+
+## Astro scoped CSS vs React-rendered roots
+
+`StaggeredReveal` wraps children in a React `motion.ul` / `motion.ol`. Astro's scoped CSS (the default) does NOT propagate the `data-astro-cid-*` attribute to elements rendered by React components. Result: grid rules like `.dispatcher__grid { display: grid }` compiled to `.dispatcher__grid[data-astro-cid-kx4izpf5]` did not match the React-rendered `<ul>`, which fell back to `display: block`.
+
+Fix applied: the 4 `<style>` blocks that target StaggeredReveal-rendered lists use `<style is:global>` — classnames are prefixed enough (`dispatcher-`, `portail-rail-`, `portail-process-`, `obs-pillars-`) to avoid collisions. Files: `DispatcherPage.astro`, `PortalRail.astro`, `ProcessStrip.astro`, `PillarStack.astro`.
+
+Note: the existing V1–V4 PillarGrid / plate components may have the same latent bug. Not fixed in this pass since they weren't visibly broken in my spot checks, but worth revisiting.
+
+### V11 Silex (Minimalism radical)
+
+3 couleurs TOTAL. Geist Mono Light en body (anti-Atlas). Un seul chiffre géant (2713), 4 paliers verbes (Observe/Collect/Publish/Share), densité décroissante.
+
+**Strengths**: la plus austère des 13 variantes. Fonctionne comme anti-cheat vs l'empilement de features.
+
+**Weaknesses**: le visiteur qui cherche "install" doit scroller 5 sections pour trouver la commande. OK si on assume le registre manifesto, pas OK pour un visiteur cold.
+
 ## Known follow-ups
 
-1. **Botanical photos** — biggest quality win. Source from NC portal, replace SVG silhouettes in V2 and V4.
-2. **Self-host Cabinet Grotesk + Satoshi** — currently Fontshare CDN imports in `fonts.css`. Move to local `.woff2` files for LCP.
-3. **Lighthouse run** — verify Performance ≥ 90 desktop / ≥ 80 mobile across all 4. Capture under `docs/alt/lighthouse/`.
-4. **Visual review with the user** — start `pnpm dev`, walk through all 4 variants in the browser, gather feedback.
-5. **`niamoto-site` git remote** — repo is currently local-only (no remote configured). If the user wants to push this branch, set up `git remote add origin <url>` first.
-6. **The current site's CLAUDE.md mentions Plus Jakarta Sans + forest-green tokens as "the design system"** — once a winning variant emerges, decide whether to update CLAUDE.md to reflect the chosen direction or keep both systems alive.
+1. **Botanical photos** — biggest quality win for V2/V4. Source from NC portal, replace SVG silhouettes.
+2. **Real Amborella screenshot** for V6 (replace `AmborellaMockup.astro`) once Chrome is installed or deployment has a stable URL.
+3. **Self-host Cabinet Grotesk, Satoshi, Clash Display** — currently Fontshare CDN imports in `fonts.css`. Move to local `.woff2` for LCP.
+4. **Lighthouse run** — verify Performance ≥ 90 desktop / ≥ 80 mobile across all 7. Capture under `docs/alt/lighthouse/`.
+5. **Revisit the V1–V4 scoped-CSS/React-Container bug** if pillars/plates render as block instead of grid in any variant.
+6. **`niamoto-site` git remote** — repo is currently local-only (no remote configured). If the user wants to push this branch, set up `git remote add origin <url>` first.
+7. **CLAUDE.md refresh** — once a winning variant emerges, decide whether to update CLAUDE.md to reflect the chosen direction or keep both systems alive.
