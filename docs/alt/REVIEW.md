@@ -1,8 +1,8 @@
 # /alt/ Variants — Review
 
-Date: 2026-04-17 (V5/V6/V7 added; V11 Silex + V8 Manifeste + V9 Cockpit + V13 Planche added wave 2); first pass 2026-04-15
+Date: 2026-04-17 (V5/V6/V7 added; V11 Silex + V8 Manifeste + V9 Cockpit + V13 Planche + V10 Sporée added wave 2); first pass 2026-04-15
 Branch: `feat/landing-alternatives`
-Status: Eleven variants shipped (7 wave 1 + V11 Silex + V8 Manifeste + V9 Cockpit + V13 Planche). Build green (28 pages, ~1.46s).
+Status: Twelve variants shipped (7 wave 1 + V11 Silex + V8 Manifeste + V9 Cockpit + V13 Planche + V10 Sporée). Build green (30 pages, ~2.32s).
 
 ## What was shipped
 
@@ -21,6 +21,7 @@ Seven landing page variants for niamoto.org under `/alt/*`, bilingual FR/EN, all
 | Manifeste (V8)  | /alt/manifeste         | /fr/alt/manifeste         | **CRO Editorial**      | Asymmetric split manifesto |
 | Cockpit (V9)    | /alt/cockpit           | /fr/alt/cockpit           | **KPI Dashboard**      | Bento 4+4+4, sparklines, status rail |
 | Planche (V13)   | /alt/planche           | /fr/alt/planche           | **Canvas × Print**     | Scroll horizontal 2400px, 9 spécimens SVG |
+| Sporée (V10)    | /alt/sporee            | /fr/alt/sporee            | **Algorithmic art**    | Hero p5.js fullscreen, flow field déterministe |
 
 Plus the dispatcher at `/alt/` (and `/fr/alt/`) listing all variants with palette swatches in a 3-column grid.
 
@@ -298,6 +299,27 @@ Scroll horizontal desktop (2400px wide) = planche d'herbier A3 dépliée. 9 plug
 **Strengths**: esthétique print rare sur une landing, assumée. Le CTA "Print this page" / "Imprimer cette page" transforme la variante en poster physique. Date romaine ajoute un détail savant. Grain papier en SVG inline (zéro requête réseau).
 
 **Weaknesses**: le scroll horizontal n'est pas intuitif pour tout le monde (affordance manquante — un hint "← scroll to explore →" sous le header serait utile). Les SVG spécimens sont stylisés au trait, pas photo-réels. `@media print` Firefox peut diffèrer de Chrome sur A3 landscape — tester uniquement avec Chrome/Chromium pour l'impression.
+
+### V10 Sporée (Algorithmic art × frontend-design) · /lab/
+
+Hero p5.js fullscreen, flow field de spores déterministe sur seed = fnv1a(date + locale). 6 captures gallery en SVG statique (mêmes seeds, mini viewBox 400x300). Install card Berkeley fallback (JetBrains Mono) sur craft paper. p5 en dynamic import — n'impacte que cette page.
+
+**Architecture seed**: `seedFrom(new Date("2026-04-17"), locale)` calcule un u32 via FNV-1a 32-bit. Deux visiteurs le même jour + même locale voient la même composition. Date fixe au build pour reproductibilité. `formatSeed()` affiche le badge "SEED D8C60E4F · 2026-04-17" en haut à droite.
+
+**p5.js isolation**: `SporeCanvas.tsx` fait `await import("p5")` dans `useEffect`. Vite bundle p5 (`p5.min.S7S6nPlB.js`, 1068kb) dans un chunk séparé chargé UNIQUEMENT par `/alt/sporee/` et `/fr/alt/sporee/`. Vérifié dans le build : `SporeCanvas` n'apparaît que dans ces deux pages HTML.
+
+**Fallback PNG**: `public/showcase/sporee/fallback.png` est un PNG 1×1 transparent (placeholder). À remplacer par une vraie capture du canvas après un premier lancement local (`pnpm preview` → ouvrir `/alt/sporee` → capturer à 1920×1080 → compresser via `pngquant`). Indispensable pour `prefers-reduced-motion: reduce` (CSS masque le canvas et affiche l'image).
+
+**Strengths**: la variante la plus "vivante" des 13. Le seed déterministe rend la génération auditable et reproductible. La gallery SVG prouve visuellement la variance entre les jours. Pas de dépendance nouvelle — p5 et @types/p5 étaient déjà dans package.json depuis les foundations.
+
+**Weaknesses**: les boutons Regenerate/Slow/Dense sont visuels seulement (CustomEvent `spore:control` émis mais non écouté par `SporeCanvas.tsx` en MVP — câbler `useEffect` pour écouter l'event si fonctionnalité requise). Migra et Berkeley Mono en fallbacks Fraunces/JetBrains Mono → typographie perd la signature prévue au brainstorm. 180 spores à 60fps peut chauffer sur mobile (`client:visible` évite au moins le démarrage hors-viewport).
+
+**QA static build confirmed**:
+- `data-theme="sporee"` présent sur `<body>` EN + FR.
+- Seed badge SSR rendu : `SEED` + hex 8 chars + `· 2026-04-17`.
+- Gallery 6 items, SVG inline 80 points chacun, seeds distinctes EN et FR.
+- Install card avec `$ pip install niamoto`, `$ niamoto init`, `$ niamoto run`.
+- Build: 30 pages (+ 2 vs les 28 de la session précédente).
 
 ## Known follow-ups
 
