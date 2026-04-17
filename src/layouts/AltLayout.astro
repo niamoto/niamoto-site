@@ -12,7 +12,20 @@
 
 import "../styles/alt/base.css";
 
-type Theme = "atlas" | "field-journal" | "methode" | "herbarium";
+type Theme =
+  | "atlas"
+  | "field-journal"
+  | "methode"
+  | "herbarium"
+  | "observatory"
+  | "portail"
+  | "strate"
+  | "manifeste"
+  | "cockpit"
+  | "silex"
+  | "sporee"
+  | "canopee"
+  | "planche";
 type Locale = "en" | "fr";
 
 interface Props {
@@ -27,8 +40,30 @@ interface Props {
 
 const { theme, locale, title, description, ogImage, slug } = Astro.props;
 
-const isDark = theme === "methode" || theme === "herbarium";
+const darkThemes: ReadonlyArray<Theme> = [
+  "methode",
+  "herbarium",
+  "observatory",
+  "cockpit",
+  "canopee",
+];
+const isDark = darkThemes.includes(theme);
 const colorScheme = isDark ? "dark" : "light";
+const themeColorMap: Record<Theme, string> = {
+  atlas: "#FDFBF7",
+  "field-journal": "#F5EEE0",
+  methode: "#1E2822",
+  herbarium: "#1A1410",
+  observatory: "#070908",
+  portail: "#F7F4EE",
+  strate: "#EFEBE2",
+  manifeste: "#F5F1E8",
+  cockpit: "#0B1220",
+  silex: "#F7F5F0",
+  sporee: "#F3EEE2",
+  canopee: "#0A0E0B",
+  planche: "#EDE4D0",
+};
 
 // Build hreflang alternate URLs for the FR/EN counterpart.
 // EN sits at /alt/<slug>, FR sits at /fr/alt/<slug>.
@@ -49,7 +84,7 @@ const finalOgImage = ogImage ?? "/niamoto_logo.png";
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
     <meta name="color-scheme" content={colorScheme} />
-    <meta name="theme-color" content={isDark ? "#1A1410" : "#FDFBF7"} />
+    <meta name="theme-color" content={themeColorMap[theme]} />
     <meta name="generator" content={Astro.generator} />
 
     <title>{title}</title>
@@ -110,8 +145,14 @@ const finalOgImage = ogImage ?? "/niamoto_logo.png";
       /* Dark variants use screen blend for grain to remain visible. */
       [data-theme="methode"] ~ .grain-overlay,
       [data-theme="herbarium"] ~ .grain-overlay,
+      [data-theme="observatory"] ~ .grain-overlay,
+      [data-theme="cockpit"] ~ .grain-overlay,
+      [data-theme="canopee"] ~ .grain-overlay,
       body[data-theme="methode"] .grain-overlay,
-      body[data-theme="herbarium"] .grain-overlay {
+      body[data-theme="herbarium"] .grain-overlay,
+      body[data-theme="observatory"] .grain-overlay,
+      body[data-theme="cockpit"] .grain-overlay,
+      body[data-theme="canopee"] .grain-overlay {
         mix-blend-mode: screen;
       }
 
