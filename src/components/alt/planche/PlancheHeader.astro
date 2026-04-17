@@ -1,0 +1,34 @@
+---
+import { dateToRoman } from "@/utils/romanize";
+
+interface Props {
+  eyebrow: string;
+  titleMain: string;
+  titleItalic: string;
+  plateNumber: string;
+  metaLine1: string;
+  metaLine2: string;
+  metaInstitutions: string;
+}
+const {
+  eyebrow, titleMain, titleItalic, plateNumber,
+  metaLine1, metaLine2, metaInstitutions,
+} = Astro.props;
+// Date fixe pour stabilité du build (évite que le numéro de planche varie d'un build à l'autre).
+const today = dateToRoman(new Date("2026-04-17"));
+---
+
+<header class="planche-header">
+  <p class="planche-header__eyebrow">{eyebrow}</p>
+  <h1 class="planche-header__title">
+    {titleMain}
+    <em>{titleItalic}</em>
+  </h1>
+  <p class="planche-header__number">Nº {plateNumber}</p>
+  <p class="planche-header__meta">
+    {metaLine1}<br/>
+    {metaLine2}<br/>
+    <strong>{today}</strong><br/>
+    {metaInstitutions}
+  </p>
+</header>

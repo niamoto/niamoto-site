@@ -1,0 +1,16 @@
+---
+interface Item { num: string; body: string }
+interface Props { heading: string; items: readonly Item[]; footnote: string }
+const { heading, items, footnote } = Astro.props;
+---
+
+<aside class="planche-notes" aria-labelledby="planche-notes-heading">
+  <p id="planche-notes-heading" class="planche-notes__heading">{heading}</p>
+  {items.map((it) => (
+    <div class="planche-notes__item">
+      <p class="planche-notes__item-num">{it.num}</p>
+      <p class="planche-notes__item-body">{it.body}</p>
+    </div>
+  ))}
+  <p class="planche-notes__footnote">{footnote}</p>
+</aside>
