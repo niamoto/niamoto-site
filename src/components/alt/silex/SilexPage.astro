@@ -1,0 +1,33 @@
+---
+import AltLayout from "@/layouts/AltLayout.astro";
+import IslandNav from "@/components/alt/shared/IslandNav.astro";
+import SilexHero from "./SilexHero.astro";
+import VerbStrate from "./VerbStrate.astro";
+import SilexCoda from "./SilexCoda.astro";
+import type { Locale } from "@/i18n/config";
+import enCopy from "@/i18n/alt/silex.en";
+import frCopy from "@/i18n/alt/silex.fr";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = locale === "fr" ? frCopy : enCopy;
+---
+
+<AltLayout
+  theme="silex"
+  locale={locale}
+  title={t.meta.title}
+  description={t.meta.description}
+  slug="silex"
+>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <IslandNav locale={locale} slug="silex" />
+
+  <main id="main">
+    <SilexHero {...t.hero} />
+    {t.strates.map((s) => (
+      <VerbStrate word={s.word} phrase={s.phrase} number={s.number} />
+    ))}
+    <SilexCoda line={t.coda.line} />
+  </main>
+</AltLayout>
