@@ -1,0 +1,23 @@
+---
+interface Props {
+  phrase: string;
+  number: string;
+  caption: string;
+  cta: string;
+  ctaHref: string;
+}
+const { phrase, number, caption, cta, ctaHref } = Astro.props;
+---
+
+<section class="silex-hero" aria-label="Silex hero">
+  <p class="silex-hero__phrase">{phrase}</p>
+  <div>
+    <p class="silex-hero__number">{number}</p>
+    <p class="silex-hero__caption">{caption}</p>
+  </div>
+  <p>
+    <a class="silex-cta-text" href={ctaHref}>
+      {cta}<span class="silex-cta-text__arrow" aria-hidden="true">&rarr;</span>
+    </a>
+  </p>
+</section>
