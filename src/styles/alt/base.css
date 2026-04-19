@@ -1,6 +1,5 @@
-/* /alt/ base stylesheet.
- * Loaded ONLY by AltLayout.astro - does NOT touch global.css or the rest of
- * the site. Each variant scopes its tokens via [data-theme="..."]. */
+/* Frond base stylesheet — loaded ONLY by AltLayout.astro.
+ * Does NOT touch global.css. Tokens are scoped via [data-theme="frond"]. */
 
 @import "tailwindcss";
 
@@ -8,25 +7,11 @@
 @source "../../components/alt/**/*.astro";
 @source "../../components/alt/**/*.tsx";
 @source "../../layouts/AltLayout.astro";
-@source "../../pages/alt/**/*.astro";
-@source "../../pages/fr/alt/**/*.astro";
+@source "../../pages/index.astro";
+@source "../../pages/fr/index.astro";
 
-/* Fonts and per-variant token scopes. */
+/* Fonts + Frond theme tokens. */
 @import "./fonts.css";
-@import "./atlas.css";
-@import "./field-journal.css";
-@import "./methode.css";
-@import "./herbarium.css";
-@import "./observatory.css";
-@import "./portail.css";
-@import "./portail-alt.css";
-@import "./strate.css";
-@import "./manifeste.css";
-@import "./cockpit.css";
-@import "./silex.css";
-@import "./sporee.css";
-@import "./canopee.css";
-@import "./planche.css";
 @import "./frond.css";
 
 /* Semantic token defaults. Each variant's [data-theme] selector overrides. */

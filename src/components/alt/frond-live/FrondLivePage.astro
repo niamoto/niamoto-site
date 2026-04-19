@@ -30,10 +30,9 @@ const t = locale === "fr" ? frCopy : enCopy;
   locale={locale}
   title={t.meta.title}
   description={t.meta.description}
-  slug="frond-live"
 >
   <a href="#main" class="skip-link">Skip to content</a>
-  <IslandNav locale={locale} slug="frond-live" />
+  <IslandNav locale={locale} />
 
   <main id="main" class="frond-shell">
     <FrondLiveHero {...t.hero} />

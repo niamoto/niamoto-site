@@ -5,19 +5,16 @@ import { getShared } from "@/i18n/alt";
 interface Props {
   /** Current locale of the page. */
   locale: Locale;
-  /** Slug after /alt/ — e.g. "atlas", "field-journal", "" for index. */
-  slug?: string;
 }
 
-const { locale, slug = "" } = Astro.props;
+const { locale } = Astro.props;
 const t = getShared(locale);
 
 const otherLocale: Locale = locale === "fr" ? "en" : "fr";
 const otherShort = otherLocale.toUpperCase();
 
-// EN sits at /alt/<slug>, FR sits at /fr/alt/<slug>.
-const segment = slug ? `/${slug}` : "";
-const otherUrl = otherLocale === "fr" ? `/fr/alt${segment}` : `/alt${segment}`;
+// EN sits at /, FR sits at /fr/.
+const otherUrl = otherLocale === "fr" ? "/fr/" : "/";
 ---
 
 <a

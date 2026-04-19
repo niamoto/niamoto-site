@@ -12,22 +12,7 @@
 
 import "../styles/alt/base.css";
 
-type Theme =
-  | "atlas"
-  | "field-journal"
-  | "methode"
-  | "herbarium"
-  | "observatory"
-  | "portail"
-  | "portail-alt"
-  | "strate"
-  | "manifeste"
-  | "cockpit"
-  | "silex"
-  | "sporee"
-  | "canopee"
-  | "planche"
-  | "frond";
+type Theme = "frond";
 type Locale = "en" | "fr";
 
 interface Props {
@@ -36,44 +21,18 @@ interface Props {
   title: string;
   description: string;
   ogImage?: string;
-  /** Slug after /alt/ — e.g. "atlas". Used for hreflang alternate links. */
-  slug?: string;
 }
 
-const { theme, locale, title, description, ogImage, slug } = Astro.props;
+const { theme, locale, title, description, ogImage } = Astro.props;
 
-const darkThemes: ReadonlyArray<Theme> = [
-  "methode",
-  "herbarium",
-  "observatory",
-  "cockpit",
-  "canopee",
-];
-const isDark = darkThemes.includes(theme);
-const colorScheme = isDark ? "dark" : "light";
+const colorScheme = "light";
 const themeColorMap: Record<Theme, string> = {
-  atlas: "#FDFBF7",
-  "field-journal": "#F5EEE0",
-  methode: "#1E2822",
-  herbarium: "#1A1410",
-  observatory: "#070908",
-  portail: "#F7F4EE",
-  "portail-alt": "#F4F1EA",
-  strate: "#EFEBE2",
-  manifeste: "#F5F1E8",
-  cockpit: "#0B1220",
-  silex: "#F7F5F0",
-  sporee: "#F3EEE2",
-  canopee: "#0A0E0B",
-  planche: "#EDE4D0",
   frond: "#F5F6F8",
 };
 
-// Build hreflang alternate URLs for the FR/EN counterpart.
-// EN sits at /alt/<slug>, FR sits at /fr/alt/<slug>.
-const slugSegment = slug ? `/${slug}` : "";
-const enUrl = `https://niamoto.org/alt${slugSegment}`;
-const frUrl = `https://niamoto.org/fr/alt${slugSegment}`;
+// Canonical + hreflang URLs for the site root.
+const enUrl = "https://niamoto.org/";
+const frUrl = "https://niamoto.org/fr/";
 const canonical = locale === "fr" ? frUrl : enUrl;
 
 const finalOgImage = ogImage ?? "/niamoto_logo.png";
