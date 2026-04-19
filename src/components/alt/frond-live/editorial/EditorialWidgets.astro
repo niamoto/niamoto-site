@@ -95,33 +95,28 @@ import MacWindow from "./MacWindow.astro";
 
       <!-- Right pane: live preview canvas -->
       <div class="edw__preview">
-        <!-- Map widget (full width) -->
+        <!-- Sous-taxons bar chart (full width, primary preview) -->
         <div class="edw__widget">
           <div class="edw__widget-head">
             <span class="edw__handle" aria-hidden="true">⋮⋮</span>
-            <span class="edw__widget-title">Distribution géographique</span>
-            <span class="edw__widget-tag edw__widget-tag--map">Interactive map</span>
+            <span class="edw__widget-title">Sous-taxons principaux</span>
+            <span class="edw__widget-tag edw__widget-tag--chart">Bar chart</span>
           </div>
-          <svg viewBox="0 0 100 22" class="edw__map" preserveAspectRatio="none" aria-hidden="true">
-            <rect width="100" height="22" fill="#f0f2f6"/>
-            <!-- NC shape -->
-            <path d="M10,13 Q22,5 35,11 T60,9 Q78,15 90,12 L92,17 Q82,22 65,18 T38,20 Q22,17 10,19 Z"
-                  fill="#faf5ea" stroke="#c4b393" stroke-width="0.3"/>
-            <circle cx="24" cy="15" r="0.7" fill="#7e22ce"/><circle cx="30" cy="13" r="0.9" fill="#7e22ce"/>
-            <circle cx="36" cy="14" r="0.6" fill="#7e22ce"/><circle cx="42" cy="12" r="1" fill="#7e22ce"/>
-            <circle cx="48" cy="14" r="0.7" fill="#7e22ce"/><circle cx="54" cy="13" r="0.8" fill="#7e22ce"/>
-            <circle cx="60" cy="15" r="0.6" fill="#7e22ce"/><circle cx="66" cy="14" r="0.7" fill="#7e22ce"/>
-            <circle cx="72" cy="15" r="0.8" fill="#7e22ce"/><circle cx="78" cy="16" r="0.6" fill="#7e22ce"/>
-            <circle cx="84" cy="15" r="0.7" fill="#7e22ce"/>
-          </svg>
+          <div class="edw__bars">
+            <div class="edw__bar"><span class="edw__bar-label">Tristaniopsis calobuxus</span><span class="edw__bar-fill" style="width:96%; background:#7ba9d8"></span><span class="edw__bar-value">889</span></div>
+            <div class="edw__bar"><span class="edw__bar-label">Melaleuca quinquenervia</span><span class="edw__bar-fill" style="width:92%; background:#a34f4f"></span><span class="edw__bar-value">899</span></div>
+            <div class="edw__bar"><span class="edw__bar-label">Arillastrum gummiferum</span><span class="edw__bar-fill" style="width:88%; background:#7ec17e"></span><span class="edw__bar-value">881</span></div>
+            <div class="edw__bar"><span class="edw__bar-label">Syzygium macranthum</span><span class="edw__bar-fill" style="width:72%; background:#d9a451"></span><span class="edw__bar-value">697</span></div>
+            <div class="edw__bar"><span class="edw__bar-label">Syzygium frutescens</span><span class="edw__bar-fill" style="width:61%; background:#4b9e87"></span><span class="edw__bar-value">590</span></div>
+          </div>
         </div>
 
-        <!-- Info grid + bar chart row -->
+        <!-- Info grid + Distribution DBH row -->
         <div class="edw__widget-row">
           <div class="edw__widget edw__widget--half">
             <div class="edw__widget-head">
               <span class="edw__handle" aria-hidden="true">⋮⋮</span>
-              <span class="edw__widget-title">Informations générales</span>
+              <span class="edw__widget-title">Informations</span>
               <span class="edw__widget-tag edw__widget-tag--info">Info</span>
             </div>
             <div class="edw__infogrid">
@@ -134,15 +129,20 @@ import MacWindow from "./MacWindow.astro";
           <div class="edw__widget edw__widget--half">
             <div class="edw__widget-head">
               <span class="edw__handle" aria-hidden="true">⋮⋮</span>
-              <span class="edw__widget-title">Sous-taxons</span>
+              <span class="edw__widget-title">Distribution DBH</span>
               <span class="edw__widget-tag edw__widget-tag--chart">Bar</span>
             </div>
-            <div class="edw__bars">
-              <div class="edw__bar"><span class="edw__bar-label">Tristaniopsis c.</span><span class="edw__bar-fill" style="width:96%; background:#7ba9d8"></span><span class="edw__bar-value">889</span></div>
-              <div class="edw__bar"><span class="edw__bar-label">Melaleuca q.</span><span class="edw__bar-fill" style="width:88%; background:#a34f4f"></span><span class="edw__bar-value">899</span></div>
-              <div class="edw__bar"><span class="edw__bar-label">Arillastrum g.</span><span class="edw__bar-fill" style="width:80%; background:#7ec17e"></span><span class="edw__bar-value">881</span></div>
-              <div class="edw__bar"><span class="edw__bar-label">Syzygium m.</span><span class="edw__bar-fill" style="width:70%; background:#8c6cb8"></span><span class="edw__bar-value">697</span></div>
-            </div>
+            <svg viewBox="0 0 100 32" class="edw__hist" preserveAspectRatio="none" aria-hidden="true">
+              <!-- DBH histogram: bell-curved distribution -->
+              <rect x="4"  y="20" width="10" height="12" fill="#c28e5f" rx="1"/>
+              <rect x="16" y="8"  width="10" height="24" fill="#c28e5f" rx="1"/>
+              <rect x="28" y="4"  width="10" height="28" fill="#c28e5f" rx="1"/>
+              <rect x="40" y="10" width="10" height="22" fill="#c28e5f" rx="1"/>
+              <rect x="52" y="15" width="10" height="17" fill="#c28e5f" rx="1"/>
+              <rect x="64" y="22" width="10" height="10" fill="#c28e5f" rx="1"/>
+              <rect x="76" y="26" width="10" height="6"  fill="#c28e5f" rx="1"/>
+              <rect x="88" y="29" width="10" height="3"  fill="#c28e5f" rx="1"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -387,10 +387,10 @@ import MacWindow from "./MacWindow.astro";
   .edw__widget-tag--info  { background: #dbeafe; color: #1d4ed8; }
   .edw__widget-tag--chart { background: #fef3c7; color: #b45309; }
 
-  .edw__map {
+  .edw__hist {
     width: 100%;
-    height: 2.2rem;
-    border-radius: 2px;
+    flex: 1;
+    min-height: 1.3rem;
   }
 
   /* Info grid (Taxon / Rang / Occurrences) */
