@@ -417,7 +417,7 @@
 
 [data-theme="frond"] .frond-slider__arrow {
   position: absolute;
-  top: calc(50% - 1.5rem);
+  top: 50%;
   transform: translateY(-50%);
   width: 2rem;
   height: 2rem;

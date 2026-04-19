@@ -3,7 +3,6 @@ import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
 import ButtonInButton from "@/components/alt/shared/ButtonInButton.astro";
 import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
 import FrondSlider from "./FrondSlider.astro";
-import type { Locale } from "@/i18n/config";
 
 type TitleLine = string | { italic: true; text: string };
 
@@ -20,7 +19,6 @@ interface Slide {
 }
 
 interface Props {
-  locale: Locale;
   signage: string;
   eyebrow: string;
   titleLines: readonly TitleLine[];
@@ -35,7 +33,7 @@ interface Props {
   slides: readonly Slide[];
 }
 
-const { locale, signage, eyebrow, titleLines, sub, ctaPrimary, ctaSecondary, install, slides } = Astro.props;
+const { signage, eyebrow, titleLines, sub, ctaPrimary, ctaSecondary, install, slides } = Astro.props;
 ---
 
 <section class="frond-hero frond-section" id="download" aria-label="Niamoto hero">
