@@ -141,7 +141,7 @@ const techStack = [
         {
           insideThePortal.map((item) => (
             <div class="overflow-hidden rounded-[12px] bg-surface shadow-[var(--shadow-widget)]">
-              <div class="aspect-[16/10] bg-surface-low">
+              <div class="aspect-[16/10]" style="background: var(--c-surface-muted)">
                 {item.image ? (
                   <img
                     src={item.image}
@@ -250,7 +250,7 @@ const techStack = [
             { name: "Amazonian Flora Portal", subtitle: "Guyane" },
           ].map((portal) => (
             <div class="flex items-start gap-4 rounded-[12px] bg-surface p-5 opacity-75 shadow-[var(--shadow-widget)]">
-              <div class="flex h-16 w-24 shrink-0 items-center justify-center rounded-[6px] bg-surface-low">
+              <div class="flex h-16 w-24 shrink-0 items-center justify-center rounded-[6px]" style="background: var(--c-surface-muted)">
                 <span class="alt-mono text-[10px] text-muted">2026</span>
               </div>
               <div class="flex-1">
