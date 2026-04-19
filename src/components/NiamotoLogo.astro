@@ -3,9 +3,10 @@
 export interface Props {
   size?: "sm" | "md" | "lg";
   color?: "dark" | "light";
+  locale?: "en" | "fr";
 }
 
-const { size = "md", color = "dark" } = Astro.props;
+const { size = "md", color = "dark", locale = "en" } = Astro.props;
 
 const sizes = {
   sm: { glyph: 20, text: 16 },
@@ -15,9 +16,10 @@ const sizes = {
 
 const { glyph, text } = sizes[size];
 const textColor = color === "dark" ? "text-ink" : "text-white";
+const homeHref = locale === "fr" ? "/fr/" : "/";
 ---
 
-<a href="/" class={`inline-flex items-center gap-2 ${textColor}`}>
+<a href={homeHref} class={`inline-flex items-center gap-2 ${textColor}`}>
   <img
     src="/niamoto_logo.png"
     alt=""

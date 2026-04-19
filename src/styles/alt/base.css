@@ -6,6 +6,7 @@
 /* Tailwind v4 in this project requires explicit @source per subdirectory. */
 @source "../../components/alt/**/*.astro";
 @source "../../components/alt/**/*.tsx";
+@source "../../components/NiamotoLogo.astro";
 @source "../../layouts/AltLayout.astro";
 @source "../../pages/index.astro";
 @source "../../pages/fr/index.astro";

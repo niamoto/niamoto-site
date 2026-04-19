@@ -3,6 +3,8 @@
 export default {
   nav: {
     documentation: "Docs",
+    plugins: "Plugins",
+    showcase: "Showcase",
     github: "GitHub",
     languageSwitchLabel: "Switch language",
   },

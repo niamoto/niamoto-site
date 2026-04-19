@@ -71,6 +71,61 @@
 }
 
 /* -------------------------------------------------------------------------
+ * Header — sticky top bar, full width
+ * ------------------------------------------------------------------------- */
+[data-theme="frond"] .frond-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  width: 100%;
+  background: color-mix(in srgb, var(--c-canvas) 85%, transparent);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  border-bottom: 1px solid var(--c-hairline);
+}
+
+[data-theme="frond"] .frond-header__inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+[data-theme="frond"] .frond-header__nav {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+[data-theme="frond"] .frond-header__nav a {
+  font-family: var(--f-body);
+  font-size: 0.88rem;
+  color: var(--c-muted);
+  text-decoration: none;
+  transition: color var(--motion-base) var(--ease-frond);
+}
+
+[data-theme="frond"] .frond-header__nav a:hover,
+[data-theme="frond"] .frond-header__nav a:focus-visible {
+  color: var(--c-ink);
+}
+
+[data-theme="frond"] .frond-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  [data-theme="frond"] .frond-header__nav {
+    display: none;
+  }
+}
+
+/* -------------------------------------------------------------------------
  * Shell & section rhythm
  * ------------------------------------------------------------------------- */
 [data-theme="frond"] .frond-shell {
@@ -213,7 +268,7 @@
  * HERO
  * ------------------------------------------------------------------------- */
 [data-theme="frond"] .frond-hero {
-  padding-top: 7rem;
+  padding-top: 3rem;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(360px, 0.8fr);
   gap: 3rem;
@@ -1146,7 +1201,7 @@
     padding-top: 4rem;
   }
   [data-theme="frond"] .frond-hero {
-    padding-top: 6rem;
+    padding-top: 2rem;
   }
   [data-theme="frond"] .frond-reading-card__inner {
     grid-template-columns: 1fr;
