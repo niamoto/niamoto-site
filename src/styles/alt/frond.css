@@ -639,7 +639,10 @@
 
 [data-theme="frond"] .frond-reading-card__meta {
   color: var(--c-muted);
-  padding: 0.3rem 0.35rem;
+  background: color-mix(in srgb, var(--c-canvas) 70%, transparent);
+  backdrop-filter: blur(6px);
+  padding: 0.3rem 0.55rem;
+  border-radius: 4px;
 }
 
 [data-theme="frond"] .frond-reading-card__image {
