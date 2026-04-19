@@ -579,9 +579,27 @@
 [data-theme="frond"] .frond-reading-card__media {
   position: relative;
   background: var(--c-surface-muted);
-  aspect-ratio: 5 / 4;
+  aspect-ratio: 3 / 4;
   align-self: start;
   overflow: hidden;
+}
+
+/* Bottom fade on media — signals "the page continues" since we only show
+   the top slice of very tall full-page captures. */
+[data-theme="frond"] .frond-reading-card__media::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 25%;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    color-mix(in srgb, var(--c-surface) 80%, transparent) 60%,
+    var(--c-surface) 100%
+  );
 }
 
 /* Body owns the vertical rule so it spans the full card height
@@ -1107,7 +1125,7 @@
     grid-template-columns: 1fr;
   }
   [data-theme="frond"] .frond-reading-card__media {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 5;
   }
   [data-theme="frond"] .frond-reading-card__body {
     border-left: none;

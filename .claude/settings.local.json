@@ -43,7 +43,14 @@
       "Bash(find /Users/julienbarbe/Dev/clients/niamoto/src/niamoto/gui/ui/src/components/widgets -name \"types.ts\" -exec echo \"=== {} ===\" \\\\; -exec cat {} \\\\;)",
       "Bash(git -C /Users/julienbarbe/Dev/clients/niamoto-site commit -m \"refactor\\(frond-live\\): port editorial slides to real app UI + macOS chrome\")",
       "Bash(git -C . add -A)",
-      "Bash(git -C . commit -m \"fix: correct license from Apache 2.0 to GPL v3 across all variants\")"
+      "Bash(git -C . commit -m \"fix: correct license from Apache 2.0 to GPL v3 across all variants\")",
+      "Skill(agent-browser)",
+      "Skill(agent-browser:*)",
+      "Bash(curl -sI http://127.0.0.1:5173/api/site/preview-exported/en/index.html)",
+      "Bash(curl -sI http://127.0.0.1:5173/api/site/preview-exported/fr/index.html)",
+      "Bash(curl -s http://127.0.0.1:5173/api/site/preview-exported/en/index.html)",
+      "Bash(curl -s http://127.0.0.1:5173/api/site/preview-exported/en/taxons/index.html)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:5173/api/site/preview-exported/__TRACKED_VAR__)"
     ]
   },
   "enableAllProjectMcpServers": true,
