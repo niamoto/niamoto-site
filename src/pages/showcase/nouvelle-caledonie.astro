@@ -1,9 +1,7 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import Button from "@/components/Button.astro";
-import Pill from "@/components/Pill.astro";
+import AltLayout from "@/layouts/AltLayout.astro";
+import FrondHeader from "@/components/alt/frond-live/FrondHeader.astro";
+import FrondFooter from "@/components/alt/shared/FrondFooter.astro";
 
 const stats = [
   { value: "3,417", label: "taxa catalogued" },
@@ -38,15 +36,17 @@ const techStack = [
 ];
 ---
 
-<BaseLayout
+<AltLayout
+  theme="frond"
+  locale="en"
   title="Portail de la forêt de Nouvelle-Calédonie — Niamoto Showcase"
   description="A reference ecological portal for New Caledonia's forests — built on Niamoto, maintained by Province Nord, Province Sud, IRD, and IAC."
 >
-  <Header active="showcase" />
+  <FrondHeader locale="en" />
 
   <!-- Breadcrumb -->
-  <nav class="bg-canvas px-6 py-3">
-    <div class="mx-auto max-w-[1200px] text-sm text-stone">
+  <nav class="px-6 py-3">
+    <div class="mx-auto max-w-[1200px] text-sm text-muted">
       <a href="/showcase/nouvelle-caledonie" class="hover:text-ink">Showcase</a>
       <span class="mx-2">/</span>
       <span class="text-ink">Nouvelle-Calédonie Forest Portal</span>
@@ -54,24 +54,27 @@ const techStack = [
   </nav>
 
   <!-- Hero 50/50 -->
-  <section class="bg-canvas">
+  <section>
     <div class="mx-auto grid max-w-[1400px] grid-cols-1 lg:grid-cols-2">
       <div class="flex flex-col justify-center px-6 py-20 lg:px-20">
-        <Pill variant="leaf" class="self-start">● Active since 2024</Pill>
+        <span class="frond-status-chip frond-status-chip--leaf self-start">
+          <span class="frond-status-chip__dot" aria-hidden="true"></span>
+          Active since 2024
+        </span>
         <h1 class="mt-5 text-[44px] font-bold leading-[1.1] tracking-[-0.02em] text-ink">
           Portail de la forêt de Nouvelle-Calédonie
         </h1>
-        <p class="mt-4 text-lg leading-relaxed text-stone">
+        <p class="mt-4 text-lg leading-relaxed text-muted">
           A reference ecological portal for New Caledonia's forests — built on
           Niamoto, maintained by Province Nord, Province Sud, IRD, and IAC.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <Button variant="primary" href="https://niamoto.nc" size="md">
+          <a href="https://niamoto.nc" target="_blank" rel="noopener" class="frond-btn frond-btn--primary">
             Visit the portal →
-          </Button>
-          <Button variant="outline" href="/documentation" size="md">
+          </a>
+          <a href="/documentation" class="frond-btn frond-btn--outline">
             Build yours with Niamoto
-          </Button>
+          </a>
         </div>
       </div>
 
@@ -82,7 +85,7 @@ const techStack = [
             <span class="h-3 w-3 rounded-full bg-[#FF5F57]"></span>
             <span class="h-3 w-3 rounded-full bg-[#FEBC2E]"></span>
             <span class="h-3 w-3 rounded-full bg-[#28C840]"></span>
-            <span class="ml-4 font-mono text-xs text-stone-light">
+            <span class="ml-4 alt-mono text-xs" style="color: rgba(255, 255, 255, 0.5)">
               niamoto.nc
             </span>
           </div>
@@ -98,7 +101,7 @@ const techStack = [
   </section>
 
   <!-- Stats band -->
-  <section class="border-y border-border bg-white py-16">
+  <section class="border-y border-hairline bg-surface py-16">
     <div
       class="mx-auto grid max-w-[1200px] grid-cols-2 gap-y-8 px-6 md:grid-cols-4"
     >
@@ -107,29 +110,29 @@ const techStack = [
           <div
             class:list={[
               "text-center",
-              i > 0 && "md:border-l md:border-border",
+              i > 0 && "md:border-l md:border-hairline",
             ]}
           >
-            <div class="font-mono text-5xl font-bold text-forest-green">
+            <div class="alt-mono text-5xl font-bold text-accent">
               {s.value}
             </div>
-            <div class="mt-2 text-sm text-stone">{s.label}</div>
+            <div class="mt-2 text-sm text-muted">{s.label}</div>
           </div>
         ))
       }
     </div>
-    <p class="mt-8 text-center font-mono text-xs text-stone opacity-60">
+    <p class="mt-8 text-center alt-mono text-xs text-muted opacity-60">
       Data updated Q1 2026 — source: Herbier de Nouvelle-Calédonie, Endemia,
       IRD
     </p>
   </section>
 
   <!-- Inside the portal -->
-  <section class="bg-canvas py-24">
+  <section class="py-24">
     <div class="mx-auto max-w-[1200px] px-6">
       <div class="mb-12 text-center">
         <h2 class="text-[32px] font-bold text-ink">Inside the portal</h2>
-        <p class="mt-2 text-[15px] text-stone">
+        <p class="mt-2 text-[15px] text-muted">
           Three page types power the portal — each generated automatically from
           the underlying data.
         </p>
@@ -137,7 +140,7 @@ const techStack = [
       <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
         {
           insideThePortal.map((item) => (
-            <div class="overflow-hidden rounded-[12px] bg-white shadow-[0_4px_12px_rgba(15,23,42,0.06)]">
+            <div class="overflow-hidden rounded-[12px] bg-surface shadow-[var(--shadow-widget)]">
               <div class="aspect-[16/10] bg-surface-low">
                 {item.image ? (
                   <img
@@ -148,7 +151,7 @@ const techStack = [
                   />
                 ) : (
                   <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-forest-green/10 to-steel-blue/10">
-                    <span class="font-mono text-xs text-stone">
+                    <span class="alt-mono text-xs text-muted">
                       Screenshot pending
                     </span>
                   </div>
@@ -156,7 +159,7 @@ const techStack = [
               </div>
               <div class="p-5">
                 <h3 class="text-base font-semibold text-ink">{item.title}</h3>
-                <p class="mt-1 text-sm text-stone">{item.caption}</p>
+                <p class="mt-1 text-sm text-muted">{item.caption}</p>
               </div>
             </div>
           ))
@@ -170,15 +173,16 @@ const techStack = [
     <div class="mx-auto max-w-[800px] px-6">
       <div class="relative">
         <span
-          class="absolute -left-4 -top-6 font-serif text-7xl leading-none text-forest-green/30"
-          aria-hidden="true">“</span
+          class="absolute -left-4 -top-6 font-serif text-7xl leading-none text-accent"
+          style="opacity: 0.3"
+          aria-hidden="true">"</span
         >
         <blockquote class="text-2xl font-medium italic leading-relaxed text-ink">
           Niamoto turned a decade of forest data into a living portal.
           Researchers, managers, and the public all read the same source of
           truth.
         </blockquote>
-        <footer class="mt-4 text-sm text-stone">
+        <footer class="mt-4 text-sm text-muted">
           — <span class="italic">[Nom du responsable scientifique]</span>,
           Institut Agronomique néo-Calédonien
         </footer>
@@ -187,14 +191,14 @@ const techStack = [
   </section>
 
   <!-- Technical details -->
-  <section class="bg-canvas py-24">
+  <section class="py-24">
     <div class="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-6 md:grid-cols-[3fr_2fr]">
       <div>
         <h2 class="text-[28px] font-bold text-ink">How it's built</h2>
-        <p class="mt-4 text-base leading-relaxed text-ink/85">
+        <p class="mt-4 text-base leading-relaxed" style="color: color-mix(in srgb, var(--c-ink) 85%, transparent)">
           The portal is a static site generated by Niamoto. Data is pulled from
           CSV exports of the research databases, transformed through a stack of
-          14 plugins, and rendered to HTML with the <span class="font-mono"
+          14 plugins, and rendered to HTML with the <span class="alt-mono"
             >static_website</span
           > exporter. Total build time: 4 minutes on a laptop.
         </p>
@@ -207,22 +211,22 @@ const techStack = [
               "Hosted on static hosting with automated redeploys",
             ].map((item) => (
               <li class="flex items-start gap-3">
-                <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-forest-green" />
-                <span class="text-ink/85">{item}</span>
+                <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                <span style="color: color-mix(in srgb, var(--c-ink) 85%, transparent)">{item}</span>
               </li>
             ))
           }
         </ul>
       </div>
 
-      <div class="rounded-[12px] bg-white p-6 shadow-[0_4px_12px_rgba(15,23,42,0.06)]">
-        <h4 class="font-mono text-[11px] font-semibold uppercase tracking-wider text-stone">
+      <div class="rounded-[12px] bg-surface p-6 shadow-[var(--shadow-widget)]">
+        <h4 class="alt-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
           Stack
         </h4>
         <ul class="mt-4 space-y-3 text-sm text-ink">
           {
             techStack.map((tech) => (
-              <li class="flex items-center gap-2 font-mono">
+              <li class="flex items-center gap-2 alt-mono">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
@@ -236,7 +240,7 @@ const techStack = [
   </section>
 
   <!-- Other portals -->
-  <section class="bg-canvas pb-24">
+  <section class="pb-24">
     <div class="mx-auto max-w-[1200px] px-6">
       <h3 class="mb-6 text-xl font-bold text-ink">Other portals</h3>
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -245,16 +249,19 @@ const techStack = [
             { name: "Congo Basin Forest Portal", subtitle: "Gabon – Cameroun" },
             { name: "Amazonian Flora Portal", subtitle: "Guyane" },
           ].map((portal) => (
-            <div class="flex items-start gap-4 rounded-[12px] bg-white p-5 opacity-75 shadow-[0_4px_12px_rgba(15,23,42,0.06)]">
+            <div class="flex items-start gap-4 rounded-[12px] bg-surface p-5 opacity-75 shadow-[var(--shadow-widget)]">
               <div class="flex h-16 w-24 shrink-0 items-center justify-center rounded-[6px] bg-surface-low">
-                <span class="font-mono text-[10px] text-stone">2026</span>
+                <span class="alt-mono text-[10px] text-muted">2026</span>
               </div>
               <div class="flex-1">
-                <Pill variant="steel">● Upcoming 2026</Pill>
+                <span class="frond-status-chip frond-status-chip--steel">
+                  <span class="frond-status-chip__dot" aria-hidden="true"></span>
+                  Upcoming 2026
+                </span>
                 <h4 class="mt-2 text-base font-semibold text-ink">
                   {portal.name}
                 </h4>
-                <p class="text-sm text-stone">{portal.subtitle}</p>
+                <p class="text-sm text-muted">{portal.subtitle}</p>
               </div>
             </div>
           ))
@@ -263,5 +270,5 @@ const techStack = [
     </div>
   </section>
 
-  <Footer />
-</BaseLayout>
+  <FrondFooter locale="en" />
+</AltLayout>
