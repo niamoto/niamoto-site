@@ -576,14 +576,37 @@
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
 }
 
-/* Media stretches to card height (= text height); image fills, cropped to
-   top. Full-page capture shows as much as the text column permits — no
-   artificial aspect-ratio or fade. */
+/* Media stretches to card height; image fills cropped to top. A fade starting
+   at the midpoint signals "the page continues" — top half solid, bottom half
+   dissolves into the card surface. */
 [data-theme="frond"] .frond-reading-card__media {
   position: relative;
   background: var(--c-surface-muted);
   overflow: hidden;
-  min-height: 360px;
+  min-height: 520px;
+}
+
+/* Sheet card is full width (span 12) and annotates a dense taxon page with
+   gauges, distributions, charts — it needs a much taller media to reveal
+   meaningful content. */
+[data-theme="frond"] .frond-reading-card--sheet .frond-reading-card__media {
+  min-height: 760px;
+}
+
+[data-theme="frond"] .frond-reading-card__media::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    color-mix(in srgb, var(--c-surface) 55%, transparent) 55%,
+    var(--c-surface) 100%
+  );
 }
 
 /* Body owns the vertical rule so it spans the full card height. */
