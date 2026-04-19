@@ -35,7 +35,6 @@ interface Props {
 }
 
 const { locale, kicker, heading, sub, cards } = Astro.props;
-const imageLocale = locale === "fr" ? "French" : "English";
 
 const FILE_MAP: Record<ImageKey, (loc: Locale) => string> = {
   "home":         (loc) => `/showcase/portail-alt/home-${loc}.png`,
@@ -45,13 +44,23 @@ const FILE_MAP: Record<ImageKey, (loc: Locale) => string> = {
   "plot-detail":  (loc) => `/showcase/portail-alt/plot-${loc}.png`,
 };
 
-const ALT_MAP: Record<ImageKey, string> = {
-  "home":         "preview of the Niamoto portal home page",
-  "taxons-index": "preview of the Niamoto taxons index",
-  "plots-index":  "preview of the Niamoto plots index",
-  "taxon-detail": "preview of a Niamoto taxon detail page",
-  "plot-detail":  "preview of a Niamoto plot detail page",
+const ALT_MAP_EN: Record<ImageKey, string> = {
+  "home":         "Preview of the Niamoto portal home page",
+  "taxons-index": "Preview of the Niamoto taxons index",
+  "plots-index":  "Preview of the Niamoto plots index",
+  "taxon-detail": "Preview of a Niamoto taxon detail page",
+  "plot-detail":  "Preview of a Niamoto plot detail page",
 };
+
+const ALT_MAP_FR: Record<ImageKey, string> = {
+  "home":         "Aperçu de la page d'accueil du portail Niamoto",
+  "taxons-index": "Aperçu de l'index des taxons Niamoto",
+  "plots-index":  "Aperçu de l'index des parcelles Niamoto",
+  "taxon-detail": "Aperçu d'une fiche taxon Niamoto",
+  "plot-detail":  "Aperçu d'une fiche parcelle Niamoto",
+};
+
+const ALT_MAP = locale === "fr" ? ALT_MAP_FR : ALT_MAP_EN;
 
 // CSS grid layout modifier — dérivé de la PREMIÈRE image de la carte.
 // Conserve les hooks CSS existants `.frond-reading-card--{home,index,sheet}`.
@@ -93,7 +102,7 @@ function imgClass(idx: number, total: number): string {
               <img
                 class={imgClass(i, card.images.length)}
                 src={FILE_MAP[key](locale)}
-                alt={`${imageLocale} ${ALT_MAP[key]}`}
+                alt={ALT_MAP[key]}
                 loading="lazy"
                 decoding="async"
               />

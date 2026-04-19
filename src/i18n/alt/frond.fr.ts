@@ -11,7 +11,7 @@ export default {
     signage: "NIAMOTO · PUBLICATION ÉCOLOGIQUE LIBRE",
     eyebrow: "OPEN SOURCE · GPL V3",
     titleLines: [
-      "Des données de terrain, des portails ",
+      "Des données de terrain aux portails écologiques ",
       { italic: true, text: "publiables" },
       ".",
     ],
@@ -35,7 +35,7 @@ export default {
     ],
   },
   widgetBand: {
-    eyebrow: "TAGLINE DU TOOLKIT",
+    eyebrow: "L'OUTIL EN TROIS VERBES",
     verbs: ["Importer.", "Structurer.", "Publier."],
     caption:
       "Une CLI, une GUI, une chaîne de publication — quatre étapes transforment des fichiers écologiques hétérogènes en pages web structurées.",
@@ -108,7 +108,7 @@ export default {
         meta: "SURFACE DE RÉFÉRENCE",
         title: "La fiche de groupe est l'endroit où carte, preuve et méthode se rencontrent.",
         body:
-          "La fiche de détail de n'importe quel groupe Niamoto — taxon, parcelle, shape ou autre référence — est le résultat le plus abouti : une page unique qui assemble occurrences, contexte territorial et repères de lecture dans un format durable.",
+          "La fiche de détail de tout groupe Niamoto — taxon, parcelle, shape ou autre référence — est le résultat le plus abouti : une page unique qui assemble occurrences, contexte territorial et repères de lecture dans un format durable.",
         images: ["taxon-detail", "plot-detail"] as const,
         notes: [
           { key: "Carte", body: "Les occurrences deviennent une forme territoriale visible, pas un attribut caché." },
@@ -157,7 +157,7 @@ export default {
       },
       {
         name: "Guyane",
-        sub: "Amérique du Sud",
+        sub: "Nord de l'Amérique du Sud",
         status: "upcoming",
         statusLabel: "À venir 2026",
         title: "Portail de la flore amazonienne",
@@ -174,7 +174,7 @@ export default {
       label: "Niamoto Desktop",
       title: "Pour les scientifiques et équipes de terrain.",
       body: "Glissez-déposez vos données, configurez les collections visuellement, publiez en un clic. Disponible sur macOS, Windows et Linux.",
-      cta: { label: "Télécharger l'app", href: "https://github.com/niamoto/niamoto/releases/latest" },
+      cta: { label: "Télécharger l'application", href: "https://github.com/niamoto/niamoto/releases/latest" },
     },
     cli: {
       label: "Niamoto CLI",
@@ -186,11 +186,11 @@ export default {
   },
   principles: {
     kicker: "PRINCIPES DE DESIGN",
-    heading: "Calme, déclaratif, écologue de terrain.",
+    heading: "Calme, déclaratif, à hauteur de terrain.",
     lead:
       "Un portail n'est pas intéressant parce qu'un déploiement atteint tel chiffre, mais parce que son système de publication reste lisible quand le projet change d'échelle, de territoire, ou survit à son financement initial.",
     items: [
-      { title: "La preuve avant le score", body: "Écrans, fiches de détail et notes de méthode disent plus qu'un KPI placé en hero." },
+      { title: "La preuve avant les chiffres", body: "Écrans, fiches de détail et notes de méthode disent plus qu'un KPI placé en accroche." },
       { title: "La méthode reste visible", body: "La chaîne éditoriale reste dans le récit, pour qu'on comprenne ce qui a produit la page consultée." },
       { title: "Même grammaire, plusieurs territoires", body: "La Nouvelle-Calédonie est un exemple, pas tout le récit. La page la cadre comme un déploiement parmi d'autres." },
       { title: "Le statique comme qualité", body: "Un portail écologique partageable doit rester déployable, archivable et lisible sans dépendance à une plateforme." },
@@ -201,7 +201,7 @@ export default {
     title: "Construit au grand jour, pour la communauté scientifique.",
     body:
       "Licence GPL v3. Maintenu par Arsis. Pull requests bienvenues — et une grammaire de publication reproductible qui transforme le travail écologique en pages lisibles, citables et maintenables dans le temps.",
-    ctaPrimary: { label: "Étoiler sur GitHub", href: "https://github.com/niamoto/niamoto" },
+    ctaPrimary: { label: "Mettre une étoile sur GitHub", href: "https://github.com/niamoto/niamoto" },
     ctaSecondary: { label: "Lire le changelog", href: "https://github.com/niamoto/niamoto/releases" },
     license: "GPL v3 · Maintenu par Arsis",
   },

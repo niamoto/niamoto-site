@@ -2,7 +2,7 @@
 
 export default {
   nav: {
-    documentation: "Doc",
+    documentation: "Documentation",
     plugins: "Plugins",
     showcase: "Showcase",
     github: "GitHub",

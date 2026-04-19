@@ -8,31 +8,70 @@ interface Props {
 
 const { locale } = Astro.props;
 const prefix = locale === "fr" ? "/fr" : "";
+const isFr = locale === "fr";
+
+const t = isFr
+  ? {
+      projectTitle: "Projet",
+      communityTitle: "Communauté",
+      madeByTitle: "Réalisé par",
+      documentation: "Documentation",
+      plugins: "Plugins",
+      showcase: "Showcase",
+      changelog: "Changelog",
+      github: "GitHub",
+      discussions: "Discussions",
+      contributing: "Contribuer",
+      codeOfConduct: "Code de conduite",
+      arsis: "Arsis · Studio de dev indépendant",
+      city: "Montpellier, France",
+      tagline: "Données écologiques, du terrain au web.",
+      license: "GPL v3",
+      legal: "© 2026 contributeurs Niamoto",
+    }
+  : {
+      projectTitle: "Project",
+      communityTitle: "Community",
+      madeByTitle: "Made by",
+      documentation: "Documentation",
+      plugins: "Plugins",
+      showcase: "Showcase",
+      changelog: "Changelog",
+      github: "GitHub",
+      discussions: "Discussions",
+      contributing: "Contributing",
+      codeOfConduct: "Code of Conduct",
+      arsis: "Arsis · Independent dev studio",
+      city: "Montpellier, France",
+      tagline: "Ecological data, from field to web.",
+      license: "GPL v3",
+      legal: "© 2026 Niamoto contributors",
+    };
 
 const cols = [
   {
-    title: "Project",
+    title: t.projectTitle,
     links: [
-      { label: "Documentation", href: `${prefix}/documentation` },
-      { label: "Plugins", href: `${prefix}/plugins` },
-      { label: "Showcase", href: `${prefix}/showcase/nouvelle-caledonie` },
-      { label: "Changelog", href: "https://github.com/niamoto/niamoto/releases" },
+      { label: t.documentation, href: `${prefix}/documentation` },
+      { label: t.plugins, href: `${prefix}/plugins` },
+      { label: t.showcase, href: `${prefix}/showcase/nouvelle-caledonie` },
+      { label: t.changelog, href: "https://github.com/niamoto/niamoto/releases" },
     ],
   },
   {
-    title: "Community",
+    title: t.communityTitle,
     links: [
-      { label: "GitHub", href: "https://github.com/niamoto/niamoto" },
-      { label: "Discussions", href: "https://github.com/niamoto/niamoto/discussions" },
-      { label: "Contributing", href: "https://github.com/niamoto/niamoto/blob/main/CONTRIBUTING.md" },
-      { label: "Code of Conduct", href: "https://github.com/niamoto/niamoto/blob/main/CODE_OF_CONDUCT.md" },
+      { label: t.github, href: "https://github.com/niamoto/niamoto" },
+      { label: t.discussions, href: "https://github.com/niamoto/niamoto/discussions" },
+      { label: t.contributing, href: "https://github.com/niamoto/niamoto/blob/main/CONTRIBUTING.md" },
+      { label: t.codeOfConduct, href: "https://github.com/niamoto/niamoto/blob/main/CODE_OF_CONDUCT.md" },
     ],
   },
   {
-    title: "Made by",
+    title: t.madeByTitle,
     links: [
-      { label: "Arsis · Independent dev studio", href: "https://arsis.dev" },
-      { label: "Montpellier, France", href: null },
+      { label: t.arsis, href: "https://arsis.dev" },
+      { label: t.city, href: null },
     ],
   },
 ] as const;
@@ -42,8 +81,8 @@ const cols = [
   <div class="frond-footer__inner">
     <div class="frond-footer__brand">
       <NiamotoLogo size="md" color="light" locale={locale} />
-      <p class="frond-footer__tagline">Ecological data, from field to web.</p>
-      <p class="frond-footer__license">GPL v3</p>
+      <p class="frond-footer__tagline">{t.tagline}</p>
+      <p class="frond-footer__license">{t.license}</p>
     </div>
 
     <div class="frond-footer__cols">
@@ -67,6 +106,6 @@ const cols = [
   </div>
 
   <div class="frond-footer__legal">
-    © 2026 Niamoto contributors
+    {t.legal}
   </div>
 </footer>

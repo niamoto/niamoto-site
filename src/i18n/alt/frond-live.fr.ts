@@ -10,7 +10,7 @@ export default {
   ...frondBase,
   meta: {
     ...frondBase.meta,
-    title: "Niamoto · Frond Live — Slides app éditoriales, même grammaire de publication",
+    title: "Niamoto · Frond Live — Aperçus éditoriaux de l'application, même grammaire de publication",
   },
   hero: {
     ...heroBase,
@@ -19,7 +19,7 @@ export default {
         dashboard: "Tableau de bord",
         import: "Import",
         widgets: "Widgets",
-        publish: "Publier",
+        publish: "Publication",
       },
       portal: [
         { src: "/showcase/portail-alt/home-wide-fr.png",    alt: "Page d'accueil du portail", label: "Portail" },
