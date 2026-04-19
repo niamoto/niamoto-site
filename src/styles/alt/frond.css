@@ -655,6 +655,32 @@
   object-position: top center;
 }
 
+/* Crossfade layers — activated only when a card has 2 images */
+[data-theme="frond"] .frond-reading-card__image--a,
+[data-theme="frond"] .frond-reading-card__image--b {
+  animation: frond-crossfade 10s infinite ease-in-out;
+}
+
+[data-theme="frond"] .frond-reading-card__image--b {
+  animation-delay: -5s;
+}
+
+@keyframes frond-crossfade {
+  0%, 45%  { opacity: 1; }
+  50%, 95% { opacity: 0; }
+  100%     { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="frond"] .frond-reading-card__image--a,
+  [data-theme="frond"] .frond-reading-card__image--b {
+    animation: none;
+  }
+  [data-theme="frond"] .frond-reading-card__image--b {
+    display: none;
+  }
+}
+
 [data-theme="frond"] .frond-reading-card__body {
   padding: 1.5rem 1.6rem 1.6rem;
   display: flex;
