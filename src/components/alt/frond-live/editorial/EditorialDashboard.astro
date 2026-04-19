@@ -1,129 +1,229 @@
-<div class="ed-dashboard">
-  <div class="ed-dashboard__card">
-    <div class="ed-dashboard__head">
-      <div class="ed-dashboard__logo" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2L2 7l10 5 10-5-10-5z" />
-          <path d="M2 17l10 5 10-5" />
-          <path d="M2 12l10 5 10-5" />
-        </svg>
+---
+/*
+ * EditorialDashboard — faithful port of the app's DashboardView + StageCard.
+ * Source of truth: src/niamoto/gui/ui/src/features/dashboard/components/{DashboardView,StageCard}.tsx
+ * Real 4-stage pipeline with colored left borders, real status copy.
+ */
+
+import MacWindow from "./MacWindow.astro";
+---
+
+<MacWindow title="Niamoto" subtitle="Dashboard">
+  <div class="edd">
+    <!-- Header (matches DashboardView.tsx lines 50-80) -->
+    <div class="edd__head">
+      <div>
+        <div class="edd__title">Dashboard</div>
+        <div class="edd__status-line">
+          <svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Everything is up to date</span>
+        </div>
       </div>
-      <div class="ed-dashboard__titles">
-        <div class="ed-dashboard__name">Nouvelle-Calédonie</div>
-        <div class="ed-dashboard__sub">Portail de la forêt</div>
+      <div class="edd__project">
+        <span class="edd__project-name">Nouvelle-Calédonie</span>
+        <span class="edd__project-sub">Portail de la forêt</span>
       </div>
     </div>
 
-    <div class="ed-dashboard__stats">
-      <div>
-        <div class="ed-dashboard__stat-value">14 K</div>
-        <div class="ed-dashboard__stat-label">Occur.</div>
-      </div>
-      <div>
-        <div class="ed-dashboard__stat-value">3 452</div>
-        <div class="ed-dashboard__stat-label">Taxons</div>
-      </div>
-      <div>
-        <div class="ed-dashboard__stat-value">216</div>
-        <div class="ed-dashboard__stat-label">Plots</div>
-      </div>
-    </div>
+    <!-- 4 stage cards (matches StageCard.tsx with colored left borders) -->
+    <div class="edd__grid">
 
-    <div class="ed-dashboard__cta">Continue →</div>
+      <!-- Data: blue -->
+      <div class="edd__stage edd__stage--data">
+        <div class="edd__stage-head">
+          <span class="edd__icon edd__icon--data" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+          </span>
+          <span class="edd__stage-title">Data</span>
+          <svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="edd__stage-status" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="edd__stage-meta">
+          <span class="edd__stage-count">4 sources</span>
+          <span class="edd__stage-ago">2m ago</span>
+        </div>
+      </div>
+
+      <!-- Collections: amber -->
+      <div class="edd__stage edd__stage--collections">
+        <div class="edd__stage-head">
+          <span class="edd__icon edd__icon--collections" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          </span>
+          <span class="edd__stage-title">Collections</span>
+          <svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="edd__stage-status" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="edd__stage-meta">
+          <span class="edd__stage-count">4 collections</span>
+          <span class="edd__stage-ago">2m ago</span>
+        </div>
+      </div>
+
+      <!-- Site: emerald -->
+      <div class="edd__stage edd__stage--site">
+        <div class="edd__stage-head">
+          <span class="edd__icon edd__icon--site" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </span>
+          <span class="edd__stage-title">Site</span>
+          <svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="edd__stage-status" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="edd__stage-meta">
+          <span class="edd__stage-count">216 pages</span>
+          <span class="edd__stage-ago">2m ago</span>
+        </div>
+      </div>
+
+      <!-- Publish: orange -->
+      <div class="edd__stage edd__stage--publish">
+        <div class="edd__stage-head">
+          <span class="edd__icon edd__icon--publish" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </span>
+          <span class="edd__stage-title">Publish</span>
+          <svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="edd__stage-status" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="edd__stage-meta">
+          <span class="edd__stage-count">Live</span>
+          <span class="edd__stage-ago">2m ago</span>
+        </div>
+      </div>
+
+    </div>
   </div>
-</div>
+</MacWindow>
 
 <style>
-  .ed-dashboard {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    background:
-      radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.04) 1px, transparent 0) 0 0 / 14px 14px,
-      linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-  }
-
-  .ed-dashboard__card {
-    background: #fff;
-    border-radius: 10px;
-    padding: 1rem 1.1rem;
-    width: 100%;
-    max-width: 17rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  }
-
-  .ed-dashboard__head {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .ed-dashboard__logo {
-    width: 1.5rem;
-    height: 1.5rem;
-    background: #2e7d32;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .ed-dashboard__titles {
+  .edd {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
+    padding: 0.55rem 0.7rem;
+    gap: 0.5rem;
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    color: #111827;
+    min-height: 0;
   }
 
-  .ed-dashboard__name {
+  .edd__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .edd__title {
+    font-size: 0.8rem;
     font-weight: 700;
-    font-size: 0.72rem;
+    letter-spacing: -0.015em;
     color: #111827;
   }
 
-  .ed-dashboard__sub {
-    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
-    font-size: 0.5rem;
+  .edd__status-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.1rem;
+    font-size: 0.58rem;
+    color: #16a34a;
+    font-weight: 500;
+  }
+
+  .edd__project {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+  }
+
+  .edd__project-name {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .edd__project-sub {
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    font-size: 0.45rem;
     color: #6b7280;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
-  .ed-dashboard__stats {
+  .edd__grid {
+    flex: 1;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0.6rem;
-    padding: 0.55rem 0;
-    border-top: 1px solid #f1f5f9;
-    border-bottom: 1px solid #f1f5f9;
-    margin-bottom: 0.7rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+    min-height: 0;
   }
 
-  .ed-dashboard__stat-value {
-    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
-    font-size: 0.85rem;
+  .edd__stage {
+    display: flex;
+    flex-direction: column;
+    gap: 0.22rem;
+    padding: 0.35rem 0.45rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-left-width: 2.5px;
+    border-radius: 5px;
+    background-image: radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.03) 1px, transparent 0);
+    background-size: 8px 8px;
+  }
+
+  /* Real pipeline stage colors (from design system) */
+  .edd__stage--data        { border-left-color: #3b82f6; }
+  .edd__stage--collections { border-left-color: #d97706; }
+  .edd__stage--site        { border-left-color: #10b981; }
+  .edd__stage--publish     { border-left-color: #f97316; }
+
+  .edd__stage-head {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .edd__icon {
+    width: 0.95rem;
+    height: 0.95rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .edd__icon--data        { background: #dbeafe; color: #2563eb; }
+  .edd__icon--collections { background: #fef3c7; color: #b45309; }
+  .edd__icon--site        { background: #d1fae5; color: #047857; }
+  .edd__icon--publish     { background: #ffedd5; color: #c2410c; }
+
+  .edd__stage-title {
+    flex: 1;
+    font-size: 0.62rem;
     font-weight: 600;
     color: #111827;
   }
 
-  .ed-dashboard__stat-label {
-    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
-    font-size: 0.5rem;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+  .edd__stage-status {
+    flex-shrink: 0;
   }
 
-  .ed-dashboard__cta {
-    background: #2e7d32;
-    color: #fff;
-    padding: 0.5rem;
-    border-radius: 5px;
-    text-align: center;
+  .edd__stage-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.4rem;
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+  }
+
+  .edd__stage-count {
+    font-size: 0.52rem;
+    color: #111827;
     font-weight: 600;
-    font-size: 0.72rem;
+  }
+
+  .edd__stage-ago {
+    font-size: 0.45rem;
+    color: #9ca3af;
   }
 </style>

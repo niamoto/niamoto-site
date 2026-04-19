@@ -1,0 +1,100 @@
+---
+/*
+ * MacWindow — macOS-style window chrome used to frame editorial app slides.
+ * Signals "this is a desktop app" visually. Content goes in the default slot.
+ */
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const { title = "Niamoto", subtitle } = Astro.props;
+---
+
+<div class="mac-window">
+  <div class="mac-window__chrome">
+    <div class="mac-window__lights" aria-hidden="true">
+      <span class="mac-window__light mac-window__light--close"></span>
+      <span class="mac-window__light mac-window__light--min"></span>
+      <span class="mac-window__light mac-window__light--max"></span>
+    </div>
+    <div class="mac-window__title">
+      <span>{title}</span>
+      {subtitle && <span class="mac-window__subtitle"> · {subtitle}</span>}
+    </div>
+  </div>
+  <div class="mac-window__body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .mac-window {
+    position: absolute;
+    inset: 1rem;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    box-shadow:
+      0 12px 28px rgba(15, 23, 42, 0.18),
+      0 2px 4px rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+  }
+
+  .mac-window__chrome {
+    position: relative;
+    height: 1.65rem;
+    background: #f4f4f5;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .mac-window__lights {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .mac-window__light {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .mac-window__light--close { background: #ff5f57; }
+  .mac-window__light--min   { background: #ffbd2e; }
+  .mac-window__light--max   { background: #28c841; }
+
+  .mac-window__title {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.62rem;
+    font-weight: 500;
+    color: #6b7280;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+  }
+
+  .mac-window__subtitle {
+    color: #9ca3af;
+  }
+
+  .mac-window__body {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+  }
+</style>

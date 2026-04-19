@@ -39,7 +39,9 @@
       "Bash(git -C /Users/julienbarbe/Dev/clients/niamoto-site commit -m \"chore: gitignore .superpowers brainstorm dir\")",
       "Bash(git -C /Users/julienbarbe/Dev/clients/niamoto-site add -A)",
       "Bash(git -C /Users/julienbarbe/Dev/clients/niamoto-site status)",
-      "Bash(git -C /Users/julienbarbe/Dev/clients/niamoto-site commit -m \"feat: add frond-live alt variant with editorial app slides\")"
+      "Bash(git -C /Users/julienbarbe/Dev/clients/niamoto-site commit -m \"feat: add frond-live alt variant with editorial app slides\")",
+      "Bash(find /Users/julienbarbe/Dev/clients/niamoto/src/niamoto/gui/ui/src/components/widgets -name \"types.ts\" -exec echo \"=== {} ===\" \\\\; -exec cat {} \\\\;)",
+      "Bash(git -C /Users/julienbarbe/Dev/clients/niamoto-site commit -m \"refactor\\(frond-live\\): port editorial slides to real app UI + macOS chrome\")"
     ]
   },
   "enableAllProjectMcpServers": true,

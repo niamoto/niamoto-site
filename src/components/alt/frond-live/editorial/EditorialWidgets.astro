@@ -1,214 +1,362 @@
-<div class="ed-widgets">
-  <div class="ed-widgets__label">Collection · species_map</div>
+---
+/*
+ * EditorialWidgets — faithful port of the app's WidgetGallery, scaled for hero.
+ * Source of truth: src/niamoto/gui/ui/src/components/widgets/{WidgetGallery,WidgetOptionCard,types}.tsx
+ * Real 7 categories, real colors, real copy.
+ */
 
-  <div class="ed-widgets__grid">
-    <!-- 1. Bar -->
-    <div class="ed-widgets__tile">
-      <div class="ed-widgets__bars">
-        <span style="height: 55%"></span><span style="height: 75%"></span><span style="height: 40%"></span><span style="height: 90%"></span>
+import MacWindow from "./MacWindow.astro";
+---
+
+<MacWindow title="Niamoto" subtitle="Collections">
+  <div class="edw">
+    <!-- Section header -->
+    <div class="edw__head">
+      <div>
+        <div class="edw__eyebrow">Collections · Taxon</div>
+        <div class="edw__title">Add widgets</div>
       </div>
-      <div class="ed-widgets__tile-label">Bar</div>
-    </div>
-
-    <!-- 2. Map -->
-    <div class="ed-widgets__tile">
-      <svg viewBox="0 0 40 40" class="ed-widgets__svg" aria-hidden="true">
-        <path d="M5,12 Q10,8 15,12 T25,10 Q30,14 35,11 L35,28 Q28,32 22,28 T12,30 Q7,26 5,28 Z" fill="#1e293b" stroke="#60a5fa" stroke-width="0.6" stroke-linejoin="round" />
-        <circle cx="14" cy="18" r="1" fill="#4ade80" />
-        <circle cx="22" cy="16" r="1" fill="#4ade80" />
-        <circle cx="28" cy="22" r="1" fill="#4ade80" />
-      </svg>
-      <div class="ed-widgets__tile-label">Map</div>
-    </div>
-
-    <!-- 3. Distribution — SELECTED -->
-    <div class="ed-widgets__tile ed-widgets__tile--active">
-      <svg viewBox="0 0 40 20" class="ed-widgets__svg" aria-hidden="true">
-        <path d="M0,20 Q8,5 12,14 T24,8 T32,16 L40,20 Z" fill="#4ade80" fill-opacity="0.3" stroke="#4ade80" stroke-width="1" stroke-linejoin="round" />
-      </svg>
-      <div class="ed-widgets__tile-label ed-widgets__tile-label--active">Dist ✓</div>
-    </div>
-
-    <!-- 4. Table -->
-    <div class="ed-widgets__tile">
-      <div class="ed-widgets__rows">
-        <span style="width: 100%; opacity: 0.8"></span>
-        <span style="width: 90%"></span>
-        <span style="width: 70%"></span>
+      <div class="edw__group">
+        <span class="edw__group-label">Group by</span>
+        <span class="edw__group-value">taxon_id</span>
       </div>
-      <div class="ed-widgets__tile-label">Table</div>
     </div>
 
-    <!-- 5. Scatter -->
-    <div class="ed-widgets__tile">
-      <svg viewBox="0 0 40 20" class="ed-widgets__svg" aria-hidden="true">
-        <circle cx="5" cy="16" r="1.2" fill="#5b86b0" />
-        <circle cx="12" cy="12" r="1.2" fill="#5b86b0" />
-        <circle cx="18" cy="14" r="1.2" fill="#5b86b0" />
-        <circle cx="24" cy="8" r="1.2" fill="#5b86b0" />
-        <circle cx="32" cy="6" r="1.2" fill="#5b86b0" />
-        <circle cx="36" cy="4" r="1.2" fill="#5b86b0" />
-      </svg>
-      <div class="ed-widgets__tile-label">Scatter</div>
+    <!-- Category filter chips -->
+    <div class="edw__chips">
+      <span class="edw__chip edw__chip--all">
+        <svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        All <span class="edw__chip-count">24</span>
+      </span>
+      <span class="edw__chip edw__chip--chart">Graphique <span class="edw__chip-count">8</span></span>
+      <span class="edw__chip edw__chip--map">Carte <span class="edw__chip-count">3</span></span>
+      <span class="edw__chip edw__chip--info">Information <span class="edw__chip-count">4</span></span>
+      <span class="edw__chip edw__chip--gauge">Jauge <span class="edw__chip-count">2</span></span>
     </div>
 
-    <!-- 6. Heatmap -->
-    <div class="ed-widgets__tile">
-      <div class="ed-widgets__heat">
-        <span style="opacity: 0.2"></span><span style="opacity: 0.5"></span><span style="opacity: 0.8"></span><span style="opacity: 0.4"></span>
-        <span style="opacity: 0.6"></span><span style="opacity: 0.9"></span><span style="opacity: 0.7"></span><span style="opacity: 0.3"></span>
+    <!-- Widget cards grid -->
+    <div class="edw__grid">
+
+      <!-- 1. Bar / chart -->
+      <div class="edw__card">
+        <div class="edw__mini">
+          <svg viewBox="0 0 60 28" class="edw__mini-svg" aria-hidden="true">
+            <rect x="4"  y="14" width="6" height="14" fill="#d97706" rx="1"/>
+            <rect x="13" y="8"  width="6" height="20" fill="#d97706" rx="1"/>
+            <rect x="22" y="4"  width="6" height="24" fill="#d97706" rx="1"/>
+            <rect x="31" y="10" width="6" height="18" fill="#d97706" rx="1"/>
+            <rect x="40" y="16" width="6" height="12" fill="#d97706" rx="1"/>
+            <rect x="49" y="20" width="6" height="8"  fill="#d97706" rx="1"/>
+          </svg>
+        </div>
+        <div class="edw__card-foot">
+          <span class="edw__card-label">Top 10</span>
+          <span class="edw__card-badge edw__card-badge--chart">Graphique</span>
+        </div>
       </div>
-      <div class="ed-widgets__tile-label">Heat</div>
+
+      <!-- 2. Map — SELECTED -->
+      <div class="edw__card edw__card--selected">
+        <span class="edw__check" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <div class="edw__mini">
+          <svg viewBox="0 0 60 28" class="edw__mini-svg" aria-hidden="true">
+            <path d="M6,10 Q14,4 22,9 T38,7 Q48,11 56,9 L56,24 Q46,27 38,24 T22,26 Q12,22 6,25 Z" fill="#a7f3d0" stroke="#059669" stroke-width="0.8" stroke-linejoin="round"/>
+            <circle cx="16" cy="15" r="1.3" fill="#059669"/>
+            <circle cx="24" cy="13" r="1.3" fill="#059669"/>
+            <circle cx="32" cy="18" r="1.3" fill="#059669"/>
+            <circle cx="44" cy="14" r="1.3" fill="#059669"/>
+          </svg>
+        </div>
+        <div class="edw__card-foot">
+          <span class="edw__card-label">Distribution</span>
+          <span class="edw__card-badge edw__card-badge--map">Carte</span>
+        </div>
+      </div>
+
+      <!-- 3. Donut -->
+      <div class="edw__card">
+        <div class="edw__mini">
+          <svg viewBox="0 0 60 28" class="edw__mini-svg" aria-hidden="true">
+            <circle cx="30" cy="14" r="10" fill="none" stroke="#f3f4f6" stroke-width="5"/>
+            <circle cx="30" cy="14" r="10" fill="none" stroke="#ea580c" stroke-width="5" stroke-dasharray="37 63" stroke-dashoffset="0" transform="rotate(-90 30 14)"/>
+            <circle cx="30" cy="14" r="10" fill="none" stroke="#fb923c" stroke-width="5" stroke-dasharray="22 78" stroke-dashoffset="-37" transform="rotate(-90 30 14)"/>
+          </svg>
+        </div>
+        <div class="edw__card-foot">
+          <span class="edw__card-label">Statut</span>
+          <span class="edw__card-badge edw__card-badge--donut">Donut</span>
+        </div>
+      </div>
+
+      <!-- 4. Gauge -->
+      <div class="edw__card">
+        <div class="edw__mini">
+          <svg viewBox="0 0 60 28" class="edw__mini-svg" aria-hidden="true">
+            <path d="M12,22 A18,18 0 0 1 48,22" fill="none" stroke="#f3f4f6" stroke-width="4" stroke-linecap="round"/>
+            <path d="M12,22 A18,18 0 0 1 38,10" fill="none" stroke="#0d9488" stroke-width="4" stroke-linecap="round"/>
+            <text x="30" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="600" fill="#0f172a">68%</text>
+          </svg>
+        </div>
+        <div class="edw__card-foot">
+          <span class="edw__card-label">Endemism</span>
+          <span class="edw__card-badge edw__card-badge--gauge">Jauge</span>
+        </div>
+      </div>
+
+      <!-- 5. Stats / info -->
+      <div class="edw__card">
+        <div class="edw__mini">
+          <svg viewBox="0 0 60 28" class="edw__mini-svg" aria-hidden="true">
+            <rect x="4"  y="5"  width="24" height="8" rx="1.5" fill="#dbeafe"/>
+            <rect x="32" y="5"  width="24" height="8" rx="1.5" fill="#dbeafe"/>
+            <rect x="4"  y="16" width="24" height="8" rx="1.5" fill="#dbeafe"/>
+            <rect x="32" y="16" width="24" height="8" rx="1.5" fill="#dbeafe"/>
+            <text x="8" y="11" font-family="JetBrains Mono, monospace" font-size="5" font-weight="700" fill="#1e40af">14K</text>
+            <text x="36" y="11" font-family="JetBrains Mono, monospace" font-size="5" font-weight="700" fill="#1e40af">3.4K</text>
+            <text x="8" y="22" font-family="JetBrains Mono, monospace" font-size="5" font-weight="700" fill="#1e40af">216</text>
+            <text x="36" y="22" font-family="JetBrains Mono, monospace" font-size="5" font-weight="700" fill="#1e40af">88%</text>
+          </svg>
+        </div>
+        <div class="edw__card-foot">
+          <span class="edw__card-label">Summary</span>
+          <span class="edw__card-badge edw__card-badge--info">Information</span>
+        </div>
+      </div>
+
+      <!-- 6. Navigation -->
+      <div class="edw__card">
+        <div class="edw__mini">
+          <svg viewBox="0 0 60 28" class="edw__mini-svg" aria-hidden="true">
+            <circle cx="10" cy="8"  r="1.5" fill="#7c3aed"/><rect x="14" y="6.5" width="20" height="3" rx="0.8" fill="#ddd6fe"/>
+            <circle cx="14" cy="14" r="1.5" fill="#7c3aed"/><rect x="18" y="12.5" width="16" height="3" rx="0.8" fill="#ddd6fe"/>
+            <circle cx="14" cy="20" r="1.5" fill="#7c3aed"/><rect x="18" y="18.5" width="24" height="3" rx="0.8" fill="#ddd6fe"/>
+            <circle cx="18" cy="26" r="1.2" fill="#a78bfa"/><rect x="22" y="24.8" width="14" height="2.4" rx="0.6" fill="#ede9fe"/>
+          </svg>
+        </div>
+        <div class="edw__card-foot">
+          <span class="edw__card-label">Hierarchy</span>
+          <span class="edw__card-badge edw__card-badge--nav">Navigation</span>
+        </div>
+      </div>
+
     </div>
 
-    <!-- 7. Timeline -->
-    <div class="ed-widgets__tile">
-      <svg viewBox="0 0 40 20" class="ed-widgets__svg" aria-hidden="true">
-        <path d="M0,15 L8,13 L14,14 L20,8 L28,10 L36,5 L40,7" fill="none" stroke="#60a5fa" stroke-width="1.2" />
-      </svg>
-      <div class="ed-widgets__tile-label">Time</div>
-    </div>
-
-    <!-- 8. Graph / network -->
-    <div class="ed-widgets__tile">
-      <svg viewBox="0 0 40 20" class="ed-widgets__svg" aria-hidden="true">
-        <line x1="12" y1="10" x2="20" y2="6" stroke="#475569" stroke-width="0.5" />
-        <line x1="12" y1="10" x2="28" y2="14" stroke="#475569" stroke-width="0.5" />
-        <line x1="20" y1="6" x2="28" y2="14" stroke="#475569" stroke-width="0.5" />
-        <circle cx="12" cy="10" r="1.8" fill="#5b86b0" />
-        <circle cx="20" cy="6" r="1.8" fill="#5b86b0" />
-        <circle cx="28" cy="14" r="1.8" fill="#5b86b0" />
-      </svg>
-      <div class="ed-widgets__tile-label">Graph</div>
+    <!-- Footer status -->
+    <div class="edw__foot">
+      <span class="edw__foot-count">1 / 24 selected</span>
+      <span class="edw__foot-meta">6 fields · Combine available</span>
     </div>
   </div>
-
-  <div class="ed-widgets__footer">
-    <span class="ed-widgets__dot"></span>
-    1 widget · 7 available
-  </div>
-</div>
+</MacWindow>
 
 <style>
-  .ed-widgets {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    background:
-      radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.04) 1px, transparent 0) 0 0 / 14px 14px,
-      linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-  }
-
-  .ed-widgets__label {
-    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.14em;
-    color: #64748b;
-    margin-bottom: 0.7rem;
-    text-transform: uppercase;
-  }
-
-  .ed-widgets__grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.35rem;
-    width: 100%;
-    max-width: 17rem;
-  }
-
-  .ed-widgets__tile {
-    aspect-ratio: 1;
-    background: #1e3a5f;
-    border: 1px solid rgba(91, 134, 176, 0.35);
-    border-radius: 5px;
-    padding: 0.35rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .ed-widgets__tile--active {
-    background: rgba(74, 222, 128, 0.1);
-    border: 2px solid #4ade80;
-    padding: 0.28rem;
-  }
-
-  .ed-widgets__svg {
+  .edw {
     flex: 1;
-    width: 100%;
-    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 0.55rem 0.7rem 0.4rem;
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    color: #111827;
+    gap: 0.35rem;
+    min-height: 0;
   }
 
-  .ed-widgets__tile-label {
-    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
-    font-size: 0.4rem;
-    color: #93c5fd;
+  .edw__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.5rem;
   }
 
-  .ed-widgets__tile-label--active {
-    color: #4ade80;
+  .edw__eyebrow {
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6b7280;
     font-weight: 600;
   }
 
-  .ed-widgets__bars {
+  .edw__title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: #111827;
+  }
+
+  .edw__group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.4rem;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+  }
+
+  .edw__group-label {
+    font-size: 0.48rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .edw__group-value {
+    font-size: 0.55rem;
+    color: #111827;
+    font-weight: 600;
+  }
+
+  .edw__chips {
     display: flex;
-    align-items: flex-end;
-    gap: 1px;
-    height: 0.7rem;
+    gap: 0.2rem;
+    flex-wrap: nowrap;
+    overflow: hidden;
   }
 
-  .ed-widgets__bars span {
+  .edw__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.2rem 0.38rem;
+    border-radius: 5px;
+    font-size: 0.52rem;
+    font-weight: 500;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    color: #4b5563;
+    white-space: nowrap;
+  }
+
+  .edw__chip-count {
+    display: inline-block;
+    padding: 0 0.2rem;
+    background: #f3f4f6;
+    border-radius: 3px;
+    font-size: 0.45rem;
+    font-weight: 600;
+    color: #6b7280;
+  }
+
+  /* Active "All" chip */
+  .edw__chip--all {
+    background: #2e7d32;
+    border-color: #2e7d32;
+    color: #ffffff;
+    box-shadow: 0 1px 2px rgba(46, 125, 50, 0.25);
+  }
+
+  .edw__chip--all .edw__chip-count {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+  }
+
+  .edw__grid {
     flex: 1;
-    background: #5b86b0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.3rem;
+    min-height: 0;
   }
 
-  .ed-widgets__rows {
+  .edw__card {
+    position: relative;
+    border: 1px solid rgba(229, 231, 235, 0.8);
+    border-radius: 6px;
+    background: #ffffff;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 1px;
   }
 
-  .ed-widgets__rows span {
-    display: block;
-    height: 1.5px;
-    background: #475569;
-    border-radius: 1px;
+  .edw__card--selected {
+    border: 1.5px solid #10b981;
+    background: rgba(16, 185, 129, 0.06);
+    box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.2);
   }
 
-  .ed-widgets__rows span:first-child {
-    background: #5b86b0;
-  }
-
-  .ed-widgets__heat {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.5px;
-    flex: 1;
-  }
-
-  .ed-widgets__heat span {
-    display: block;
-    background: #5b86b0;
-  }
-
-  .ed-widgets__footer {
+  .edw__check {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: #10b981;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    gap: 0.35rem;
-    margin-top: 0.7rem;
-    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
-    font-size: 0.55rem;
-    color: #94a3b8;
+    justify-content: center;
+    z-index: 2;
   }
 
-  .ed-widgets__dot {
-    width: 0.3rem;
-    height: 0.3rem;
-    background: #4ade80;
-    border-radius: 50%;
+  .edw__mini {
+    flex: 1;
+    padding: 0.25rem;
+    background: #f9fafb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  .edw__mini-svg {
+    width: 100%;
+    height: 100%;
+    max-height: 1.4rem;
+  }
+
+  .edw__card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.2rem;
+    padding: 0.2rem 0.3rem;
+    border-top: 1px solid #f3f4f6;
+  }
+
+  .edw__card-label {
+    font-size: 0.5rem;
+    font-weight: 600;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .edw__card-badge {
+    flex-shrink: 0;
+    padding: 0.05rem 0.28rem;
+    border-radius: 3px;
+    font-size: 0.42rem;
+    font-weight: 500;
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+  }
+
+  /* Real app category colors (Tailwind) */
+  .edw__card-badge--chart  { background: #fef3c7; color: #b45309; }
+  .edw__card-badge--map    { background: #d1fae5; color: #047857; }
+  .edw__card-badge--donut  { background: #ffedd5; color: #c2410c; }
+  .edw__card-badge--gauge  { background: #ccfbf1; color: #0f766e; }
+  .edw__card-badge--info   { background: #dbeafe; color: #1d4ed8; }
+  .edw__card-badge--nav    { background: #ede9fe; color: #6d28d9; }
+  .edw__card-badge--table  { background: #f1f5f9; color: #475569; }
+
+  .edw__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.15rem;
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    font-size: 0.48rem;
+    color: #6b7280;
+  }
+
+  .edw__foot-count {
+    color: #111827;
+    font-weight: 600;
   }
 </style>
