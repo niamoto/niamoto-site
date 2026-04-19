@@ -16,6 +16,7 @@ import FrondShowcase from "../frond/FrondShowcase.astro";
 import FrondTwoWays from "../frond/FrondTwoWays.astro";
 import FrondPrinciples from "../frond/FrondPrinciples.astro";
 import FrondClosing from "../frond/FrondClosing.astro";
+import FrondFooter from "@/components/alt/shared/FrondFooter.astro";
 
 interface Props {
   locale: Locale;
@@ -53,4 +54,5 @@ const t = locale === "fr" ? frCopy : enCopy;
       fundersHeading={t.funders.heading}
     />
   </main>
+  <FrondFooter locale={locale} />
 </AltLayout>
