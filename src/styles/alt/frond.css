@@ -1009,14 +1009,6 @@
   white-space: pre;
 }
 
-[data-theme="frond"] .frond-twoways-card__meta {
-  font-family: var(--f-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--c-muted);
-}
-
 [data-theme="frond"] .frond-twoways-card__cta {
   padding-top: 0.5rem;
   display: flex;

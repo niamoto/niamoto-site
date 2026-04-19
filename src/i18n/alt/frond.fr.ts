@@ -175,7 +175,6 @@ export default {
       title: "Pour les scientifiques et équipes de terrain.",
       body: "Glissez-déposez vos données, configurez les collections visuellement, publiez en un clic. Disponible sur macOS, Windows et Linux.",
       cta: { label: "Télécharger l'app", href: "https://github.com/niamoto/niamoto/releases/latest" },
-      meta: "v0.8 · macOS · Windows · Linux",
     },
     cli: {
       label: "Niamoto CLI",

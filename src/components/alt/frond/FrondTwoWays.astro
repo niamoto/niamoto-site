@@ -16,7 +16,6 @@ interface Props {
     title: string;
     body: string;
     cta: Cta;
-    meta: string;
   };
   cli: {
     label: string;
@@ -41,7 +40,6 @@ const { kicker, heading, gui, cli } = Astro.props;
       <span class="frond-twoways-card__label">{gui.label}</span>
       <h3 class="frond-twoways-card__title">{gui.title}</h3>
       <p class="frond-twoways-card__body">{gui.body}</p>
-      <span class="frond-twoways-card__meta">{gui.meta}</span>
       <div class="frond-twoways-card__cta">
         <ButtonInButton variant="primary" href={gui.cta.href} target="_blank" rel="noopener">
           {gui.cta.label}
