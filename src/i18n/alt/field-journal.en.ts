@@ -61,7 +61,7 @@ export default {
   },
   closing: {
     title: "An open framework for ecological knowledge.",
-    body: "Apache 2.0 licensed. Ten years of fieldwork. A growing community of ecologists, foresters and developers.",
+    body: "GPL v3 licensed. Ten years of fieldwork. A growing community of ecologists, foresters and developers.",
     ctaPrimary: "Install Niamoto",
     ctaSecondary: "Read the docs",
   },

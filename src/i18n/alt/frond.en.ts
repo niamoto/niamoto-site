@@ -9,7 +9,7 @@ export default {
   },
   hero: {
     signage: "NIAMOTO · OPEN ECOLOGICAL PUBLISHING",
-    eyebrow: "OPEN SOURCE · APACHE 2.0",
+    eyebrow: "OPEN SOURCE · GPL V3",
     titleLines: [
       "From field data to ",
       { italic: true, text: "publishable" },
@@ -201,10 +201,10 @@ export default {
     eyebrow: "OPEN FRAMEWORK",
     title: "Built in the open, for the scientific community.",
     body:
-      "Apache 2.0 licensed. Maintained by Arsis. Pull requests welcome — and a repeatable publishing grammar that turns ecological work into pages that can be read, cited, and maintained over time.",
+      "GPL v3 licensed. Maintained by Arsis. Pull requests welcome — and a repeatable publishing grammar that turns ecological work into pages that can be read, cited, and maintained over time.",
     ctaPrimary: { label: "Star on GitHub", href: "https://github.com/niamoto/niamoto" },
     ctaSecondary: { label: "Read the changelog", href: "https://github.com/niamoto/niamoto/releases" },
-    license: "Apache 2.0 · Maintained by Arsis",
+    license: "GPL v3 · Maintained by Arsis",
   },
   funders: {
     heading: "Built with",

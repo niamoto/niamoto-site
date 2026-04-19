@@ -27,7 +27,7 @@ export default {
   notes: {
     heading: "NOTES DE TERRAIN",
     items: [
-      { num: "Nº 1",  body: "Tous les spécimens de cette planche sont sous licence Apache 2. Aucun n'a poussé dans un silo." },
+      { num: "Nº 1",  body: "Tous les spécimens de cette planche sont sous licence GPL v3. Aucun n'a poussé dans un silo." },
       { num: "Nº 2",  body: "Installation : pip install niamoto. Chaque spécimen s'accroche au même runtime, qui n'est pas un SaaS." },
       { num: "Nº 3",  body: "Cette planche est générée à partir de données réelles. Cliquez sur un spécimen pour voir sa commande sur GitHub." },
       { num: "Nº 4",  body: "Imprimez cette page (A3 paysage) et épinglez-la au mur de votre laboratoire de terrain. Lisible hors-ligne." },

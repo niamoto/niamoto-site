@@ -19,7 +19,7 @@ export default {
     { label: "Build moyen",          value: "47,2s",        delta: "-5,3s vs précédent",   status: "ok" as const },
     { label: "Contributeurs (12m)",  value: "28",           delta: "+6 dernier trimestre", status: "ok" as const },
     { label: "Langues",              value: "2",            delta: "EN · FR",              status: "muted" as const },
-    { label: "Licence",              value: "Apache 2",     delta: "OSS · zéro SaaS",      status: "muted" as const },
+    { label: "Licence",              value: "GPL v3",     delta: "OSS · zéro SaaS",      status: "muted" as const },
   ],
   sparks: [
     {

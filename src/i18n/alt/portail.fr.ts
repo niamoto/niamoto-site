@@ -73,7 +73,7 @@ export default {
   },
   closing: {
     eyebrow: "OPEN SOURCE",
-    title: "Apache 2.0. Maintenu par Arsis.",
+    title: "GPL v3. Maintenu par Arsis.",
     body: "Pull requests et retours de terrain bienvenus. Le portail NC est une reference publique ouverte.",
     ctaPrimary: "Etoiler sur GitHub",
     ctaSecondary: "Lire la doc",

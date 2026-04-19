@@ -62,7 +62,7 @@ export default {
     ],
   },
   closing: {
-    title: "Open source. Apache 2.0.",
+    title: "Open source. GPL v3.",
     body: "Maintained by Arsis. Pull requests, plugin contributions and field reports welcome.",
     ctaPrimary: "Star on GitHub",
     ctaSecondary: "Read the docs",

@@ -61,7 +61,7 @@ export default {
       num: "06",
       label: "Sol",
       title: "Construit a l'air libre",
-      body: "Apache 2.0. Plugins bienvenus. Niamoto est maintenu par Arsis avec la communaute scientifique de Nouvelle-Caledonie. Pull requests et retours de terrain font avancer le projet.",
+      body: "GPL v3. Plugins bienvenus. Niamoto est maintenu par Arsis avec la communaute scientifique de Nouvelle-Caledonie. Pull requests et retours de terrain font avancer le projet.",
     },
   ],
   closing: {

@@ -7,7 +7,7 @@ export default {
       "Niamoto est l'outil libre pour les portails écologiques. Un herbier numérique de la forêt néo-calédonienne, construit par la communauté scientifique.",
   },
   hero: {
-    eyebrow: "HERBIER OUVERT - APACHE 2.0",
+    eyebrow: "HERBIER OUVERT - GPL V3",
     titleLine1: "Un herbier",
     titleLine2: "vivant,",
     titleLine3: "ouvert.",
@@ -38,7 +38,7 @@ export default {
   },
   closing: {
     title: "Un cadre ouvert pour les forêts dont nous héritons.",
-    body: "Apache 2.0. Maintenu par Arsis. Pull requests bienvenues, écologues, forestiers et développeurs ensemble.",
+    body: "GPL v3. Maintenu par Arsis. Pull requests bienvenues, écologues, forestiers et développeurs ensemble.",
     ctaPrimary: "Étoile sur GitHub",
     ctaSecondary: "Lire la doc",
   },

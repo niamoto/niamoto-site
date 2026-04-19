@@ -74,7 +74,7 @@ export default {
   closing: {
     eyebrow: "OPEN SOURCE",
     title: "Built in the open, for the scientific community.",
-    body: "Apache 2.0. Maintained by Arsis. Pull requests, plugin contributions and field reports welcome.",
+    body: "GPL v3. Maintained by Arsis. Pull requests, plugin contributions and field reports welcome.",
     ctaPrimary: "Star on GitHub",
     ctaSecondary: "Read the docs",
   },

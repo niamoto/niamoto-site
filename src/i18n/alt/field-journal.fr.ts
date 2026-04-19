@@ -61,7 +61,7 @@ export default {
   },
   closing: {
     title: "Un cadre ouvert pour la connaissance écologique.",
-    body: "Sous licence Apache 2.0. Dix ans de terrain. Une communauté grandissante d'écologues, forestiers et développeurs.",
+    body: "Sous licence GPL v3. Dix ans de terrain. Une communauté grandissante d'écologues, forestiers et développeurs.",
     ctaPrimary: "Installer Niamoto",
     ctaSecondary: "Lire la doc",
   },

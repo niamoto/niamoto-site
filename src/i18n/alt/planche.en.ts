@@ -27,7 +27,7 @@ export default {
   notes: {
     heading: "FIELD NOTES",
     items: [
-      { num: "Nº 1",  body: "All specimens on this plate are Apache-2 licensed. None of them were grown in a silo." },
+      { num: "Nº 1",  body: "All specimens on this plate are GPL-3.0 licensed. None of them were grown in a silo." },
       { num: "Nº 2",  body: "Installation: pip install niamoto. Each specimen docks into the same runtime, which is not a SaaS." },
       { num: "Nº 3",  body: "This plate is generated from real data. Click any specimen to see its command invocation on GitHub." },
       { num: "Nº 4",  body: "Print this page (A3 landscape) and pin it to the wall of your forest research lab. Offline-ready." },

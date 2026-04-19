@@ -74,7 +74,7 @@ export default {
   closing: {
     eyebrow: "OPEN SOURCE",
     title: "Construit a l'air libre, pour la communaute scientifique.",
-    body: "Apache 2.0. Maintenu par Arsis. Pull requests, contributions de plugins et retours de terrain bienvenus.",
+    body: "GPL v3. Maintenu par Arsis. Pull requests, contributions de plugins et retours de terrain bienvenus.",
     ctaPrimary: "Etoiler sur GitHub",
     ctaSecondary: "Lire la doc",
   },

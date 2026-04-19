@@ -71,7 +71,7 @@ export default {
         numeral: "III",
         title: "Outlives the grant",
         body:
-          "Apache-2 licence. No SaaS tier. The portal keeps serving long after the funding window closes. That's the durability test.",
+          "GPL-3.0 licence. No SaaS tier. The portal keeps serving long after the funding window closes. That's the durability test.",
       },
     ],
   },

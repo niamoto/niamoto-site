@@ -61,7 +61,7 @@ export default {
       num: "06",
       label: "Soil",
       title: "Built in the open",
-      body: "Apache 2.0. Plugins welcome. Niamoto is maintained by Arsis with the scientific community of Nouvelle-Caledonie. Pull requests and field reports move the project forward.",
+      body: "GPL v3. Plugins welcome. Niamoto is maintained by Arsis with the scientific community of Nouvelle-Caledonie. Pull requests and field reports move the project forward.",
     },
   ],
   closing: {

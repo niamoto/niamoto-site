@@ -21,7 +21,7 @@ export default {
     explore: "Explore",
   },
   legal: {
-    license: "Apache 2.0",
+    license: "GPL v3",
     maintainer: "Maintained by Arsis",
     builtWith: "Built with the scientific community",
   },

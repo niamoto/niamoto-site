@@ -9,7 +9,7 @@ export default {
   },
   hero: {
     signage: "NIAMOTO · PUBLICATION ÉCOLOGIQUE LIBRE",
-    eyebrow: "OPEN SOURCE · APACHE 2.0",
+    eyebrow: "OPEN SOURCE · GPL V3",
     titleLines: [
       "Des données de terrain, des portails ",
       { italic: true, text: "publiables" },
@@ -201,10 +201,10 @@ export default {
     eyebrow: "FRAMEWORK OUVERT",
     title: "Construit au grand jour, pour la communauté scientifique.",
     body:
-      "Licence Apache 2.0. Maintenu par Arsis. Pull requests bienvenues — et une grammaire de publication reproductible qui transforme le travail écologique en pages lisibles, citables et maintenables dans le temps.",
+      "Licence GPL v3. Maintenu par Arsis. Pull requests bienvenues — et une grammaire de publication reproductible qui transforme le travail écologique en pages lisibles, citables et maintenables dans le temps.",
     ctaPrimary: { label: "Étoiler sur GitHub", href: "https://github.com/niamoto/niamoto" },
     ctaSecondary: { label: "Lire le changelog", href: "https://github.com/niamoto/niamoto/releases" },
-    license: "Apache 2.0 · Maintenu par Arsis",
+    license: "GPL v3 · Maintenu par Arsis",
   },
   funders: {
     heading: "Construit avec",

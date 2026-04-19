@@ -69,7 +69,7 @@ export default {
         numeral: "III",
         title: "Survit à la subvention",
         body:
-          "Licence Apache 2. Aucune offre SaaS. Le portail continue de servir bien après la fenêtre de financement. C'est le test de durabilité.",
+          "Licence GPL v3. Aucune offre SaaS. Le portail continue de servir bien après la fenêtre de financement. C'est le test de durabilité.",
       },
     ],
   },

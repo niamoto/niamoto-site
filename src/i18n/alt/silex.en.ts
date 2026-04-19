@@ -20,7 +20,7 @@ export default {
     {
       word: "Collect",
       phrase: "Your data stays yours. Versioned, portable, exportable.",
-      number: "42 plugins · Apache 2",
+      number: "42 plugins · GPL v3",
     },
     {
       word: "Publish",

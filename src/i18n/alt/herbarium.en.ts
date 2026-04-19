@@ -7,7 +7,7 @@ export default {
       "Niamoto is the open framework for ecological portals. A digital herbarium of the New Caledonian forest, built by the scientific community.",
   },
   hero: {
-    eyebrow: "OPEN HERBARIUM - APACHE 2.0",
+    eyebrow: "OPEN HERBARIUM - GPL V3",
     titleLine1: "A living",
     titleLine2: "herbarium,",
     titleLine3: "open.",
@@ -38,7 +38,7 @@ export default {
   },
   closing: {
     title: "An open framework for the forests we inherit.",
-    body: "Apache 2.0. Maintained by Arsis. Pull requests welcome from ecologists, foresters and developers alike.",
+    body: "GPL v3. Maintained by Arsis. Pull requests welcome from ecologists, foresters and developers alike.",
     ctaPrimary: "Star on GitHub",
     ctaSecondary: "Read the docs",
   },
