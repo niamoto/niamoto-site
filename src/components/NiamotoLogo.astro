@@ -1,7 +1,7 @@
 ---
 // Wordmark + leaf glyph
 export interface Props {
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
   color?: "dark" | "light";
   locale?: "en" | "fr";
 }
@@ -12,6 +12,7 @@ const sizes = {
   sm: { glyph: 20, text: 16 },
   md: { glyph: 24, text: 20 },
   lg: { glyph: 48, text: 40 },
+  xl: { glyph: 36, text: 28 },
 };
 
 const { glyph, text } = sizes[size];
