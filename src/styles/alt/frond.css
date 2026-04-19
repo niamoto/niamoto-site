@@ -1,0 +1,1115 @@
+/* Frond — canonical Niamoto design system as an /alt/ variant.
+ *
+ * Applies the Niamoto "Frond" preset (default GUI theme) directly:
+ *   - Plus Jakarta Sans display + body, JetBrains Mono for code/eyebrows
+ *   - Arial Black for the one "field-station signage" line in the hero
+ *   - Cool neutrals (oklch hue 250), NOT green-tinted
+ *   - Forest green #2E7D32 primary, leaf #4BAF50 highlight, steel #5B86B0 secondary
+ *   - 7px default radii, 12px widget radii, pill only for status chips
+ *   - Animated widget gradient (8s, 135deg #228b22 → #2d8f47 → #1f7a1f)
+ *   - Motion cubic-bezier(0.22, 1, 0.36, 1) at 200ms base, no overshoot
+ *   - Hover lift -2px on widget cards with shadow upgrade
+ *   - StageCard 3px colored left border for pipeline stages
+ */
+
+[data-theme="frond"] {
+  /* canvas and ink */
+  --c-canvas: oklch(0.97 0.003 250);
+  --c-ink: oklch(0.16 0.005 270);
+  --c-muted: oklch(0.50 0.01 250);
+  --c-faint: oklch(0.70 0.01 250);
+
+  /* brand */
+  --c-accent: #2E7D32;        /* forest, GUI primary */
+  --c-accent-alt: #5B86B0;    /* steel, info/secondary */
+  --c-leaf: #4BAF50;
+  --c-fern: #228b22;          /* published-site primary */
+  --c-charcoal: #1E1E22;
+
+  /* surfaces */
+  --c-surface: #ffffff;
+  --c-surface-muted: oklch(0.94 0.005 250);
+  --c-hairline: oklch(0.88 0.005 250 / 0.6);
+  --c-hairline-strong: oklch(0.82 0.005 250);
+  --c-grain-opacity: 0.022;
+
+  /* fonts — canonical Niamoto pair */
+  --f-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --f-body: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --f-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --f-signage: "Arial Black", "Helvetica Neue", system-ui, sans-serif;
+
+  --fvs-display: "wght" 700;
+  --fvs-body: "wght" 400;
+
+  --ls-display: -0.02em;
+  --ls-body: 0;
+  --lh-display: 1.1;
+  --lh-body: 1.55;
+
+  /* Niamoto motion tokens */
+  --motion-fast: 120ms;
+  --motion-base: 200ms;
+  --motion-slow: 350ms;
+  --ease-frond: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* shadow system (Niamoto neutral multi-layer) */
+  --shadow-sm: 0 1px 3px oklch(0.20 0.01 250 / 0.05), 0 0 0 1px oklch(0.20 0.01 250 / 0.02);
+  --shadow-md: 0 4px 12px oklch(0.20 0.01 250 / 0.07), 0 0 0 1px oklch(0.20 0.01 250 / 0.02);
+  --shadow-lg: 0 8px 24px oklch(0.20 0.01 250 / 0.09), 0 0 0 1px oklch(0.20 0.01 250 / 0.02);
+  --shadow-widget: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06);
+  --shadow-widget-hover: 0 10px 25px -5px rgba(0, 0, 0, .15), 0 8px 10px -6px rgba(0, 0, 0, .08);
+  --shadow-card-stack: 0 2px 4px rgba(17, 24, 39, .12), 0 16px 32px rgba(17, 24, 39, .06), 0 32px 64px rgba(17, 24, 39, .04);
+}
+
+[data-theme="frond"] body {
+  background:
+    radial-gradient(60rem 30rem at 8% -10%, oklch(0.92 0.02 145 / 0.35), transparent 58%),
+    radial-gradient(50rem 28rem at 92% 6%, oklch(0.93 0.015 220 / 0.30), transparent 60%),
+    var(--c-canvas);
+  background-attachment: fixed;
+}
+
+/* -------------------------------------------------------------------------
+ * Shell & section rhythm
+ * ------------------------------------------------------------------------- */
+[data-theme="frond"] .frond-shell {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 1.5rem 6rem;
+}
+
+[data-theme="frond"] .frond-section {
+  padding-top: 6rem;
+}
+
+[data-theme="frond"] .frond-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  max-width: 48rem;
+  margin-bottom: 2.25rem;
+}
+
+[data-theme="frond"] .frond-heading {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.028em;
+  color: var(--c-ink);
+  line-height: 1.08;
+}
+
+[data-theme="frond"] .frond-sub {
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+  max-width: 42rem;
+}
+
+[data-theme="frond"] .frond-kicker {
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+/* -------------------------------------------------------------------------
+ * Cards — widget pattern
+ *   - Primary content cards use widget radius (12px) + neutral shadow
+ *   - Hover lift -2px + shadow upgrade (the one "marketing" move)
+ * ------------------------------------------------------------------------- */
+[data-theme="frond"] .frond-widget {
+  background: var(--c-surface);
+  border: 1px solid var(--c-hairline);
+  border-radius: 12px;
+  box-shadow: var(--shadow-widget);
+  transition: transform var(--motion-base) var(--ease-frond),
+              box-shadow var(--motion-base) var(--ease-frond);
+}
+
+[data-theme="frond"] .frond-widget:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-widget-hover);
+}
+
+/* Widget gradient header band — the animated 8s gradient, Niamoto signature */
+[data-theme="frond"] .frond-widget__band {
+  height: 6px;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(135deg, #228b22 0%, #2d8f47 50%, #1f7a1f 100%);
+  background-size: 180% 180%;
+  animation: frond-gradient-shift 8s ease-in-out infinite;
+}
+
+@keyframes frond-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* StageCard — 3px colored left border encoding pipeline stage.
+ * The single sanctioned use of the "colored left border" pattern. */
+[data-theme="frond"] .frond-stage-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-hairline);
+  border-left-width: 3px;
+  border-radius: 7px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  transition: transform var(--motion-base) var(--ease-frond),
+              box-shadow var(--motion-base) var(--ease-frond);
+}
+
+[data-theme="frond"] .frond-stage-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="frond"] .frond-stage-card--steel   { border-left-color: var(--c-accent-alt); }
+[data-theme="frond"] .frond-stage-card--leaf    { border-left-color: var(--c-leaf); }
+[data-theme="frond"] .frond-stage-card--forest  { border-left-color: var(--c-accent); }
+
+[data-theme="frond"] .frond-stage-card__tag {
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+[data-theme="frond"] .frond-stage-card__title {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--c-ink);
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+[data-theme="frond"] .frond-stage-card__body {
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+[data-theme="frond"] .frond-stage-card__code {
+  margin: 0;
+  padding: 0.85rem 0.95rem;
+  background: var(--c-charcoal);
+  color: #E5E7EB;
+  border-radius: 6px;
+  font-family: var(--f-mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* -------------------------------------------------------------------------
+ * HERO
+ * ------------------------------------------------------------------------- */
+[data-theme="frond"] .frond-hero {
+  padding-top: 7rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.8fr);
+  gap: 3rem;
+  align-items: start;
+}
+
+[data-theme="frond"] .frond-hero__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+[data-theme="frond"] .frond-hero__signage {
+  font-family: var(--f-signage);
+  font-size: 0.8rem;
+  letter-spacing: 0.125em;
+  text-transform: uppercase;
+  color: var(--c-fern);
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8),
+    0 2px 4px rgba(34, 139, 34, 0.12);
+  padding: 0.55rem 0.9rem;
+  background: color-mix(in srgb, var(--c-fern) 8%, var(--c-surface));
+  border: 1px solid color-mix(in srgb, var(--c-fern) 22%, var(--c-hairline));
+  border-radius: 4px;
+  width: fit-content;
+}
+
+[data-theme="frond"] .frond-hero__title {
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--c-ink);
+  margin: 0;
+  font-weight: 700;
+}
+
+[data-theme="frond"] .frond-hero__title em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--c-accent);
+}
+
+[data-theme="frond"] .frond-hero__sub {
+  margin: 0;
+  max-width: 36rem;
+  color: var(--c-muted);
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+
+[data-theme="frond"] .frond-hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.3rem;
+}
+
+[data-theme="frond"] .frond-hero__install {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.55rem 0.55rem 0.9rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-hairline);
+  border-radius: 9999px;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--f-mono);
+  font-size: 0.82rem;
+  color: var(--c-ink);
+  max-width: max-content;
+}
+
+[data-theme="frond"] .frond-hero__install-label {
+  font-family: var(--f-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--c-muted);
+  padding-right: 0.7rem;
+  border-right: 1px solid var(--c-hairline);
+}
+
+[data-theme="frond"] .frond-hero__install-snippet {
+  padding: 0 0.15rem;
+  color: var(--c-ink);
+}
+
+[data-theme="frond"] .frond-hero__install-copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  background: var(--c-surface-muted);
+  color: var(--c-muted);
+  border: none;
+  cursor: pointer;
+  transition: background var(--motion-base) var(--ease-frond),
+              color var(--motion-base) var(--ease-frond);
+}
+
+[data-theme="frond"] .frond-hero__install-copy:hover {
+  background: var(--c-accent);
+  color: var(--c-canvas);
+}
+
+/* Hero stage — the slider side */
+[data-theme="frond"] .frond-hero__stage {
+  display: grid;
+  gap: 1rem;
+}
+
+
+[data-theme="frond"] .frond-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  font-family: var(--f-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+[data-theme="frond"] .frond-status-chip--leaf {
+  background: #dcfce7;
+  color: #166534;
+}
+
+[data-theme="frond"] .frond-status-chip--steel {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+[data-theme="frond"] .frond-status-chip__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: currentColor;
+}
+
+/* -------------------------------------------------------------------------
+ * HERO SLIDER
+ * ------------------------------------------------------------------------- */
+[data-theme="frond"] .frond-slider {
+  position: relative;
+  border-radius: 12px;
+  border: 1px solid var(--c-hairline);
+  box-shadow: var(--shadow-card-stack);
+  background: var(--c-surface);
+  overflow: hidden;
+}
+
+[data-theme="frond"] .frond-slider__track {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 10px 10px 0 0;
+  background: #0f172a;
+}
+
+[data-theme="frond"] .frond-slider__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+[data-theme="frond"] .frond-slider__slide--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+[data-theme="frond"] .frond-slider__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+[data-theme="frond"] .frond-slider__caption {
+  position: absolute;
+  bottom: 0.7rem;
+  left: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+[data-theme="frond"] .frond-slider__caption-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.02em;
+}
+
+[data-theme="frond"] .frond-slider__arrow {
+  position: absolute;
+  top: calc(50% - 1.5rem);
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid var(--c-hairline);
+  background: var(--c-surface);
+  color: var(--c-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, background 0.15s ease;
+  z-index: 2;
+}
+
+[data-theme="frond"] .frond-slider:hover .frond-slider__arrow,
+[data-theme="frond"] .frond-slider:focus-within .frond-slider__arrow {
+  opacity: 1;
+}
+
+[data-theme="frond"] .frond-slider__arrow:hover {
+  background: var(--c-canvas);
+}
+
+[data-theme="frond"] .frond-slider__arrow--prev {
+  left: 0.5rem;
+}
+
+[data-theme="frond"] .frond-slider__arrow--next {
+  right: 0.5rem;
+}
+
+[data-theme="frond"] .frond-slider__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.8rem;
+  background: var(--c-surface);
+}
+
+[data-theme="frond"] .frond-slider__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-hairline);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+[data-theme="frond"] .frond-slider__dot--active {
+  background: var(--color-forest-green, #2e7d32);
+  transform: scale(1.25);
+}
+
+[data-theme="frond"] .frond-slider__dot:hover:not(.frond-slider__dot--active) {
+  background: var(--c-stone);
+}
+
+/* -------------------------------------------------------------------------
+ * WIDGET BAND — signature animated gradient with the tagline
+ * ------------------------------------------------------------------------- */
+[data-theme="frond"] .frond-widget-band {
+  margin-top: 4rem;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #228b22 0%, #2d8f47 50%, #1f7a1f 100%);
+  background-size: 180% 180%;
+  animation: frond-gradient-shift 8s ease-in-out infinite;
+  padding: 2.5rem 2rem;
+  color: #ffffff;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  align-items: center;
+  box-shadow: var(--shadow-lg);
+}
+
+[data-theme="frond"] .frond-widget-band__verbs {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 0.95rem;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="frond"] .frond-widget-band__verbs span:nth-child(2) {
+  opacity: 0.8;
+}
+[data-theme="frond"] .frond-widget-band__verbs span:nth-child(3) {
+  opacity: 0.6;
+}
+
+[data-theme="frond"] .frond-widget-band__caption {
+  max-width: 28rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+/* -------------------------------------------------------------------------
+ * PILLARS — 3 stage cards
+ * ------------------------------------------------------------------------- */
+[data-theme="frond"] .frond-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+/* -------------------------------------------------------------------------
+ * READING ATLAS — three surfaces, mixed-span grid
+ * ------------------------------------------------------------------------- */
+[data-theme="frond"] .frond-reading-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+[data-theme="frond"] .frond-reading-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-hairline);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-widget);
+  transition: transform var(--motion-base) var(--ease-frond),
+              box-shadow var(--motion-base) var(--ease-frond);
+}
+
+[data-theme="frond"] .frond-reading-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-widget-hover);
+}
+
+[data-theme="frond"] .frond-reading-card--home  { grid-column: span 7; }
+[data-theme="frond"] .frond-reading-card--index { grid-column: span 5; }
+[data-theme="frond"] .frond-reading-card--sheet { grid-column: span 12; }
+
+[data-theme="frond"] .frond-reading-card__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 0;
+}
+
+[data-theme="frond"] .frond-reading-card--sheet .frond-reading-card__inner {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+}
+
+[data-theme="frond"] .frond-reading-card__media {
+  position: relative;
+  background: var(--c-surface-muted);
+  border-right: 1px solid var(--c-hairline);
+  min-height: 280px;
+}
+
+[data-theme="frond"] .frond-reading-card__topline {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.9rem;
+  right: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--f-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+[data-theme="frond"] .frond-reading-card__label {
+  color: var(--c-ink);
+  background: color-mix(in srgb, var(--c-canvas) 70%, transparent);
+  backdrop-filter: blur(6px);
+  padding: 0.3rem 0.55rem;
+  border-radius: 4px;
+}
+
+[data-theme="frond"] .frond-reading-card__meta {
+  color: var(--c-muted);
+  padding: 0.3rem 0.35rem;
+}
+
+[data-theme="frond"] .frond-reading-card__image {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  max-height: 420px;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+}
+
+[data-theme="frond"] .frond-reading-card__body {
+  padding: 1.5rem 1.6rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+[data-theme="frond"] .frond-reading-card__title {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0;
+  color: var(--c-ink);
+}
+
+[data-theme="frond"] .frond-reading-card__copy {
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+[data-theme="frond"] .frond-reading-card__notes {
+  list-style: none;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+[data-theme="frond"] .frond-reading-card__notes li {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 0.9rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--c-hairline);
+}
+
+[data-theme="frond"] .frond-reading-card__notes li:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+[data-theme="frond"] .frond-reading-card__note-key {
+  font-family: var(--f-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+}
+
+[data-theme="frond"] .frond-reading-card__note-body {
+  color: var(--c-muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+/* -------------------------------------------------------------------------
+ * SEQUENCE — 4 numbered rows, hairline separators
+ * ------------------------------------------------------------------------- */
+[data-theme="frond"] .frond-sequence {
+  border-top: 1px solid var(--c-hairline);
+}
+
+[data-theme="frond"] .frond-sequence__item {
+  border-bottom: 1px solid var(--c-hairline);
+  padding: 1.5rem 0;
+  display: grid;
+  grid-template-columns: 120px minmax(180px, 220px) 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  transition: background-color var(--motion-base) var(--ease-frond);
+}
+
+[data-theme="frond"] .frond-sequence__item:hover {
+  background-color: color-mix(in srgb, var(--c-accent) 3%, transparent);
+}
+
+[data-theme="frond"] .frond-sequence__number {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--c-accent);
+}
+
+[data-theme="frond"] .frond-sequence__title {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  color: var(--c-ink);
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+[data-theme="frond"] .frond-sequence__body {
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 0.96rem;
+  line-height: 1.6;
+  max-width: 52rem;
+}
+
+/* -------------------------------------------------------------------------
+ * SHOWCASE — 3 region cards with gradient band
+ * ------------------------------------------------------------------------- */
+[data-theme="frond"] .frond-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+[data-theme="frond"] .frond-region-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-hairline);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-widget);
+  transition: transform var(--motion-base) var(--ease-frond),
+              box-shadow var(--motion-base) var(--ease-frond);
+  display: flex;
+  flex-direction: column;
+}
+
+[data-theme="frond"] .frond-region-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-widget-hover);
+}
+
+[data-theme="frond"] .frond-region-card__media {
+  aspect-ratio: 16 / 10;
+  position: relative;
+  background: var(--c-surface-muted);
+  overflow: hidden;
+}
+
+[data-theme="frond"] .frond-region-card__media::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(135deg, #228b22 0%, #2d8f47 50%, #1f7a1f 100%);
+  background-size: 180% 180%;
+  animation: frond-gradient-shift 8s ease-in-out infinite;
+  z-index: 2;
+}
+
+[data-theme="frond"] .frond-region-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+[data-theme="frond"] .frond-region-card__placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(18rem 12rem at 20% 20%, color-mix(in srgb, var(--c-accent) 14%, transparent), transparent 62%),
+    radial-gradient(16rem 12rem at 80% 80%, color-mix(in srgb, var(--c-accent-alt) 14%, transparent), transparent 64%),
+    var(--c-surface-muted);
+  font-family: var(--f-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+[data-theme="frond"] .frond-region-card__chip-area {
+  position: absolute;
+  left: 0.85rem;
+  top: 0.95rem;
+  z-index: 3;
+}
+
+[data-theme="frond"] .frond-region-card__body {
+  padding: 1.25rem 1.3rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  flex: 1;
+}
+
+[data-theme="frond"] .frond-region-card__sub {
+  font-family: var(--f-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+[data-theme="frond"] .frond-region-card__title {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.015em;
+  color: var(--c-ink);
+  margin: 0;
+}
+
+[data-theme="frond"] .frond-region-card__name {
+  color: var(--c-ink);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+[data-theme="frond"] .frond-region-card__partners {
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+[data-theme="frond"] .frond-region-card__link {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  color: var(--c-accent-alt);
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color var(--motion-base) var(--ease-frond);
+}
+
+[data-theme="frond"] .frond-region-card__link:hover {
+  color: var(--c-accent);
+}
+
+/* -------------------------------------------------------------------------
+ * TWO WAYS — Desktop card + CLI dark card
+ * ------------------------------------------------------------------------- */
+[data-theme="frond"] .frond-twoways {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+[data-theme="frond"] .frond-twoways-card {
+  padding: 2rem 1.9rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  border: 1px solid var(--c-hairline);
+  box-shadow: var(--shadow-widget);
+  transition: transform var(--motion-base) var(--ease-frond),
+              box-shadow var(--motion-base) var(--ease-frond);
+}
+
+[data-theme="frond"] .frond-twoways-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-widget-hover);
+}
+
+[data-theme="frond"] .frond-twoways-card--gui {
+  background: var(--c-surface);
+}
+
+[data-theme="frond"] .frond-twoways-card--cli {
+  background: var(--c-charcoal);
+  color: #E5E7EB;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="frond"] .frond-twoways-card__label {
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+[data-theme="frond"] .frond-twoways-card--cli .frond-twoways-card__label {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+[data-theme="frond"] .frond-twoways-card__title {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+  margin: 0;
+}
+
+[data-theme="frond"] .frond-twoways-card--cli .frond-twoways-card__title {
+  color: #ffffff;
+}
+
+[data-theme="frond"] .frond-twoways-card__body {
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+
+[data-theme="frond"] .frond-twoways-card--cli .frond-twoways-card__body {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+[data-theme="frond"] .frond-twoways-card__code {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 7px;
+  font-family: var(--f-mono);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #E5E7EB;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+[data-theme="frond"] .frond-twoways-card__meta {
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+[data-theme="frond"] .frond-twoways-card__cta {
+  padding-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+[data-theme="frond"] .frond-twoways-card--cli .frond-twoways-card__cta a {
+  color: #6FB3DD;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.92rem;
+}
+
+[data-theme="frond"] .frond-twoways-card--cli .frond-twoways-card__cta a:hover {
+  color: #ffffff;
+}
+
+/* -------------------------------------------------------------------------
+ * PRINCIPLES — split lead + 2x2 grid
+ * ------------------------------------------------------------------------- */
+[data-theme="frond"] .frond-principles {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+[data-theme="frond"] .frond-principles__lead {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-right: 1rem;
+}
+
+[data-theme="frond"] .frond-principles__leadcopy {
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+  max-width: 34rem;
+}
+
+[data-theme="frond"] .frond-principles__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+[data-theme="frond"] .frond-principles__item {
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--c-hairline);
+}
+
+[data-theme="frond"] .frond-principles__title {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--c-ink);
+}
+
+[data-theme="frond"] .frond-principles__body {
+  margin: 0.55rem 0 0;
+  color: var(--c-muted);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+/* -------------------------------------------------------------------------
+ * CLOSING
+ * ------------------------------------------------------------------------- */
+[data-theme="frond"] .frond-closing {
+  padding-top: 6rem;
+  padding-bottom: 2rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-width: 48rem;
+}
+
+[data-theme="frond"] .frond-closing__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.4rem;
+}
+
+[data-theme="frond"] .frond-closing__license {
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  padding-top: 2rem;
+  border-top: 1px solid var(--c-hairline);
+  margin-top: 2rem;
+}
+
+[data-theme="frond"] .frond-funders {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--c-hairline);
+}
+
+/* -------------------------------------------------------------------------
+ * Responsive
+ * ------------------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  [data-theme="frond"] .frond-hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  [data-theme="frond"] .frond-reading-card--home,
+  [data-theme="frond"] .frond-reading-card--index,
+  [data-theme="frond"] .frond-reading-card--sheet {
+    grid-column: span 12;
+  }
+  [data-theme="frond"] .frond-pillars,
+  [data-theme="frond"] .frond-showcase-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  [data-theme="frond"] .frond-shell {
+    padding: 0 1rem 5rem;
+  }
+  [data-theme="frond"] .frond-section {
+    padding-top: 4rem;
+  }
+  [data-theme="frond"] .frond-hero {
+    padding-top: 6rem;
+  }
+  [data-theme="frond"] .frond-reading-card__inner {
+    grid-template-columns: 1fr;
+  }
+  [data-theme="frond"] .frond-reading-card__media {
+    border-right: none;
+    border-bottom: 1px solid var(--c-hairline);
+    min-height: 220px;
+  }
+  [data-theme="frond"] .frond-reading-card__notes li {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+  [data-theme="frond"] .frond-sequence__item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  [data-theme="frond"] .frond-pillars,
+  [data-theme="frond"] .frond-showcase-grid,
+  [data-theme="frond"] .frond-twoways,
+  [data-theme="frond"] .frond-principles,
+  [data-theme="frond"] .frond-principles__grid {
+    grid-template-columns: 1fr;
+  }
+  [data-theme="frond"] .frond-widget-band {
+    grid-template-columns: 1fr;
+    padding: 2rem 1.6rem;
+  }
+}
