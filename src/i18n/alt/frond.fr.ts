@@ -59,14 +59,14 @@ export default {
         title: "Transformer avec des plugins.",
         body:
           "Des transformations YAML déclaratives changent les données brutes en index, statistiques, distributions et widgets. Étendez ce qui manque.",
-        snippet: "- group_by: taxons\n  widgets_data:\n    top_species:\n      plugin: top_ranking\n    distribution_map:\n      plugin: geospatial_extractor",
+        snippet: "- group_by: taxons\n  widgets_data:\n    distribution_map:\n      plugin: geospatial_extractor\n- group_by: plots\n  widgets_data:\n    species_list:\n      plugin: top_ranking",
       },
       {
         stage: "03 · SITE",
         color: "forest",
         title: "Publier un portail statique.",
         body:
-          "Site auto-généré avec cartes, graphiques et pages taxons. Déployez partout — GitHub Pages, Netlify, votre propre serveur.",
+          "Site auto-généré avec cartes, graphiques et pages par groupe. Déployez partout — GitHub Pages, Netlify, votre propre serveur.",
         snippet: "niamoto run\n# → exports/web/ prêt à déployer",
       },
     ],
@@ -95,20 +95,20 @@ export default {
         meta: "SURFACE DE PARCOURS",
         title: "Une liste devient une manière de lire le corpus.",
         body:
-          "Les taxons ne sont pas seulement stockés. Ils sont présentés dans un index lisible, que l'on peut parcourir, filtrer et revisiter selon différents usages.",
+          "Chaque groupe est présenté dans un index lisible, que l'on peut parcourir, filtrer et revisiter — 1 667 taxons ici, parcelles et shapes dans un autre onglet.",
         image: "index" as const,
         notes: [
-          { key: "Corpus", body: "La liste donne l'échelle du corpus : chaque taxon y reste accessible et lisible individuellement." },
+          { key: "Corpus", body: "La liste donne l'échelle du groupe : chaque entrée y reste accessible et lisible individuellement." },
           { key: "Filtres", body: "Le parcours reste attaché à des catégories écologiques, pas seulement à des champs techniques." },
-          { key: "Continuité", body: "Depuis cet index, chaque fiche taxon conserve le même langage visuel et narratif." },
+          { key: "Continuité", body: "Depuis cet index, chaque fiche de détail conserve le même langage visuel et narratif." },
         ],
       },
       {
         label: "03 · FICHE",
         meta: "SURFACE DE RÉFÉRENCE",
-        title: "La fiche taxon est l'endroit où carte, preuve et méthode se rencontrent.",
+        title: "La fiche de groupe est l'endroit où carte, preuve et méthode se rencontrent.",
         body:
-          "La fiche taxon est le résultat le plus abouti : une page unique qui assemble occurrences, contexte territorial et repères de lecture dans un format durable.",
+          "La fiche de détail de n'importe quel groupe Niamoto — taxon, parcelle, shape ou autre référence — est le résultat le plus abouti : une page unique qui assemble occurrences, contexte territorial et repères de lecture dans un format durable.",
         image: "sheet" as const,
         notes: [
           { key: "Carte", body: "Les occurrences deviennent une forme territoriale visible, pas un attribut caché." },
