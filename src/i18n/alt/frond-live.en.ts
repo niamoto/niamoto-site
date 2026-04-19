@@ -22,9 +22,9 @@ export default {
         publish: "Publish",
       },
       portal: [
-        { src: "/showcase/portail-alt/home-en.png",           alt: "Published portal home page", label: "Portal"  },
-        { src: "/showcase/portail-alt/preview-taxons-en.png", alt: "Taxons browser page",        label: "Taxons"  },
-        { src: "/showcase/portail-alt/species-en.png",        alt: "Species detail page",        label: "Species" },
+        { src: "/showcase/portail-alt/home-wide-en.png",    alt: "Published portal home page", label: "Portal" },
+        { src: "/showcase/portail-alt/taxons-wide-en.png",  alt: "Taxons browser page",        label: "Taxons" },
+        { src: "/showcase/portail-alt/species-wide-en.png", alt: "Taxon detail page",          label: "Taxon"  },
       ],
     },
   },

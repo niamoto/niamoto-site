@@ -29,9 +29,9 @@ export default {
       { src: "/showcase/app/import.png",       alt: "Import data sources into Niamoto",         badge: "app",    label: "Import"       },
       { src: "/showcase/app/widgets.png",      alt: "Widget catalog for collection pages",      badge: "app",    label: "Widgets"      },
       { src: "/showcase/app/site-builder.png", alt: "Site builder — configure portal pages",    badge: "app",    label: "Site builder" },
-      { src: "/showcase/portail-alt/home-en.png",           alt: "Published portal home page",  badge: "portal", label: "Portal"       },
-      { src: "/showcase/portail-alt/preview-taxons-en.png", alt: "Taxons browser page",         badge: "portal", label: "Taxons"       },
-      { src: "/showcase/portail-alt/species-en.png",        alt: "Species detail page",         badge: "portal", label: "Species"      },
+      { src: "/showcase/portail-alt/home-wide-en.png",    alt: "Published portal home page", badge: "portal", label: "Portal"  },
+      { src: "/showcase/portail-alt/taxons-wide-en.png",  alt: "Taxons browser page",        badge: "portal", label: "Taxons"  },
+      { src: "/showcase/portail-alt/species-wide-en.png", alt: "Taxon detail page",          badge: "portal", label: "Taxon"   },
     ],
   },
   widgetBand: {

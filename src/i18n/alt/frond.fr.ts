@@ -29,9 +29,9 @@ export default {
       { src: "/showcase/app/import.png",       alt: "Import des sources de données dans Niamoto",  badge: "app",    label: "Import"          },
       { src: "/showcase/app/widgets.png",      alt: "Catalogue de widgets pour les collections",   badge: "app",    label: "Widgets"         },
       { src: "/showcase/app/site-builder.png", alt: "Site builder — configuration des pages",      badge: "app",    label: "Site builder"    },
-      { src: "/showcase/portail-alt/home-fr.png",           alt: "Page d'accueil du portail",      badge: "portal", label: "Portail"         },
-      { src: "/showcase/portail-alt/preview-taxons-fr.png", alt: "Navigateur de taxons",           badge: "portal", label: "Taxons"          },
-      { src: "/showcase/portail-alt/species-fr.png",        alt: "Fiche espèce",                   badge: "portal", label: "Espèce"          },
+      { src: "/showcase/portail-alt/home-wide-fr.png",    alt: "Page d'accueil du portail", badge: "portal", label: "Portail" },
+      { src: "/showcase/portail-alt/taxons-wide-fr.png",  alt: "Navigateur de taxons",      badge: "portal", label: "Taxons"  },
+      { src: "/showcase/portail-alt/species-wide-fr.png", alt: "Fiche taxon",               badge: "portal", label: "Taxon"   },
     ],
   },
   widgetBand: {

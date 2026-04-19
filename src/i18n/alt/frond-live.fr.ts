@@ -22,9 +22,9 @@ export default {
         publish: "Publier",
       },
       portal: [
-        { src: "/showcase/portail-alt/home-fr.png",           alt: "Page d'accueil du portail", label: "Portail" },
-        { src: "/showcase/portail-alt/preview-taxons-fr.png", alt: "Navigateur de taxons",      label: "Taxons"  },
-        { src: "/showcase/portail-alt/species-fr.png",        alt: "Fiche espèce",              label: "Espèce"  },
+        { src: "/showcase/portail-alt/home-wide-fr.png",    alt: "Page d'accueil du portail", label: "Portail" },
+        { src: "/showcase/portail-alt/taxons-wide-fr.png",  alt: "Navigateur de taxons",      label: "Taxons"  },
+        { src: "/showcase/portail-alt/species-wide-fr.png", alt: "Fiche taxon",               label: "Taxon"   },
       ],
     },
   },
