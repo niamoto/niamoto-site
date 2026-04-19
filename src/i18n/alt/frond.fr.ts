@@ -11,9 +11,9 @@ export default {
     signage: "NIAMOTO · PUBLICATION ÉCOLOGIQUE LIBRE",
     eyebrow: "OPEN SOURCE · GPL V3",
     titleLines: [
-      "Des données de terrain aux portails écologiques ",
-      { italic: true, text: "publiables" },
-      ".",
+      "Des données de terrain à la ",
+      { italic: true, text: "publication" },
+      " de portails écologiques.",
     ],
     sub:
       "Niamoto transforme occurrences, inventaires taxonomiques et parcelles en portails statiques partageables. Open source, orienté plugins, conçu pour les écologues.",
