@@ -1,7 +1,7 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
+import AltLayout from "@/layouts/AltLayout.astro";
+import FrondHeader from "@/components/alt/frond-live/FrondHeader.astro";
+import FrondFooter from "@/components/alt/shared/FrondFooter.astro";
 
 const recipes = [
   {
@@ -71,36 +71,39 @@ const navSections = [
 ];
 ---
 
-<BaseLayout
+<AltLayout
+  theme="frond"
+  locale="en"
   title="Documentation — Niamoto"
   description="Guides, concepts, and recipes to run Niamoto from data import to published portal."
 >
-  <Header active="docs" />
+  <FrondHeader locale="en" />
 
   <!-- Hero -->
-  <section class="border-b border-border bg-canvas py-16">
+  <section class="border-b border-hairline py-16" style="background: var(--c-surface-muted)">
     <div class="mx-auto max-w-[1200px] px-6 text-center">
       <h1 class="text-5xl font-bold tracking-[-0.02em] text-ink">
         Documentation
       </h1>
-      <p class="mx-auto mt-3 max-w-[640px] text-lg text-stone">
+      <p class="mx-auto mt-3 max-w-[640px] text-lg text-muted">
         Guides, concepts, and recipes to run Niamoto from data import to
         published portal.
       </p>
       <div
-        class="mx-auto mt-8 flex max-w-[500px] items-center gap-2 rounded-[10px] border border-border bg-white px-4 py-3"
+        class="mx-auto mt-8 flex max-w-[500px] items-center gap-2 rounded-[10px] border border-hairline bg-surface px-4 py-3"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--c-muted)" stroke-width="2">
           <circle cx="11" cy="11" r="8"></circle>
           <path d="m21 21-4.3-4.3"></path>
         </svg>
         <input
           type="search"
           placeholder="Search the docs..."
-          class="flex-1 bg-transparent font-mono text-sm text-ink placeholder:text-stone-light focus:outline-none"
+          class="flex-1 bg-transparent alt-mono text-sm text-ink placeholder:text-muted focus:outline-none"
         />
         <kbd
-          class="rounded-[4px] border border-border-strong bg-surface-low px-1.5 py-0.5 font-mono text-xs text-stone"
+          class="rounded-[4px] border alt-mono text-xs text-muted"
+          style="border-color: var(--c-hairline-strong); background: var(--c-surface-muted); padding: 0.125rem 0.375rem;"
           >⌘K</kbd
         >
       </div>
@@ -112,7 +115,7 @@ const navSections = [
     <div class="grid grid-cols-1 gap-12 md:grid-cols-[240px_1fr]">
       <!-- Sidebar -->
       <aside class="space-y-6">
-        <h3 class="font-mono text-[11px] font-semibold uppercase tracking-wider text-stone">
+        <h3 class="alt-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
           Documentation
         </h3>
         {
@@ -121,7 +124,7 @@ const navSections = [
               <h4
                 class:list={[
                   "mb-2 text-sm font-semibold",
-                  section.active ? "text-forest-green" : "text-ink",
+                  section.active ? "text-accent" : "text-ink",
                 ]}
               >
                 {section.title}
@@ -131,7 +134,7 @@ const navSections = [
                   <li>
                     <a
                       href="#"
-                      class="text-[13px] text-stone hover:text-ink"
+                      class="text-[13px] text-muted hover:text-ink"
                     >
                       {item}
                     </a>
@@ -146,7 +149,7 @@ const navSections = [
       <!-- Main content -->
       <div class="max-w-[900px]">
         <h2 class="text-[28px] font-bold text-ink">Start here</h2>
-        <p class="mt-3 text-base leading-relaxed text-ink/85">
+        <p class="mt-3 text-base leading-relaxed" style="color: color-mix(in srgb, var(--c-ink) 85%, transparent)">
           Niamoto runs on three layers: import your ecological data, transform
           it with plugins, publish a static portal. Pick where you want to
           start.
@@ -157,10 +160,13 @@ const navSections = [
             recipes.map((r) => (
               <a
                 href="#"
-                class="block rounded-[12px] bg-white p-6 shadow-[0_4px_12px_rgba(15,23,42,0.06)] transition-shadow hover:shadow-[0_8px_20px_rgba(15,23,42,0.08)]"
+                class="block rounded-[12px] bg-surface p-6 shadow-[var(--shadow-widget)] transition-shadow hover:shadow-[var(--shadow-widget-hover)]"
               >
-                <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-[8px] bg-[rgba(46,125,50,0.08)]">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <div
+                  class="mb-3 flex h-10 w-10 items-center justify-center rounded-[8px]"
+                  style="background: color-mix(in srgb, var(--c-accent) 10%, transparent)"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     {r.icon === "download" && (
                       <>
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -201,10 +207,10 @@ const navSections = [
                   </svg>
                 </div>
                 <h3 class="text-lg font-semibold text-ink">{r.title}</h3>
-                <p class="mt-1 line-clamp-2 text-sm leading-relaxed text-stone">
+                <p class="mt-1 line-clamp-2 text-sm leading-relaxed text-muted">
                   {r.body}
                 </p>
-                <div class="mt-3 font-mono text-xs text-stone">
+                <div class="mt-3 alt-mono text-xs text-muted">
                   ⏱ {r.minutes} min read
                 </div>
               </a>
@@ -213,30 +219,28 @@ const navSections = [
         </div>
 
         <!-- Community callout -->
-        <div
-          class="mt-16 rounded-[12px] bg-white p-8 shadow-[0_4px_12px_rgba(15,23,42,0.06)]"
-        >
+        <div class="mt-16 rounded-[12px] bg-surface p-8 shadow-[var(--shadow-widget)]">
           <h3 class="text-xl font-semibold text-ink">Need help?</h3>
-          <p class="mt-2 text-sm text-ink/80">
+          <p class="mt-2 text-sm" style="color: color-mix(in srgb, var(--c-ink) 80%, transparent)">
             Niamoto is maintained by Arsis and its research partners. Open a
             discussion, file an issue, or contribute.
           </p>
           <div class="mt-5 flex flex-wrap gap-3 text-sm">
             <a
               href="https://github.com/niamoto/niamoto/discussions"
-              class="rounded-[999px] border border-border-strong px-4 py-1.5 font-medium text-ink hover:bg-surface-low"
+              class="frond-btn frond-btn--outline"
             >
               GitHub Discussions
             </a>
             <a
               href="https://github.com/niamoto/niamoto/issues/new"
-              class="rounded-[999px] border border-border-strong px-4 py-1.5 font-medium text-ink hover:bg-surface-low"
+              class="frond-btn frond-btn--outline"
             >
               File an issue
             </a>
             <a
               href="https://github.com/niamoto/niamoto/blob/main/CONTRIBUTING.md"
-              class="rounded-[999px] border border-border-strong px-4 py-1.5 font-medium text-ink hover:bg-surface-low"
+              class="frond-btn frond-btn--outline"
             >
               Contribute a plugin
             </a>
@@ -246,5 +250,5 @@ const navSections = [
     </div>
   </section>
 
-  <Footer />
-</BaseLayout>
+  <FrondFooter locale="en" />
+</AltLayout>

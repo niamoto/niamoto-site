@@ -10,6 +10,9 @@
 @source "../../layouts/AltLayout.astro";
 @source "../../pages/index.astro";
 @source "../../pages/fr/index.astro";
+@source "../../pages/documentation/**/*.astro";
+@source "../../pages/plugins/**/*.astro";
+@source "../../pages/showcase/**/*.astro";
 
 /* Fonts + Frond theme tokens. */
 @import "./fonts.css";
