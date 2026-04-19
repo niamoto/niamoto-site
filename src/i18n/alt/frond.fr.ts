@@ -191,7 +191,7 @@ export default {
     lead:
       "Un portail n'est pas intéressant parce qu'un déploiement atteint tel chiffre, mais parce que son système de publication reste lisible quand le projet change d'échelle, de territoire, ou survit à son financement initial.",
     items: [
-      { title: "La preuve avant le score", body: "Écrans, fiches taxons et notes de méthode disent plus qu'un KPI placé en hero." },
+      { title: "La preuve avant le score", body: "Écrans, fiches de détail et notes de méthode disent plus qu'un KPI placé en hero." },
       { title: "La méthode reste visible", body: "La chaîne éditoriale reste dans le récit, pour qu'on comprenne ce qui a produit la page consultée." },
       { title: "Même grammaire, plusieurs territoires", body: "La Nouvelle-Calédonie est un exemple, pas tout le récit. La page la cadre comme un déploiement parmi d'autres." },
       { title: "Le statique comme qualité", body: "Un portail écologique partageable doit rester déployable, archivable et lisible sans dépendance à une plateforme." },

@@ -191,7 +191,7 @@ export default {
     lead:
       "A portal is interesting not because one deployment reached a figure, but because the publishing system stays legible when the project scales, changes region, or outlives its initial funding.",
     items: [
-      { title: "Evidence over scoreboard", body: "Screens, taxon sheets, and method notes communicate more than a hero KPI ever will." },
+      { title: "Evidence over scoreboard", body: "Screens, detail pages, and method notes communicate more than a hero KPI ever will." },
       { title: "Method stays visible", body: "The publishing chain remains part of the narrative, so readers understand what produced the page they are consulting." },
       { title: "Same grammar, many territories", body: "Nouvelle-Calédonie is an example, not the whole story. The page frames it as one deployment among others." },
       { title: "Static as a feature", body: "A shareable ecological portal should remain deployable, archivable, and readable without platform dependence." },
