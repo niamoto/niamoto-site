@@ -22,7 +22,7 @@ interface Card {
   meta: string;
   title: string;
   body: string;
-  images: readonly ImageKey[];
+  images: readonly [ImageKey] | readonly [ImageKey, ImageKey];
   notes: readonly Note[];
 }
 
