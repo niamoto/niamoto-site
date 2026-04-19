@@ -1,0 +1,72 @@
+---
+import NiamotoLogo from "@/components/NiamotoLogo.astro";
+import type { Locale } from "@/i18n/config";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const prefix = locale === "fr" ? "/fr" : "";
+
+const cols = [
+  {
+    title: "Project",
+    links: [
+      { label: "Documentation", href: `${prefix}/documentation` },
+      { label: "Plugins", href: `${prefix}/plugins` },
+      { label: "Showcase", href: `${prefix}/showcase/nouvelle-caledonie` },
+      { label: "Changelog", href: "https://github.com/niamoto/niamoto/releases" },
+    ],
+  },
+  {
+    title: "Community",
+    links: [
+      { label: "GitHub", href: "https://github.com/niamoto/niamoto" },
+      { label: "Discussions", href: "https://github.com/niamoto/niamoto/discussions" },
+      { label: "Contributing", href: "https://github.com/niamoto/niamoto/blob/main/CONTRIBUTING.md" },
+      { label: "Code of Conduct", href: "https://github.com/niamoto/niamoto/blob/main/CODE_OF_CONDUCT.md" },
+    ],
+  },
+  {
+    title: "Made by",
+    links: [
+      { label: "Arsis · Independent dev studio", href: "https://arsis.dev" },
+      { label: "Montpellier, France", href: null },
+    ],
+  },
+] as const;
+---
+
+<footer class="frond-footer">
+  <div class="frond-footer__inner">
+    <div class="frond-footer__brand">
+      <NiamotoLogo size="md" color="light" locale={locale} />
+      <p class="frond-footer__tagline">Ecological data, from field to web.</p>
+      <p class="frond-footer__license">GPL v3</p>
+    </div>
+
+    <div class="frond-footer__cols">
+      {cols.map((col) => (
+        <div class="frond-footer__col">
+          <h4 class="frond-footer__col-title">{col.title}</h4>
+          <ul>
+            {col.links.map((link) => (
+              <li>
+                {link.href ? (
+                  <a href={link.href} {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}>{link.label}</a>
+                ) : (
+                  <span>{link.label}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="frond-footer__legal">
+    © 2026 Niamoto contributors
+  </div>
+</footer>
