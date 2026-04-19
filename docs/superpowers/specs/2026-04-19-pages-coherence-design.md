@@ -98,9 +98,9 @@ Chaque page legacy suit cette règle de migration :
 | `text-stone` | `.text-muted` |
 | `text-stone-light` | `.text-muted` (on perd la nuance, acceptable pour un hover-state inactif) |
 | `text-forest-green` | `.text-accent` |
-| `shadow-[0_4px_12px_rgba(15,23,42,0.06)]` | inline `box-shadow: var(--shadow-widget)` |
-| `shadow-[0_8px_20px_rgba(15,23,42,0.08)]` | `var(--shadow-widget-hover)` |
-| `shadow-[0_1px_2px_rgba(15,23,42,0.04)]` | `var(--shadow-sm)` |
+| `shadow-[0_4px_12px_rgba(15,23,42,0.06)]` | `shadow-[var(--shadow-widget)]` (Tailwind arbitrary value) |
+| `shadow-[0_8px_20px_rgba(15,23,42,0.08)]` | `shadow-[var(--shadow-widget-hover)]` |
+| `shadow-[0_1px_2px_rgba(15,23,42,0.04)]` | `shadow-[var(--shadow-sm)]` |
 | `font-mono` | (identique — `.font-mono` déjà utilisable via Tailwind, mais préférer `.alt-mono` défini dans alt/base.css qui pointe sur `var(--f-mono)`) |
 | `rounded-[8px]` | garder tel quel (utilitaire Tailwind) |
 | `rounded-[12px]` | idem |
@@ -173,11 +173,11 @@ Chaque page legacy suit cette règle de migration :
 #### `/plugins/index.astro`
 
 - Shell swap
-- Hero avec 4 type badges → `.frond-status-chip` variants. Mapping :
-  - Transformers (leaf/vert) → `frond-status-chip--leaf`
-  - Widgets (steel/bleu) → `frond-status-chip--steel`
-  - Loaders (amber/orange) → ajouter une variante `frond-status-chip--amber` à frond.css
-  - Exporters (violet) → ajouter `frond-status-chip--violet`
+- Hero avec 4 type badges → `.frond-status-chip` variants. Mapping (basé sur les vraies couleurs du fichier plugins/index.astro) :
+  - Transformers (green `#2E7D32`) → `frond-status-chip--leaf`
+  - Widgets (steel `#5B86B0`) → `frond-status-chip--steel`
+  - Loaders (violet `#9333EA`) → ajouter une variante `frond-status-chip--violet` à frond.css
+  - Exporters (green `#2E7D32`, même teinte que Transformers) → `frond-status-chip--leaf`
 - Filter bar sticky : `var(--c-surface)` bg + `var(--c-hairline)` border
 - Grid de plugin cards : chaque card en `.frond-widget`, badge type en haut, nom en mono, version en bas
 - Plugin `typeStyle` inline-style → remplacer par les classes `frond-status-chip--*`
@@ -215,7 +215,7 @@ Chaque page legacy suit cette règle de migration :
 | Fichier | Action |
 |---------|--------|
 | `src/components/alt/shared/FrondFooter.astro` | **Créer** |
-| `src/styles/alt/frond.css` | Ajout `.frond-footer*`, `.frond-btn*`, `frond-status-chip--amber/violet` |
+| `src/styles/alt/frond.css` | Ajout `.frond-footer*`, `.frond-btn*`, `frond-status-chip--violet` |
 | `src/pages/documentation/index.astro` | Shell swap + class migration |
 | `src/pages/plugins/index.astro` | Shell swap + class migration + badges |
 | `src/pages/showcase/nouvelle-caledonie.astro` | Shell swap + class migration + Button/Pill remplacés |
