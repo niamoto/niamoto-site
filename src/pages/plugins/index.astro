@@ -1,35 +1,18 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import Button from "@/components/Button.astro";
+import AltLayout from "@/layouts/AltLayout.astro";
+import FrondHeader from "@/components/alt/frond-live/FrondHeader.astro";
+import FrondFooter from "@/components/alt/shared/FrondFooter.astro";
 
 type PluginType = "transformer" | "widget" | "loader" | "exporter";
 
-const typeStyle: Record<
+const typeChip: Record<
   PluginType,
-  { label: string; bg: string; color: string }
+  { label: string; variant: "leaf" | "steel" | "violet" }
 > = {
-  transformer: {
-    label: "TRANSFORMER",
-    bg: "rgba(75, 175, 80, 0.12)",
-    color: "#2E7D32",
-  },
-  widget: {
-    label: "WIDGET",
-    bg: "rgba(91, 134, 176, 0.12)",
-    color: "#5B86B0",
-  },
-  loader: {
-    label: "LOADER",
-    bg: "rgba(147, 51, 234, 0.12)",
-    color: "#9333EA",
-  },
-  exporter: {
-    label: "EXPORTER",
-    bg: "rgba(46, 125, 50, 0.14)",
-    color: "#2E7D32",
-  },
+  transformer: { label: "TRANSFORMER", variant: "leaf" },
+  widget:      { label: "WIDGET",      variant: "steel" },
+  loader:      { label: "LOADER",      variant: "violet" },
+  exporter:    { label: "EXPORTER",    variant: "leaf" },
 };
 
 const plugins: Array<{
@@ -62,33 +45,35 @@ const filters = [
 ];
 ---
 
-<BaseLayout
+<AltLayout
+  theme="frond"
+  locale="en"
   title="Plugins — Niamoto"
   description="Niamoto is extended through four plugin types: Transformers, Widgets, Loaders, Exporters. Mix and match to shape your pipeline."
 >
-  <Header active="plugins" />
+  <FrondHeader locale="en" />
 
   <!-- Hero -->
-  <section class="bg-canvas py-16">
+  <section class="py-16">
     <div class="mx-auto max-w-[1200px] px-6 text-center">
       <h1 class="text-5xl font-bold tracking-[-0.02em] text-ink">
         Plugins for every ecological workflow
       </h1>
-      <p class="mx-auto mt-3 max-w-[720px] text-lg text-stone">
+      <p class="mx-auto mt-3 max-w-[720px] text-lg text-muted">
         Niamoto is extended through four plugin types. Mix and match to shape
         your pipeline — from raw CSVs to published portals.
       </p>
       <div class="mt-8 flex flex-wrap items-center justify-center gap-2">
-        <span class="rounded-[999px] bg-white px-4 py-1.5 text-sm text-ink shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+        <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
           42 Transformers
         </span>
-        <span class="rounded-[999px] bg-white px-4 py-1.5 text-sm text-ink shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+        <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
           28 Widgets
         </span>
-        <span class="rounded-[999px] bg-white px-4 py-1.5 text-sm text-ink shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+        <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
           12 Loaders
         </span>
-        <span class="rounded-[999px] bg-white px-4 py-1.5 text-sm text-ink shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+        <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
           8 Exporters
         </span>
       </div>
@@ -96,7 +81,10 @@ const filters = [
   </section>
 
   <!-- Filter bar -->
-  <div class="sticky top-[73px] z-40 border-b border-border bg-white/95 backdrop-blur-md">
+  <div
+    class="sticky top-[48px] z-40 border-b border-hairline backdrop-blur-md"
+    style="background: color-mix(in srgb, var(--c-surface) 95%, transparent)"
+  >
     <div
       class="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-4 px-6 py-4"
     >
@@ -108,20 +96,21 @@ const filters = [
               class:list={[
                 "pb-1",
                 f.active
-                  ? "border-b-2 border-forest-green font-semibold text-ink"
-                  : "text-stone hover:text-ink",
+                  ? "border-b-2 font-semibold text-ink"
+                  : "text-muted hover:text-ink",
               ]}
+              style={f.active ? "border-color: var(--c-accent)" : ""}
             >
               {f.label} ({f.count})
             </a>
           ))
         }
       </nav>
-      <div class="flex items-center gap-3 text-xs text-stone">
+      <div class="flex items-center gap-3 text-xs text-muted">
         <input
           type="search"
           placeholder="Search plugins..."
-          class="rounded-[6px] border border-border bg-white px-3 py-1.5 font-mono text-xs text-ink placeholder:text-stone-light focus:border-forest-green focus:outline-none"
+          class="rounded-[6px] border border-hairline bg-surface px-3 py-1.5 alt-mono text-xs text-ink placeholder:text-muted focus:outline-none"
         />
         <span>Most used ▾</span>
       </div>
@@ -133,24 +122,21 @@ const filters = [
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {
         plugins.map((p) => {
-          const style = typeStyle[p.type];
+          const chip = typeChip[p.type];
           return (
-            <div class="flex flex-col rounded-[12px] bg-white p-6 shadow-[0_4px_12px_rgba(15,23,42,0.06)]">
-              <span
-                class="self-start rounded-[999px] px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider"
-                style={`background:${style.bg}; color:${style.color}`}
-              >
-                {style.label}
+            <div class="flex flex-col rounded-[12px] bg-surface p-6 shadow-[var(--shadow-widget)]">
+              <span class={`frond-status-chip frond-status-chip--${chip.variant} self-start`}>
+                {chip.label}
               </span>
-              <h3 class="mt-3 font-mono text-lg font-bold text-ink">
+              <h3 class="mt-3 alt-mono text-lg font-bold text-ink">
                 {p.name}
               </h3>
-              <p class="mt-2 flex-1 text-sm leading-relaxed text-ink/80">
+              <p class="mt-2 flex-1 text-sm leading-relaxed" style="color: color-mix(in srgb, var(--c-ink) 80%, transparent)">
                 {p.body}
               </p>
-              <div class="mt-4 flex items-center justify-between text-xs text-stone">
+              <div class="mt-4 flex items-center justify-between text-xs text-muted">
                 <span>Used by {p.usedBy} projects</span>
-                <span class="font-mono">v{p.version}</span>
+                <span class="alt-mono">v{p.version}</span>
               </div>
             </div>
           );
@@ -160,30 +146,29 @@ const filters = [
   </section>
 
   <!-- Contribute -->
-  <section class="bg-canvas py-24">
+  <section class="py-24">
     <div class="mx-auto max-w-[800px] px-6 text-center">
       <h2 class="text-[32px] font-bold text-ink">Build your own</h2>
-      <p class="mt-3 text-[15px] leading-relaxed text-stone">
+      <p class="mt-3 text-[15px] leading-relaxed text-muted">
         Plugins are plain Python with a YAML contract. Clone the template,
         implement your logic, register it with a decorator.
       </p>
 
-      <pre class="mx-auto mt-8 max-w-[640px] overflow-auto rounded-[8px] bg-[#16161A] p-4 text-left font-mono text-[13px] leading-relaxed text-[#E5E7EB]"><code>@register("my_plugin", PluginType.TRANSFORMER)
+      <pre class="mx-auto mt-8 max-w-[640px] overflow-auto rounded-[8px] bg-[#16161A] p-4 text-left alt-mono text-[13px] leading-relaxed text-[#E5E7EB]"><code>@register("my_plugin", PluginType.TRANSFORMER)
 class MyPlugin(Transformer):
     config_model = MyPluginConfig
     ...</code></pre>
 
       <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
-        <Button
-          variant="outline"
+        <a
           href="/documentation"
-          size="md"
+          class="frond-btn frond-btn--outline"
         >
           Read the Plugin API
-        </Button>
+        </a>
         <a
           href="https://github.com/niamoto/niamoto-plugin-template"
-          class="text-sm font-medium text-steel-blue hover:underline"
+          class="text-sm font-medium text-accent hover:underline"
         >
           Plugin template repo →
         </a>
@@ -191,5 +176,5 @@ class MyPlugin(Transformer):
     </div>
   </section>
 
-  <Footer />
-</BaseLayout>
+  <FrondFooter locale="en" />
+</AltLayout>
