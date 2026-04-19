@@ -1,23 +1,29 @@
 ---
 /*
- * EditorialWidgets — faithful port of the app's Collections > Blocks editor.
+ * EditorialWidgets — faithful port of the app's Collections > taxons > Blocks view.
  * Source of truth: src/niamoto/gui/ui/src/features/collections/components/CollectionPanel.tsx
- * Two-pane layout: configured widgets list (left) + live preview (right).
- * Real widget names from nouvelle-caledonie taxons config.
+ * Layout: tab bar with run computation + widget list (left) + live preview (right).
+ * Content drawn from the nouvelle-caledonie taxons.yml config.
  */
 
 import MacWindow from "./MacWindow.astro";
 ---
 
-<MacWindow title="Niamoto" subtitle="Collections · taxons · Blocks">
+<MacWindow title="Niamoto" subtitle="Collections · taxons">
   <div class="edw">
-    <!-- Toolbar -->
-    <div class="edw__toolbar">
-      <span class="edw__badge">18 widgets configured</span>
-      <span class="edw__entities">1 667 entities · Hierarchical</span>
-      <span class="edw__save">
-        <svg viewBox="0 0 24 24" width="7" height="7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-        Save
+    <!-- Tab bar: Sources / Blocks / List / Export + Run button -->
+    <div class="edw__tabs">
+      <span class="edw__tab">Sources</span>
+      <span class="edw__tab edw__tab--active">
+        <svg viewBox="0 0 24 24" width="7" height="7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Blocks
+      </span>
+      <span class="edw__tab">List</span>
+      <span class="edw__tab">Export</span>
+      <span class="edw__meta">1 667 entities · Hierarchical</span>
+      <span class="edw__run">
+        <svg viewBox="0 0 24 24" width="6" height="6" fill="#fff" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+        Run
       </span>
     </div>
 
@@ -26,93 +32,128 @@ import MacWindow from "./MacWindow.astro";
       <div class="edw__list">
         <div class="edw__add">
           <svg viewBox="0 0 24 24" width="8" height="8" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          <span>Add widget</span>
+          Add widget
         </div>
 
         <div class="edw__item">
           <span class="edw__drag" aria-hidden="true">⋮⋮</span>
-          <span class="edw__name">Navigation taxonomique</span>
-          <span class="edw__kind edw__kind--nav">Nav</span>
+          <span class="edw__icon edw__icon--nav" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="7" height="7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h12M3 18h8"/></svg>
+          </span>
+          <span class="edw__body">
+            <span class="edw__name">Navigation taxonomique</span>
+            <span class="edw__kind">Navigation</span>
+          </span>
         </div>
+
         <div class="edw__item">
           <span class="edw__drag" aria-hidden="true">⋮⋮</span>
-          <span class="edw__name">Distribution géographique</span>
-          <span class="edw__kind edw__kind--map">Map</span>
+          <span class="edw__icon edw__icon--map" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="7" height="7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/></svg>
+          </span>
+          <span class="edw__body">
+            <span class="edw__name">Distribution géographique</span>
+            <span class="edw__kind">Interactive map</span>
+          </span>
         </div>
+
         <div class="edw__item">
           <span class="edw__drag" aria-hidden="true">⋮⋮</span>
-          <span class="edw__name">Informations générales</span>
-          <span class="edw__kind edw__kind--info">Info</span>
+          <span class="edw__icon edw__icon--info" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="7" height="7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          </span>
+          <span class="edw__body">
+            <span class="edw__name">Informations générales</span>
+            <span class="edw__kind">Info grid</span>
+          </span>
         </div>
+
         <div class="edw__item">
           <span class="edw__drag" aria-hidden="true">⋮⋮</span>
-          <span class="edw__name">Sous-taxons principaux</span>
-          <span class="edw__kind edw__kind--chart">Bar</span>
+          <span class="edw__icon edw__icon--chart" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="7" height="7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+          </span>
+          <span class="edw__body">
+            <span class="edw__name">Sous-taxons principaux</span>
+            <span class="edw__kind">Bar chart</span>
+          </span>
         </div>
+
         <div class="edw__item">
           <span class="edw__drag" aria-hidden="true">⋮⋮</span>
-          <span class="edw__name">Distribution DBH</span>
-          <span class="edw__kind edw__kind--chart">Bar</span>
+          <span class="edw__icon edw__icon--gauge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="7" height="7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 0 1 18 0"/><line x1="12" y1="12" x2="16" y2="8"/></svg>
+          </span>
+          <span class="edw__body">
+            <span class="edw__name">Hauteur maximale</span>
+            <span class="edw__kind">Gauge</span>
+          </span>
         </div>
-        <div class="edw__item">
-          <span class="edw__drag" aria-hidden="true">⋮⋮</span>
-          <span class="edw__name">Hauteur maximale</span>
-          <span class="edw__kind edw__kind--gauge">Gauge</span>
-        </div>
-        <div class="edw__more">+ 12 more</div>
+
+        <div class="edw__more">+ 13 more widgets</div>
       </div>
 
-      <!-- Right pane: live preview stack -->
+      <!-- Right pane: live preview canvas -->
       <div class="edw__preview">
+        <!-- Map widget (full width) -->
         <div class="edw__widget">
           <div class="edw__widget-head">
+            <span class="edw__handle" aria-hidden="true">⋮⋮</span>
             <span class="edw__widget-title">Distribution géographique</span>
-            <span class="edw__kind edw__kind--map">Map</span>
+            <span class="edw__widget-tag edw__widget-tag--map">Interactive map</span>
           </div>
-          <svg viewBox="0 0 100 30" class="edw__map" aria-hidden="true">
-            <!-- Stylised NC shape -->
-            <path d="M10,18 Q22,10 35,16 T60,14 Q78,20 90,17 L92,22 Q82,27 65,23 T38,25 Q22,22 10,24 Z"
-                  fill="#f3efe4" stroke="#c4b393" stroke-width="0.4" stroke-linejoin="round"/>
-            <!-- occurrence dots -->
-            <circle cx="22" cy="20" r="0.8" fill="#7e22ce"/>
-            <circle cx="28" cy="18" r="0.9" fill="#7e22ce"/>
-            <circle cx="34" cy="19" r="0.7" fill="#7e22ce"/>
-            <circle cx="40" cy="17" r="1.1" fill="#7e22ce"/>
-            <circle cx="46" cy="19" r="0.8" fill="#7e22ce"/>
-            <circle cx="52" cy="18" r="0.9" fill="#7e22ce"/>
-            <circle cx="58" cy="20" r="0.7" fill="#7e22ce"/>
-            <circle cx="64" cy="19" r="0.8" fill="#7e22ce"/>
-            <circle cx="70" cy="20" r="0.9" fill="#7e22ce"/>
-            <circle cx="76" cy="21" r="0.7" fill="#7e22ce"/>
-            <circle cx="82" cy="20" r="0.8" fill="#7e22ce"/>
+          <svg viewBox="0 0 100 22" class="edw__map" preserveAspectRatio="none" aria-hidden="true">
+            <rect width="100" height="22" fill="#f0f2f6"/>
+            <!-- NC shape -->
+            <path d="M10,13 Q22,5 35,11 T60,9 Q78,15 90,12 L92,17 Q82,22 65,18 T38,20 Q22,17 10,19 Z"
+                  fill="#faf5ea" stroke="#c4b393" stroke-width="0.3"/>
+            <circle cx="24" cy="15" r="0.7" fill="#7e22ce"/><circle cx="30" cy="13" r="0.9" fill="#7e22ce"/>
+            <circle cx="36" cy="14" r="0.6" fill="#7e22ce"/><circle cx="42" cy="12" r="1" fill="#7e22ce"/>
+            <circle cx="48" cy="14" r="0.7" fill="#7e22ce"/><circle cx="54" cy="13" r="0.8" fill="#7e22ce"/>
+            <circle cx="60" cy="15" r="0.6" fill="#7e22ce"/><circle cx="66" cy="14" r="0.7" fill="#7e22ce"/>
+            <circle cx="72" cy="15" r="0.8" fill="#7e22ce"/><circle cx="78" cy="16" r="0.6" fill="#7e22ce"/>
+            <circle cx="84" cy="15" r="0.7" fill="#7e22ce"/>
           </svg>
         </div>
 
+        <!-- Info grid + bar chart row -->
         <div class="edw__widget-row">
           <div class="edw__widget edw__widget--half">
             <div class="edw__widget-head">
-              <span class="edw__widget-title">Sous-taxons principaux</span>
+              <span class="edw__handle" aria-hidden="true">⋮⋮</span>
+              <span class="edw__widget-title">Informations générales</span>
+              <span class="edw__widget-tag edw__widget-tag--info">Info</span>
             </div>
-            <div class="edw__bars">
-              <div class="edw__bar"><span class="edw__bar-label">Tristaniopsis</span><span class="edw__bar-fill" style="width:96%; background:#60a5fa"></span></div>
-              <div class="edw__bar"><span class="edw__bar-label">Melaleuca</span><span class="edw__bar-fill" style="width:84%; background:#ef4444"></span></div>
-              <div class="edw__bar"><span class="edw__bar-label">Arillastrum</span><span class="edw__bar-fill" style="width:78%; background:#22c55e"></span></div>
-              <div class="edw__bar"><span class="edw__bar-label">Syzygium</span><span class="edw__bar-fill" style="width:62%; background:#a855f7"></span></div>
+            <div class="edw__infogrid">
+              <div class="edw__cell"><span class="edw__cell-label">Taxon</span><span class="edw__cell-value">Myrtaceae</span></div>
+              <div class="edw__cell"><span class="edw__cell-label">Rang</span><span class="edw__cell-value">Famille</span></div>
+              <div class="edw__cell edw__cell--span"><span class="edw__cell-label">Occurrences</span><span class="edw__cell-value edw__cell-value--big">20 039</span></div>
             </div>
           </div>
 
           <div class="edw__widget edw__widget--half">
             <div class="edw__widget-head">
-              <span class="edw__widget-title">Hauteur maximale</span>
+              <span class="edw__handle" aria-hidden="true">⋮⋮</span>
+              <span class="edw__widget-title">Sous-taxons</span>
+              <span class="edw__widget-tag edw__widget-tag--chart">Bar</span>
             </div>
-            <svg viewBox="0 0 60 32" class="edw__gauge" aria-hidden="true">
-              <path d="M8,28 A22,22 0 0 1 52,28" fill="none" stroke="#f3f4f6" stroke-width="5" stroke-linecap="round"/>
-              <path d="M8,28 A22,22 0 0 1 43,11" fill="none" stroke="#0d9488" stroke-width="5" stroke-linecap="round"/>
-              <text x="30" y="29" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#0f172a">45m</text>
-            </svg>
+            <div class="edw__bars">
+              <div class="edw__bar"><span class="edw__bar-label">Tristaniopsis c.</span><span class="edw__bar-fill" style="width:96%; background:#7ba9d8"></span><span class="edw__bar-value">889</span></div>
+              <div class="edw__bar"><span class="edw__bar-label">Melaleuca q.</span><span class="edw__bar-fill" style="width:88%; background:#a34f4f"></span><span class="edw__bar-value">899</span></div>
+              <div class="edw__bar"><span class="edw__bar-label">Arillastrum g.</span><span class="edw__bar-fill" style="width:80%; background:#7ec17e"></span><span class="edw__bar-value">881</span></div>
+              <div class="edw__bar"><span class="edw__bar-label">Syzygium m.</span><span class="edw__bar-fill" style="width:70%; background:#8c6cb8"></span><span class="edw__bar-value">697</span></div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="edw__footbar">
+      <span>18 widgets configured</span>
+      <span class="edw__dot" aria-hidden="true"></span>
+      <span>2 columns</span>
+      <span class="edw__dot" aria-hidden="true"></span>
+      <span>Drag to reorder</span>
     </div>
   </div>
 </MacWindow>
@@ -123,50 +164,63 @@ import MacWindow from "./MacWindow.astro";
     display: flex;
     flex-direction: column;
     padding: 0.35rem 0.45rem;
-    gap: 0.3rem;
+    gap: 0.28rem;
     font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
     color: #111827;
     min-height: 0;
   }
 
-  .edw__toolbar {
+  /* Tab bar */
+  .edw__tabs {
     display: flex;
     align-items: center;
-    gap: 0.45rem;
+    gap: 0.4rem;
     padding-bottom: 0.2rem;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid #e5e7eb;
   }
 
-  .edw__badge {
-    font-size: 0.5rem;
-    font-weight: 600;
-    color: #111827;
-  }
-
-  .edw__entities {
-    flex: 1;
-    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
-    font-size: 0.45rem;
+  .edw__tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.15rem 0.3rem;
+    font-size: 0.48rem;
+    font-weight: 500;
     color: #9ca3af;
   }
 
-  .edw__save {
+  .edw__tab--active {
+    color: #111827;
+    font-weight: 700;
+    border-bottom: 1.5px solid #111827;
+  }
+
+  .edw__meta {
+    flex: 1;
+    text-align: right;
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    font-size: 0.42rem;
+    color: #9ca3af;
+    padding-right: 0.3rem;
+  }
+
+  .edw__run {
     display: inline-flex;
     align-items: center;
     gap: 0.2rem;
-    padding: 0.15rem 0.4rem;
-    background: #d1fae5;
-    color: #047857;
+    padding: 0.18rem 0.42rem;
+    background: #16a34a;
+    color: #fff;
     border-radius: 3px;
     font-size: 0.48rem;
     font-weight: 600;
   }
 
-  /* Two panes */
+  /* Two-pane body */
   .edw__panes {
     flex: 1;
     display: grid;
-    grid-template-columns: 0.85fr 1fr;
+    grid-template-columns: 0.9fr 1fr;
     gap: 0.3rem;
     min-height: 0;
   }
@@ -194,13 +248,13 @@ import MacWindow from "./MacWindow.astro";
     border-radius: 4px;
     font-size: 0.5rem;
     font-weight: 600;
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.1rem;
   }
 
   .edw__item {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.22rem;
     padding: 0.2rem 0.3rem;
     background: #ffffff;
     border: 1px solid #e5e7eb;
@@ -209,16 +263,41 @@ import MacWindow from "./MacWindow.astro";
 
   .edw__drag {
     font-size: 0.4rem;
-    color: #cbd5e1;
+    color: #94a3b8;
     font-weight: 700;
     line-height: 1;
     letter-spacing: -1px;
     flex-shrink: 0;
   }
 
-  .edw__name {
+  .edw__icon {
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 2.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .edw__icon--nav   { background: #ede9fe; color: #6d28d9; }
+  .edw__icon--map   { background: #d1fae5; color: #047857; }
+  .edw__icon--info  { background: #dbeafe; color: #1d4ed8; }
+  .edw__icon--chart { background: #fef3c7; color: #b45309; }
+  .edw__icon--gauge { background: #ccfbf1; color: #0f766e; }
+  .edw__icon--donut { background: #ffedd5; color: #c2410c; }
+
+  .edw__body {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.1;
+  }
+
+  .edw__name {
     font-size: 0.44rem;
+    font-weight: 600;
     color: #111827;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -226,52 +305,43 @@ import MacWindow from "./MacWindow.astro";
   }
 
   .edw__kind {
-    flex-shrink: 0;
-    padding: 0.04rem 0.25rem;
-    border-radius: 2px;
-    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
-    font-size: 0.38rem;
-    font-weight: 600;
+    font-size: 0.36rem;
+    color: #9ca3af;
   }
 
-  .edw__kind--nav   { background: #ede9fe; color: #6d28d9; }
-  .edw__kind--map   { background: #d1fae5; color: #047857; }
-  .edw__kind--info  { background: #dbeafe; color: #1d4ed8; }
-  .edw__kind--chart { background: #fef3c7; color: #b45309; }
-  .edw__kind--gauge { background: #ccfbf1; color: #0f766e; }
-  .edw__kind--donut { background: #ffedd5; color: #c2410c; }
-
   .edw__more {
-    padding: 0.15rem 0.3rem;
+    padding: 0.2rem 0.3rem;
     font-family: "JetBrains Mono Variable", ui-monospace, monospace;
     font-size: 0.4rem;
     color: #9ca3af;
     text-align: center;
   }
 
-  /* Right pane — live preview stack */
+  /* Right pane — live preview */
   .edw__preview {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.22rem;
     min-height: 0;
   }
 
   .edw__widget {
     background: #ffffff;
     border: 1px solid #e5e7eb;
-    border-radius: 5px;
-    padding: 0.3rem 0.4rem;
+    border-radius: 4px;
+    padding: 0.25rem 0.35rem;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.18rem;
     min-height: 0;
   }
 
   .edw__widget-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.25rem;
+    gap: 0.22rem;
+    flex: 1;
+    min-height: 0;
   }
 
   .edw__widget--half {
@@ -281,12 +351,20 @@ import MacWindow from "./MacWindow.astro";
   .edw__widget-head {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.3rem;
+    gap: 0.22rem;
+  }
+
+  .edw__handle {
+    font-size: 0.38rem;
+    color: #cbd5e1;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1;
   }
 
   .edw__widget-title {
-    font-size: 0.45rem;
+    flex: 1;
+    font-size: 0.44rem;
     font-weight: 600;
     color: #111827;
     overflow: hidden;
@@ -294,13 +372,67 @@ import MacWindow from "./MacWindow.astro";
     white-space: nowrap;
   }
 
-  .edw__map {
-    width: 100%;
-    height: auto;
-    background: #f0f2f6;
-    border-radius: 3px;
+  .edw__widget-tag {
+    flex-shrink: 0;
+    padding: 0.04rem 0.22rem;
+    border-radius: 2px;
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    font-size: 0.36rem;
+    font-weight: 500;
+    color: #6b7280;
+    background: #f1f5f9;
   }
 
+  .edw__widget-tag--map   { background: #d1fae5; color: #047857; }
+  .edw__widget-tag--info  { background: #dbeafe; color: #1d4ed8; }
+  .edw__widget-tag--chart { background: #fef3c7; color: #b45309; }
+
+  .edw__map {
+    width: 100%;
+    height: 2.2rem;
+    border-radius: 2px;
+  }
+
+  /* Info grid (Taxon / Rang / Occurrences) */
+  .edw__infogrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.2rem;
+  }
+
+  .edw__cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+    padding: 0.18rem 0.25rem;
+    background: #f9fafb;
+    border-radius: 2px;
+  }
+
+  .edw__cell--span {
+    grid-column: 1 / -1;
+  }
+
+  .edw__cell-label {
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    font-size: 0.34rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .edw__cell-value {
+    font-size: 0.48rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .edw__cell-value--big {
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    font-size: 0.62rem;
+  }
+
+  /* Bar chart */
   .edw__bars {
     display: flex;
     flex-direction: column;
@@ -309,14 +441,14 @@ import MacWindow from "./MacWindow.astro";
 
   .edw__bar {
     display: grid;
-    grid-template-columns: 3rem 1fr;
-    gap: 0.3rem;
+    grid-template-columns: 2.6rem 1fr auto;
+    gap: 0.2rem;
     align-items: center;
   }
 
   .edw__bar-label {
     font-family: "JetBrains Mono Variable", ui-monospace, monospace;
-    font-size: 0.38rem;
+    font-size: 0.36rem;
     color: #6b7280;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -325,13 +457,33 @@ import MacWindow from "./MacWindow.astro";
 
   .edw__bar-fill {
     display: inline-block;
-    height: 0.3rem;
+    height: 0.28rem;
     border-radius: 1px;
   }
 
-  .edw__gauge {
-    width: 100%;
-    height: auto;
-    flex: 1;
+  .edw__bar-value {
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    font-size: 0.36rem;
+    color: #111827;
+    font-weight: 600;
+  }
+
+  /* Footer */
+  .edw__footbar {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding-top: 0.2rem;
+    border-top: 1px solid #f1f5f9;
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    font-size: 0.4rem;
+    color: #9ca3af;
+  }
+
+  .edw__dot {
+    width: 0.15rem;
+    height: 0.15rem;
+    border-radius: 50%;
+    background: #cbd5e1;
   }
 </style>
