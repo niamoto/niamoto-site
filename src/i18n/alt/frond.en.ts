@@ -59,14 +59,14 @@ export default {
         title: "Transform with plugins.",
         body:
           "Declarative YAML transforms turn raw data into indexes, statistics, distributions, and widgets. Extend what is missing.",
-        snippet: "- group_by: taxons\n  widgets_data:\n    top_species:\n      plugin: top_ranking\n    distribution_map:\n      plugin: geospatial_extractor",
+        snippet: "- group_by: taxons\n  widgets_data:\n    distribution_map:\n      plugin: geospatial_extractor\n- group_by: plots\n  widgets_data:\n    species_list:\n      plugin: top_ranking",
       },
       {
         stage: "03 · SITE",
         color: "forest",
         title: "Publish a static portal.",
         body:
-          "Auto-generated site with maps, charts, and taxon pages. Deploy anywhere — GitHub Pages, Netlify, your own server.",
+          "Auto-generated site with maps, charts, and per-group pages. Deploy anywhere — GitHub Pages, Netlify, your own server.",
         snippet: "niamoto run\n# → exports/web/ ready to deploy",
       },
     ],
@@ -95,20 +95,20 @@ export default {
         meta: "BROWSING SURFACE",
         title: "A list becomes a way of reading the corpus.",
         body:
-          "Taxons are not just stored. They are presented as a legible index that can be scanned, filtered, and revisited by botanists, managers, or contributors.",
+          "Each group is presented as a legible index that can be scanned, filtered, and revisited by botanists, managers, or contributors — 1 667 taxons here, plots and shapes in another tab.",
         image: "index" as const,
         notes: [
-          { key: "Corpus", body: "The list shows the scale of the corpus — every taxon accessible and individually readable." },
+          { key: "Corpus", body: "The list shows the scale of the group — every entry accessible and individually readable." },
           { key: "Filters", body: "Sorting and browsing remain attached to ecological categories, not only technical fields." },
-          { key: "Continuity", body: "From this index, every taxon sheet keeps the same visual and narrative language." },
+          { key: "Continuity", body: "From this index, every detail page keeps the same visual and narrative language." },
         ],
       },
       {
         label: "03 · SHEET",
         meta: "REFERENCE SURFACE",
-        title: "A taxon page is where map, evidence, and method meet.",
+        title: "A group detail page is where map, evidence, and method meet.",
         body:
-          "The taxon sheet is the clearest output: a single page that assembles occurrences, territorial context, and reading cues into a durable reference.",
+          "The detail page for any Niamoto group — taxon, plot, shape, or another reference — is the clearest output: a single page that assembles occurrences, territorial context, and reading cues into a durable reference.",
         image: "sheet" as const,
         notes: [
           { key: "Map", body: "Occurrences are visible as a territorial pattern, not a hidden attribute." },
