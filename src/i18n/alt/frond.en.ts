@@ -83,7 +83,7 @@ export default {
         title: "The portal opens with orientation, not noise.",
         body:
           "Maps, recent additions, and portal sections are presented as reading landmarks. The page introduces a territory and the way its data is organised at the same time.",
-        image: "home" as const,
+        images: ["home"] as const,
         notes: [
           { key: "Context", body: "The territory is named and situated before any stat becomes meaningful." },
           { key: "Access", body: "Navigation gives direct entry to taxons, plots, methods, and updates." },
@@ -96,7 +96,7 @@ export default {
         title: "A list becomes a way of reading the corpus.",
         body:
           "Each group is presented as a legible index that can be scanned, filtered, and revisited by botanists, managers, or contributors — 1 667 taxons here, plots and shapes in another tab.",
-        image: "index" as const,
+        images: ["taxons-index", "plots-index"] as const,
         notes: [
           { key: "Corpus", body: "The list shows the scale of the group — every entry accessible and individually readable." },
           { key: "Filters", body: "Sorting and browsing remain attached to ecological categories, not only technical fields." },
@@ -109,7 +109,7 @@ export default {
         title: "A group detail page is where map, evidence, and method meet.",
         body:
           "The detail page for any Niamoto group — taxon, plot, shape, or another reference — is the clearest output: a single page that assembles occurrences, territorial context, and reading cues into a durable reference.",
-        image: "sheet" as const,
+        images: ["taxon-detail", "plot-detail"] as const,
         notes: [
           { key: "Map", body: "Occurrences are visible as a territorial pattern, not a hidden attribute." },
           { key: "Method", body: "Charts and summaries remain tied to the way the data was structured upstream." },

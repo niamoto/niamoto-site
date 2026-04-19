@@ -83,7 +83,7 @@ export default {
         title: "Le portail s'ouvre par l'orientation, pas par le bruit.",
         body:
           "Cartes, ajouts récents et sections du portail sont présentés comme des repères de lecture. La page introduit à la fois un territoire et l'organisation des données.",
-        image: "home" as const,
+        images: ["home"] as const,
         notes: [
           { key: "Contexte", body: "Le territoire est nommé et situé avant que toute statistique ne prenne sens." },
           { key: "Accès", body: "La navigation donne une entrée directe vers taxons, parcelles, méthodes et mises à jour." },
@@ -96,7 +96,7 @@ export default {
         title: "Une liste devient une manière de lire le corpus.",
         body:
           "Chaque groupe est présenté dans un index lisible, que l'on peut parcourir, filtrer et revisiter — 1 667 taxons ici, parcelles et shapes dans un autre onglet.",
-        image: "index" as const,
+        images: ["taxons-index", "plots-index"] as const,
         notes: [
           { key: "Corpus", body: "La liste donne l'échelle du groupe : chaque entrée y reste accessible et lisible individuellement." },
           { key: "Filtres", body: "Le parcours reste attaché à des catégories écologiques, pas seulement à des champs techniques." },
@@ -109,7 +109,7 @@ export default {
         title: "La fiche de groupe est l'endroit où carte, preuve et méthode se rencontrent.",
         body:
           "La fiche de détail de n'importe quel groupe Niamoto — taxon, parcelle, shape ou autre référence — est le résultat le plus abouti : une page unique qui assemble occurrences, contexte territorial et repères de lecture dans un format durable.",
-        image: "sheet" as const,
+        images: ["taxon-detail", "plot-detail"] as const,
         notes: [
           { key: "Carte", body: "Les occurrences deviennent une forme territoriale visible, pas un attribut caché." },
           { key: "Méthode", body: "Graphiques et résumés restent liés à la manière dont les données ont été structurées." },
