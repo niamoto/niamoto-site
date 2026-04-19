@@ -1,152 +1,118 @@
 ---
 /*
- * EditorialWidgets — faithful port of the app's WidgetGallery, scaled for hero.
- * Source of truth: src/niamoto/gui/ui/src/components/widgets/{WidgetGallery,WidgetOptionCard,types}.tsx
- * Real 7 categories, real colors, real copy.
+ * EditorialWidgets — faithful port of the app's Collections > Blocks editor.
+ * Source of truth: src/niamoto/gui/ui/src/features/collections/components/CollectionPanel.tsx
+ * Two-pane layout: configured widgets list (left) + live preview (right).
+ * Real widget names from nouvelle-caledonie taxons config.
  */
 
 import MacWindow from "./MacWindow.astro";
 ---
 
-<MacWindow title="Niamoto" subtitle="Collections">
+<MacWindow title="Niamoto" subtitle="Collections · taxons · Blocks">
   <div class="edw">
-    <!-- Section header -->
-    <div class="edw__head">
-      <div>
-        <div class="edw__eyebrow">Collections · Taxon</div>
-        <div class="edw__title">Add widgets</div>
-      </div>
-      <div class="edw__group">
-        <span class="edw__group-label">Group by</span>
-        <span class="edw__group-value">taxon_id</span>
-      </div>
-    </div>
-
-    <!-- Category filter chips -->
-    <div class="edw__chips">
-      <span class="edw__chip edw__chip--all">
-        <svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        All <span class="edw__chip-count">24</span>
+    <!-- Toolbar -->
+    <div class="edw__toolbar">
+      <span class="edw__badge">18 widgets configured</span>
+      <span class="edw__entities">1 667 entities · Hierarchical</span>
+      <span class="edw__save">
+        <svg viewBox="0 0 24 24" width="7" height="7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Save
       </span>
-      <span class="edw__chip edw__chip--chart">Graphique <span class="edw__chip-count">8</span></span>
-      <span class="edw__chip edw__chip--map">Carte <span class="edw__chip-count">3</span></span>
-      <span class="edw__chip edw__chip--info">Information <span class="edw__chip-count">4</span></span>
-      <span class="edw__chip edw__chip--gauge">Jauge <span class="edw__chip-count">2</span></span>
     </div>
 
-    <!-- Widget cards grid -->
-    <div class="edw__grid">
+    <div class="edw__panes">
+      <!-- Left pane: configured widget list -->
+      <div class="edw__list">
+        <div class="edw__add">
+          <svg viewBox="0 0 24 24" width="8" height="8" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Add widget</span>
+        </div>
 
-      <!-- 1. Bar / chart -->
-      <div class="edw__card">
-        <div class="edw__mini">
-          <svg viewBox="0 0 60 28" class="edw__mini-svg" aria-hidden="true">
-            <rect x="4"  y="14" width="6" height="14" fill="#d97706" rx="1"/>
-            <rect x="13" y="8"  width="6" height="20" fill="#d97706" rx="1"/>
-            <rect x="22" y="4"  width="6" height="24" fill="#d97706" rx="1"/>
-            <rect x="31" y="10" width="6" height="18" fill="#d97706" rx="1"/>
-            <rect x="40" y="16" width="6" height="12" fill="#d97706" rx="1"/>
-            <rect x="49" y="20" width="6" height="8"  fill="#d97706" rx="1"/>
-          </svg>
+        <div class="edw__item">
+          <span class="edw__drag" aria-hidden="true">⋮⋮</span>
+          <span class="edw__name">Navigation taxonomique</span>
+          <span class="edw__kind edw__kind--nav">Nav</span>
         </div>
-        <div class="edw__card-foot">
-          <span class="edw__card-label">Top 10</span>
-          <span class="edw__card-badge edw__card-badge--chart">Graphique</span>
+        <div class="edw__item">
+          <span class="edw__drag" aria-hidden="true">⋮⋮</span>
+          <span class="edw__name">Distribution géographique</span>
+          <span class="edw__kind edw__kind--map">Map</span>
         </div>
+        <div class="edw__item">
+          <span class="edw__drag" aria-hidden="true">⋮⋮</span>
+          <span class="edw__name">Informations générales</span>
+          <span class="edw__kind edw__kind--info">Info</span>
+        </div>
+        <div class="edw__item">
+          <span class="edw__drag" aria-hidden="true">⋮⋮</span>
+          <span class="edw__name">Sous-taxons principaux</span>
+          <span class="edw__kind edw__kind--chart">Bar</span>
+        </div>
+        <div class="edw__item">
+          <span class="edw__drag" aria-hidden="true">⋮⋮</span>
+          <span class="edw__name">Distribution DBH</span>
+          <span class="edw__kind edw__kind--chart">Bar</span>
+        </div>
+        <div class="edw__item">
+          <span class="edw__drag" aria-hidden="true">⋮⋮</span>
+          <span class="edw__name">Hauteur maximale</span>
+          <span class="edw__kind edw__kind--gauge">Gauge</span>
+        </div>
+        <div class="edw__more">+ 12 more</div>
       </div>
 
-      <!-- 2. Map — SELECTED -->
-      <div class="edw__card edw__card--selected">
-        <span class="edw__check" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        </span>
-        <div class="edw__mini">
-          <svg viewBox="0 0 60 28" class="edw__mini-svg" aria-hidden="true">
-            <path d="M6,10 Q14,4 22,9 T38,7 Q48,11 56,9 L56,24 Q46,27 38,24 T22,26 Q12,22 6,25 Z" fill="#a7f3d0" stroke="#059669" stroke-width="0.8" stroke-linejoin="round"/>
-            <circle cx="16" cy="15" r="1.3" fill="#059669"/>
-            <circle cx="24" cy="13" r="1.3" fill="#059669"/>
-            <circle cx="32" cy="18" r="1.3" fill="#059669"/>
-            <circle cx="44" cy="14" r="1.3" fill="#059669"/>
+      <!-- Right pane: live preview stack -->
+      <div class="edw__preview">
+        <div class="edw__widget">
+          <div class="edw__widget-head">
+            <span class="edw__widget-title">Distribution géographique</span>
+            <span class="edw__kind edw__kind--map">Map</span>
+          </div>
+          <svg viewBox="0 0 100 30" class="edw__map" aria-hidden="true">
+            <!-- Stylised NC shape -->
+            <path d="M10,18 Q22,10 35,16 T60,14 Q78,20 90,17 L92,22 Q82,27 65,23 T38,25 Q22,22 10,24 Z"
+                  fill="#f3efe4" stroke="#c4b393" stroke-width="0.4" stroke-linejoin="round"/>
+            <!-- occurrence dots -->
+            <circle cx="22" cy="20" r="0.8" fill="#7e22ce"/>
+            <circle cx="28" cy="18" r="0.9" fill="#7e22ce"/>
+            <circle cx="34" cy="19" r="0.7" fill="#7e22ce"/>
+            <circle cx="40" cy="17" r="1.1" fill="#7e22ce"/>
+            <circle cx="46" cy="19" r="0.8" fill="#7e22ce"/>
+            <circle cx="52" cy="18" r="0.9" fill="#7e22ce"/>
+            <circle cx="58" cy="20" r="0.7" fill="#7e22ce"/>
+            <circle cx="64" cy="19" r="0.8" fill="#7e22ce"/>
+            <circle cx="70" cy="20" r="0.9" fill="#7e22ce"/>
+            <circle cx="76" cy="21" r="0.7" fill="#7e22ce"/>
+            <circle cx="82" cy="20" r="0.8" fill="#7e22ce"/>
           </svg>
         </div>
-        <div class="edw__card-foot">
-          <span class="edw__card-label">Distribution</span>
-          <span class="edw__card-badge edw__card-badge--map">Carte</span>
+
+        <div class="edw__widget-row">
+          <div class="edw__widget edw__widget--half">
+            <div class="edw__widget-head">
+              <span class="edw__widget-title">Sous-taxons principaux</span>
+            </div>
+            <div class="edw__bars">
+              <div class="edw__bar"><span class="edw__bar-label">Tristaniopsis</span><span class="edw__bar-fill" style="width:96%; background:#60a5fa"></span></div>
+              <div class="edw__bar"><span class="edw__bar-label">Melaleuca</span><span class="edw__bar-fill" style="width:84%; background:#ef4444"></span></div>
+              <div class="edw__bar"><span class="edw__bar-label">Arillastrum</span><span class="edw__bar-fill" style="width:78%; background:#22c55e"></span></div>
+              <div class="edw__bar"><span class="edw__bar-label">Syzygium</span><span class="edw__bar-fill" style="width:62%; background:#a855f7"></span></div>
+            </div>
+          </div>
+
+          <div class="edw__widget edw__widget--half">
+            <div class="edw__widget-head">
+              <span class="edw__widget-title">Hauteur maximale</span>
+            </div>
+            <svg viewBox="0 0 60 32" class="edw__gauge" aria-hidden="true">
+              <path d="M8,28 A22,22 0 0 1 52,28" fill="none" stroke="#f3f4f6" stroke-width="5" stroke-linecap="round"/>
+              <path d="M8,28 A22,22 0 0 1 43,11" fill="none" stroke="#0d9488" stroke-width="5" stroke-linecap="round"/>
+              <text x="30" y="29" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#0f172a">45m</text>
+            </svg>
+          </div>
         </div>
       </div>
-
-      <!-- 3. Donut -->
-      <div class="edw__card">
-        <div class="edw__mini">
-          <svg viewBox="0 0 60 28" class="edw__mini-svg" aria-hidden="true">
-            <circle cx="30" cy="14" r="10" fill="none" stroke="#f3f4f6" stroke-width="5"/>
-            <circle cx="30" cy="14" r="10" fill="none" stroke="#ea580c" stroke-width="5" stroke-dasharray="37 63" stroke-dashoffset="0" transform="rotate(-90 30 14)"/>
-            <circle cx="30" cy="14" r="10" fill="none" stroke="#fb923c" stroke-width="5" stroke-dasharray="22 78" stroke-dashoffset="-37" transform="rotate(-90 30 14)"/>
-          </svg>
-        </div>
-        <div class="edw__card-foot">
-          <span class="edw__card-label">Statut</span>
-          <span class="edw__card-badge edw__card-badge--donut">Donut</span>
-        </div>
-      </div>
-
-      <!-- 4. Gauge -->
-      <div class="edw__card">
-        <div class="edw__mini">
-          <svg viewBox="0 0 60 28" class="edw__mini-svg" aria-hidden="true">
-            <path d="M12,22 A18,18 0 0 1 48,22" fill="none" stroke="#f3f4f6" stroke-width="4" stroke-linecap="round"/>
-            <path d="M12,22 A18,18 0 0 1 38,10" fill="none" stroke="#0d9488" stroke-width="4" stroke-linecap="round"/>
-            <text x="30" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="600" fill="#0f172a">68%</text>
-          </svg>
-        </div>
-        <div class="edw__card-foot">
-          <span class="edw__card-label">Endemism</span>
-          <span class="edw__card-badge edw__card-badge--gauge">Jauge</span>
-        </div>
-      </div>
-
-      <!-- 5. Stats / info -->
-      <div class="edw__card">
-        <div class="edw__mini">
-          <svg viewBox="0 0 60 28" class="edw__mini-svg" aria-hidden="true">
-            <rect x="4"  y="5"  width="24" height="8" rx="1.5" fill="#dbeafe"/>
-            <rect x="32" y="5"  width="24" height="8" rx="1.5" fill="#dbeafe"/>
-            <rect x="4"  y="16" width="24" height="8" rx="1.5" fill="#dbeafe"/>
-            <rect x="32" y="16" width="24" height="8" rx="1.5" fill="#dbeafe"/>
-            <text x="8" y="11" font-family="JetBrains Mono, monospace" font-size="5" font-weight="700" fill="#1e40af">14K</text>
-            <text x="36" y="11" font-family="JetBrains Mono, monospace" font-size="5" font-weight="700" fill="#1e40af">3.4K</text>
-            <text x="8" y="22" font-family="JetBrains Mono, monospace" font-size="5" font-weight="700" fill="#1e40af">216</text>
-            <text x="36" y="22" font-family="JetBrains Mono, monospace" font-size="5" font-weight="700" fill="#1e40af">88%</text>
-          </svg>
-        </div>
-        <div class="edw__card-foot">
-          <span class="edw__card-label">Summary</span>
-          <span class="edw__card-badge edw__card-badge--info">Information</span>
-        </div>
-      </div>
-
-      <!-- 6. Navigation -->
-      <div class="edw__card">
-        <div class="edw__mini">
-          <svg viewBox="0 0 60 28" class="edw__mini-svg" aria-hidden="true">
-            <circle cx="10" cy="8"  r="1.5" fill="#7c3aed"/><rect x="14" y="6.5" width="20" height="3" rx="0.8" fill="#ddd6fe"/>
-            <circle cx="14" cy="14" r="1.5" fill="#7c3aed"/><rect x="18" y="12.5" width="16" height="3" rx="0.8" fill="#ddd6fe"/>
-            <circle cx="14" cy="20" r="1.5" fill="#7c3aed"/><rect x="18" y="18.5" width="24" height="3" rx="0.8" fill="#ddd6fe"/>
-            <circle cx="18" cy="26" r="1.2" fill="#a78bfa"/><rect x="22" y="24.8" width="14" height="2.4" rx="0.6" fill="#ede9fe"/>
-          </svg>
-        </div>
-        <div class="edw__card-foot">
-          <span class="edw__card-label">Hierarchy</span>
-          <span class="edw__card-badge edw__card-badge--nav">Navigation</span>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Footer status -->
-    <div class="edw__foot">
-      <span class="edw__foot-count">1 / 24 selected</span>
-      <span class="edw__foot-meta">6 fields · Combine available</span>
     </div>
   </div>
 </MacWindow>
@@ -156,207 +122,216 @@ import MacWindow from "./MacWindow.astro";
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 0.55rem 0.7rem 0.4rem;
+    padding: 0.35rem 0.45rem;
+    gap: 0.3rem;
     font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
     color: #111827;
-    gap: 0.35rem;
     min-height: 0;
   }
 
-  .edw__head {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 0.5rem;
-  }
-
-  .edw__eyebrow {
-    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
-    font-size: 0.48rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #6b7280;
-    font-weight: 600;
-  }
-
-  .edw__title {
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: -0.015em;
-    color: #111827;
-  }
-
-  .edw__group {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    padding: 0.2rem 0.4rem;
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 5px;
-    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
-  }
-
-  .edw__group-label {
-    font-size: 0.48rem;
-    color: #9ca3af;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .edw__group-value {
-    font-size: 0.55rem;
-    color: #111827;
-    font-weight: 600;
-  }
-
-  .edw__chips {
-    display: flex;
-    gap: 0.2rem;
-    flex-wrap: nowrap;
-    overflow: hidden;
-  }
-
-  .edw__chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.2rem;
-    padding: 0.2rem 0.38rem;
-    border-radius: 5px;
-    font-size: 0.52rem;
-    font-weight: 500;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    color: #4b5563;
-    white-space: nowrap;
-  }
-
-  .edw__chip-count {
-    display: inline-block;
-    padding: 0 0.2rem;
-    background: #f3f4f6;
-    border-radius: 3px;
-    font-size: 0.45rem;
-    font-weight: 600;
-    color: #6b7280;
-  }
-
-  /* Active "All" chip */
-  .edw__chip--all {
-    background: #2e7d32;
-    border-color: #2e7d32;
-    color: #ffffff;
-    box-shadow: 0 1px 2px rgba(46, 125, 50, 0.25);
-  }
-
-  .edw__chip--all .edw__chip-count {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    color: #ffffff;
-  }
-
-  .edw__grid {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.3rem;
-    min-height: 0;
-  }
-
-  .edw__card {
-    position: relative;
-    border: 1px solid rgba(229, 231, 235, 0.8);
-    border-radius: 6px;
-    background: #ffffff;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .edw__card--selected {
-    border: 1.5px solid #10b981;
-    background: rgba(16, 185, 129, 0.06);
-    box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.2);
-  }
-
-  .edw__check {
-    position: absolute;
-    top: 0.2rem;
-    right: 0.2rem;
-    width: 0.75rem;
-    height: 0.75rem;
-    background: #10b981;
-    border-radius: 50%;
+  .edw__toolbar {
     display: flex;
     align-items: center;
-    justify-content: center;
-    z-index: 2;
+    gap: 0.45rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid #f1f5f9;
   }
 
-  .edw__mini {
-    flex: 1;
-    padding: 0.25rem;
-    background: #f9fafb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 0;
-  }
-
-  .edw__mini-svg {
-    width: 100%;
-    height: 100%;
-    max-height: 1.4rem;
-  }
-
-  .edw__card-foot {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.2rem;
-    padding: 0.2rem 0.3rem;
-    border-top: 1px solid #f3f4f6;
-  }
-
-  .edw__card-label {
+  .edw__badge {
     font-size: 0.5rem;
     font-weight: 600;
     color: #111827;
-    white-space: nowrap;
+  }
+
+  .edw__entities {
+    flex: 1;
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    font-size: 0.45rem;
+    color: #9ca3af;
+  }
+
+  .edw__save {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.15rem 0.4rem;
+    background: #d1fae5;
+    color: #047857;
+    border-radius: 3px;
+    font-size: 0.48rem;
+    font-weight: 600;
+  }
+
+  /* Two panes */
+  .edw__panes {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 0.85fr 1fr;
+    gap: 0.3rem;
+    min-height: 0;
+  }
+
+  /* Left pane — configured widgets list */
+  .edw__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.25rem;
+    background: #f9fafb;
+    border: 1px solid #f1f5f9;
+    border-radius: 5px;
+    min-height: 0;
+  }
+
+  .edw__add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.4rem;
+    background: #2e7d32;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 0.5rem;
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+  }
+
+  .edw__item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.2rem 0.3rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 3px;
+  }
+
+  .edw__drag {
+    font-size: 0.4rem;
+    color: #cbd5e1;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -1px;
+    flex-shrink: 0;
+  }
+
+  .edw__name {
+    flex: 1;
+    font-size: 0.44rem;
+    color: #111827;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .edw__card-badge {
+  .edw__kind {
     flex-shrink: 0;
-    padding: 0.05rem 0.28rem;
-    border-radius: 3px;
-    font-size: 0.42rem;
-    font-weight: 500;
+    padding: 0.04rem 0.25rem;
+    border-radius: 2px;
     font-family: "JetBrains Mono Variable", ui-monospace, monospace;
-  }
-
-  /* Real app category colors (Tailwind) */
-  .edw__card-badge--chart  { background: #fef3c7; color: #b45309; }
-  .edw__card-badge--map    { background: #d1fae5; color: #047857; }
-  .edw__card-badge--donut  { background: #ffedd5; color: #c2410c; }
-  .edw__card-badge--gauge  { background: #ccfbf1; color: #0f766e; }
-  .edw__card-badge--info   { background: #dbeafe; color: #1d4ed8; }
-  .edw__card-badge--nav    { background: #ede9fe; color: #6d28d9; }
-  .edw__card-badge--table  { background: #f1f5f9; color: #475569; }
-
-  .edw__foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 0.15rem;
-    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
-    font-size: 0.48rem;
-    color: #6b7280;
-  }
-
-  .edw__foot-count {
-    color: #111827;
+    font-size: 0.38rem;
     font-weight: 600;
+  }
+
+  .edw__kind--nav   { background: #ede9fe; color: #6d28d9; }
+  .edw__kind--map   { background: #d1fae5; color: #047857; }
+  .edw__kind--info  { background: #dbeafe; color: #1d4ed8; }
+  .edw__kind--chart { background: #fef3c7; color: #b45309; }
+  .edw__kind--gauge { background: #ccfbf1; color: #0f766e; }
+  .edw__kind--donut { background: #ffedd5; color: #c2410c; }
+
+  .edw__more {
+    padding: 0.15rem 0.3rem;
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    font-size: 0.4rem;
+    color: #9ca3af;
+    text-align: center;
+  }
+
+  /* Right pane — live preview stack */
+  .edw__preview {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-height: 0;
+  }
+
+  .edw__widget {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+    padding: 0.3rem 0.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-height: 0;
+  }
+
+  .edw__widget-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.25rem;
+  }
+
+  .edw__widget--half {
+    min-width: 0;
+  }
+
+  .edw__widget-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.3rem;
+  }
+
+  .edw__widget-title {
+    font-size: 0.45rem;
+    font-weight: 600;
+    color: #111827;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .edw__map {
+    width: 100%;
+    height: auto;
+    background: #f0f2f6;
+    border-radius: 3px;
+  }
+
+  .edw__bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .edw__bar {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 0.3rem;
+    align-items: center;
+  }
+
+  .edw__bar-label {
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    font-size: 0.38rem;
+    color: #6b7280;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .edw__bar-fill {
+    display: inline-block;
+    height: 0.3rem;
+    border-radius: 1px;
+  }
+
+  .edw__gauge {
+    width: 100%;
+    height: auto;
+    flex: 1;
   }
 </style>
