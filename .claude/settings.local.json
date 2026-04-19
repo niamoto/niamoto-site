@@ -75,7 +75,8 @@
       "Bash(grep -nA8 \"frond-reading-card__image\")",
       "Bash(git -C /Users/julienbarbe/Dev/clients/niamoto-site diff 478a33e..33c1375 -- src/i18n/alt/frond.fr.ts src/i18n/alt/frond.en.ts)",
       "Bash(git -C /Users/julienbarbe/Dev/clients/niamoto-site status --short)",
-      "Bash(git -C /Users/julienbarbe/Dev/clients/niamoto-site diff src/i18n/alt/frond.en.ts)"
+      "Bash(git -C /Users/julienbarbe/Dev/clients/niamoto-site diff src/i18n/alt/frond.en.ts)",
+      "Bash(git mv *)"
     ]
   },
   "enableAllProjectMcpServers": true,
