@@ -1,0 +1,83 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import type { Locale } from "@/i18n/config";
+
+interface Note {
+  key: string;
+  body: string;
+}
+
+interface Card {
+  label: string;
+  meta: string;
+  title: string;
+  body: string;
+  image: "home" | "index" | "sheet";
+  notes: readonly Note[];
+}
+
+interface Props {
+  locale: Locale;
+  kicker: string;
+  heading: string;
+  sub: string;
+  cards: readonly Card[];
+}
+
+const { locale, kicker, heading, sub, cards } = Astro.props;
+const imageLocale = locale === "fr" ? "French" : "English";
+
+function imgFor(kind: "home" | "index" | "sheet") {
+  if (kind === "home")  return `/showcase/portail-alt/home-${locale}.png`;
+  if (kind === "index") return `/showcase/portail-alt/preview-taxons-${locale}.png`;
+  return `/showcase/portail-alt/species-${locale}.png`;
+}
+function altFor(kind: "home" | "index" | "sheet") {
+  if (kind === "home")  return `${imageLocale} preview of the Niamoto portal home page`;
+  if (kind === "index") return `${imageLocale} preview of the Niamoto taxon index`;
+  return `${imageLocale} preview of a Niamoto species page`;
+}
+---
+
+<section id="reading" class="frond-section" aria-labelledby="frond-reading-heading">
+  <FadeUpOnView client:visible className="frond-head">
+    <EyebrowTag variant="accent">{kicker}</EyebrowTag>
+    <h2 id="frond-reading-heading" class="display frond-heading">{heading}</h2>
+    <p class="frond-sub">{sub}</p>
+  </FadeUpOnView>
+
+  <div class="frond-reading-grid">
+    {cards.map((card, index) => (
+      <FadeUpOnView client:visible delay={0.05 + index * 0.08} className={`frond-reading-card frond-reading-card--${card.image}`}>
+        <div class="frond-reading-card__inner">
+          <div class="frond-reading-card__media">
+            <div class="frond-reading-card__topline">
+              <span class="frond-reading-card__label">{card.label}</span>
+              <span class="frond-reading-card__meta">{card.meta}</span>
+            </div>
+            <img
+              class="frond-reading-card__image"
+              src={imgFor(card.image)}
+              alt={altFor(card.image)}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="frond-reading-card__body">
+            <h3 class="frond-reading-card__title">{card.title}</h3>
+            <p class="frond-reading-card__copy">{card.body}</p>
+            <ul class="frond-reading-card__notes">
+              {card.notes.map((n) => (
+                <li>
+                  <span class="frond-reading-card__note-key">{n.key}</span>
+                  <span class="frond-reading-card__note-body">{n.body}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </FadeUpOnView>
+    ))}
+  </div>
+</section>

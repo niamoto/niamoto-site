@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Plus Jakarta Sans",system-ui,sans-serif;
+  background:#ffffff;
+  color:oklch(0.16 0.005 270);
+  -webkit-font-smoothing:antialiased;
+  padding:20px;
+}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.sw{display:flex;flex-direction:column;gap:4px;min-width:0}
+.swatch{width:100%;height:56px;border-radius:7px;border:1px solid rgba(208,213,221,0.6)}
+.lbl{font-size:11px;font-weight:600;letter-spacing:-0.01em}
+.val{font-family:"JetBrains Mono",monospace;font-size:10px;color:oklch(0.5 0.01 250)}
+.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:oklch(0.5 0.01 250);font-weight:600;margin-bottom:10px}

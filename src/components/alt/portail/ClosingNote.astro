@@ -1,0 +1,73 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import ButtonInButton from "@/components/alt/shared/ButtonInButton.astro";
+import FunderGrid from "@/components/alt/shared/FunderGrid.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  body: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
+  fundersHeading: string;
+}
+
+const { eyebrow, title, body, ctaPrimary, ctaSecondary, fundersHeading } = Astro.props;
+---
+
+<section class="portail-closing" aria-label={title}>
+  <FadeUpOnView client:visible className="portail-closing__inner">
+    <EyebrowTag variant="accent">{eyebrow}</EyebrowTag>
+    <h2 class="display portail-closing__title">{title}</h2>
+    <p class="portail-closing__body">{body}</p>
+    <div class="portail-closing__cta">
+      <ButtonInButton variant="primary" href="https://github.com/niamoto/niamoto" target="_blank" rel="noopener">
+        {ctaPrimary}
+      </ButtonInButton>
+      <ButtonInButton variant="secondary" href="/documentation">
+        {ctaSecondary}
+      </ButtonInButton>
+    </div>
+  </FadeUpOnView>
+
+  <FadeUpOnView client:visible delay={0.15} className="portail-closing__funders">
+    <FunderGrid heading={fundersHeading} variant="compact" />
+  </FadeUpOnView>
+</section>
+
+<style>
+  .portail-closing {
+    padding: 3rem 1.5rem 6rem;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .portail-closing__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 52rem;
+    margin-bottom: 4rem;
+  }
+  .portail-closing__title {
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    font-variation-settings: "wght" 500;
+    color: var(--c-ink);
+    letter-spacing: -0.035em;
+  }
+  .portail-closing__body {
+    margin: 0;
+    color: var(--c-muted);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  .portail-closing__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .portail-closing__funders {
+    padding-top: 3rem;
+    border-top: 1px solid var(--c-hairline);
+  }
+</style>

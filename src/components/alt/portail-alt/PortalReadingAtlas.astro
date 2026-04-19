@@ -1,0 +1,155 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import type { Locale } from "@/i18n/config";
+
+interface Note {
+  key: string;
+  body: string;
+}
+
+interface Card {
+  label: string;
+  meta: string;
+  title: string;
+  body: string;
+  image: "home" | "index" | "sheet";
+  notes: readonly Note[];
+}
+
+interface Props {
+  locale: Locale;
+  kicker: string;
+  heading: string;
+  sub: string;
+  cards: readonly Card[];
+}
+
+const { locale, kicker, heading, sub, cards } = Astro.props;
+const imageLocale = locale === "fr" ? "French" : "English";
+---
+
+<section id="reading" class="portail-alt-section" aria-labelledby="portail-alt-reading-heading">
+  <div class="portail-alt-head">
+    <EyebrowTag variant="accent">{kicker}</EyebrowTag>
+    <h2 id="portail-alt-reading-heading" class="display portail-alt-heading">{heading}</h2>
+    <p class="portail-alt-sub">{sub}</p>
+  </div>
+
+  <div class="portail-alt-reading__grid">
+    {cards.map((card, index) => (
+      <FadeUpOnView client:visible delay={index * 0.06} className={`portail-alt-reading__card portail-alt-reading__card--${card.image}`}>
+        <article class="portail-alt-reading__article">
+          <div class="portail-alt-frame">
+            <div class="portail-alt-frame__topline">
+              <span class="portail-alt-frame__label">{card.label}</span>
+              <span class="portail-alt-frame__meta">{card.meta}</span>
+            </div>
+            {card.image === "index" ? (
+              <div class="portail-alt-shot-viewport portail-alt-shot-viewport--index">
+                <img
+                  class="portail-alt-shot portail-alt-shot--index-fit"
+                  src={`/showcase/portail-alt/preview-taxons-${locale}.png`}
+                  alt={`${imageLocale} full-width preview of the Niamoto taxon index`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            ) : (
+              <img
+                class:list={[
+                  "portail-alt-shot",
+                  "portail-alt-shot--card",
+                  card.image === "home" ? "portail-alt-shot--home-tight" : "",
+                ]}
+                src={
+                  card.image === "home"
+                    ? `/showcase/portail-alt/home-${locale}.png`
+                    : `/showcase/portail-alt/species-${locale}.png`
+                }
+                alt={card.image === "home" ? `${imageLocale} preview of the Niamoto portal home page` : `${imageLocale} preview of a Niamoto species page`}
+                loading="lazy"
+                decoding="async"
+              />
+            )}
+          </div>
+
+          <div class="portail-alt-reading__body">
+            <p class="portail-alt-kicker">{card.label}</p>
+            <h3 class="display portail-alt-reading__title">{card.title}</h3>
+            <p class="portail-alt-reading__copy">{card.body}</p>
+            <ul class="portail-alt-annotation-list">
+              {card.notes.map((note) => (
+                <li>
+                  <span class="portail-alt-annotation-key">{note.key}</span>
+                  <span class="portail-alt-annotation-body">{note.body}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      </FadeUpOnView>
+    ))}
+  </div>
+</section>
+
+<style is:global>
+  .portail-alt-reading__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .portail-alt-reading__card--home {
+    grid-column: span 7;
+  }
+
+  .portail-alt-reading__card--index {
+    grid-column: span 5;
+  }
+
+  .portail-alt-reading__card--sheet {
+    grid-column: span 12;
+  }
+
+  .portail-alt-reading__article {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  .portail-alt-reading__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 0.5rem 0.25rem 0;
+  }
+
+  .portail-alt-reading__title {
+    font-size: clamp(1.45rem, 2.6vw, 2.2rem);
+    color: var(--c-ink);
+    letter-spacing: -0.03em;
+  }
+
+  .portail-alt-reading__copy {
+    margin: 0;
+    color: var(--c-muted);
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 1100px) {
+    .portail-alt-reading__card--home,
+    .portail-alt-reading__card--index,
+    .portail-alt-reading__card--sheet {
+      grid-column: span 12;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .portail-alt-reading__article {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

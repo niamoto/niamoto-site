@@ -1,0 +1,67 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import type { Locale } from "@/i18n/config";
+
+interface Region {
+  name: string;
+  sub: string;
+  status: string;
+  statusLabel: string;
+  title: string;
+  partners: string;
+  href: string | null;
+  image: string | null;
+}
+
+interface Props {
+  locale: Locale;
+  kicker: string;
+  heading: string;
+  sub: string;
+  regions: readonly Region[];
+}
+
+const { locale, kicker, heading, sub, regions } = Astro.props;
+const visitLabel = locale === "fr" ? "Visiter" : "Visit";
+const comingLabel = locale === "fr" ? "À venir 2026" : "Coming 2026";
+---
+
+<section class="frond-section" aria-labelledby="frond-showcase-heading">
+  <FadeUpOnView client:visible className="frond-head">
+    <EyebrowTag variant="outlined">{kicker}</EyebrowTag>
+    <h2 id="frond-showcase-heading" class="display frond-heading">{heading}</h2>
+    <p class="frond-sub">{sub}</p>
+  </FadeUpOnView>
+
+  <div class="frond-showcase-grid">
+    {regions.map((r, index) => (
+      <FadeUpOnView client:visible delay={0.05 + index * 0.07} className="frond-region-card">
+        <div class="frond-region-card__media">
+          <div class="frond-region-card__chip-area">
+            <span class={`frond-status-chip frond-status-chip--${r.status === "active" ? "leaf" : "steel"}`}>
+              <span class="frond-status-chip__dot" aria-hidden="true"></span>
+              {r.statusLabel}
+            </span>
+          </div>
+          {r.image ? (
+            <img src={r.image} alt={`${r.name} portal preview`} loading="lazy" decoding="async" />
+          ) : (
+            <div class="frond-region-card__placeholder">{comingLabel}</div>
+          )}
+        </div>
+        <div class="frond-region-card__body">
+          <span class="frond-region-card__sub">{r.sub}</span>
+          <h3 class="frond-region-card__title">{r.title}</h3>
+          <p class="frond-region-card__name">{r.name}</p>
+          <p class="frond-region-card__partners">{r.partners}</p>
+          {r.href && (
+            <a class="frond-region-card__link" href={r.href} target="_blank" rel="noopener">
+              {visitLabel} <span aria-hidden="true">→</span>
+            </a>
+          )}
+        </div>
+      </FadeUpOnView>
+    ))}
+  </div>
+</section>

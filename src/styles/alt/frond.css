@@ -326,6 +326,7 @@
 [data-theme="frond"] .frond-hero__stage {
   display: grid;
   gap: 1rem;
+  margin-top: 5rem; /* aligns slider top with h1, skipping signage + eyebrow */
 }
 
 
@@ -1063,6 +1064,9 @@
   [data-theme="frond"] .frond-hero {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+  [data-theme="frond"] .frond-hero__stage {
+    margin-top: 0;
   }
   [data-theme="frond"] .frond-reading-card--home,
   [data-theme="frond"] .frond-reading-card--index,

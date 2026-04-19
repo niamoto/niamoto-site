@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Niamoto Desktop — UI kit</title>
+  <link rel="stylesheet" href="../../colors_and_type.css">
+  <style>
+    html,body{height:100%;margin:0;background:var(--bg);font-family:var(--font-sans);color:var(--fg)}
+    #app{height:100vh;display:flex;flex-direction:column}
+  </style>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="./themes.js"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/babel" src="./Icons.jsx"></script>
+<script type="text/babel" src="./Sidebar.jsx"></script>
+<script type="text/babel" src="./TopBar.jsx"></script>
+<script type="text/babel" src="./Cards.jsx"></script>
+<script type="text/babel" src="./Dashboard.jsx"></script>
+<script type="text/babel" src="./DataScreen.jsx"></script>
+<script type="text/babel" src="./CollectionsScreen.jsx"></script>
+<script type="text/babel" src="./PublishScreen.jsx"></script>
+<script type="text/babel" src="./CommandPalette.jsx"></script>
+<script type="text/babel" src="./WidgetConfigDialog.jsx"></script>
+<script type="text/babel" src="./PluginMarketplace.jsx"></script>
+<script type="text/babel" src="./ThemeSwitcher.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+const TWEAKS = /*EDITMODE-BEGIN*/{
+  "theme": "frond",
+  "openWidgetDialog": false,
+  "openCommandPalette": false
+}/*EDITMODE-END*/;
+
+function App() {
+  const [current, setCurrent] = React.useState(localStorage.getItem('nia-gui-screen') || 'dashboard');
+  const [collapsed, setCollapsed] = React.useState(false);
+  const [theme, setTheme] = React.useState(localStorage.getItem('nia-gui-theme') || TWEAKS.theme);
+  const [cmdOpen, setCmdOpen] = React.useState(!!TWEAKS.openCommandPalette);
+  const [widgetOpen, setWidgetOpen] = React.useState(!!TWEAKS.openWidgetDialog);
+  const [tweaksOn, setTweaksOn] = React.useState(false);
+
+  const project = { name: 'niamoto-nc', path: '~/Projects/niamoto-nc' };
+
+  React.useEffect(() => localStorage.setItem('nia-gui-screen', current), [current]);
+  React.useEffect(() => { localStorage.setItem('nia-gui-theme', theme); window.applyNiaTheme(theme); }, [theme]);
+
+  // ⌘K binding
+  React.useEffect(() => {
+    const onKey = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); setCmdOpen(o => !o); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  // Tweaks handshake — listener FIRST, then announce.
+  React.useEffect(() => {
+    const onMsg = (e) => {
+      if (e.data?.type === '__activate_edit_mode') setTweaksOn(true);
+      else if (e.data?.type === '__deactivate_edit_mode') setTweaksOn(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  const persist = (edits) => window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+
+  const nav = (id) => {
+    if (id === 'widget-config') { setWidgetOpen(true); return; }
+    setCurrent(id);
+  };
+
+  let body;
+  if (current === 'dashboard')   body = <Dashboard project={project} onNavigate={nav}/>;
+  else if (current === 'data')   body = <DataScreen/>;
+  else if (current === 'collections') body = <CollectionsScreen onEditWidget={() => setWidgetOpen(true)}/>;
+  else if (current === 'publish') body = <PublishScreen/>;
+  else if (current === 'plugins') body = <PluginMarketplace/>;
+  else if (current === 'theme')   body = <ThemeSwitcher current={theme} onChoose={(id) => { setTheme(id); persist({ theme: id }); }}/>;
+  else body = <div style={{ padding:28, color:'var(--fg-muted)' }}>
+    <div className="eyebrow">Stub</div>
+    <h1 style={{ textTransform:'capitalize', margin:'4px 0 8px' }}>{current}</h1>
+    <p>This surface exists in the app but is left as a stub in this UI kit.</p>
+  </div>;
+
+  return (
+    <div data-screen-label={current} style={{ display:'flex', height:'100vh' }}>
+      <Sidebar current={current} onNavigate={nav} collapsed={collapsed} onToggle={() => setCollapsed(c => !c)} onCommand={() => setCmdOpen(true)} onTheme={() => setCurrent('theme')}/>
+      <main style={{ flex:1, display:'flex', flexDirection:'column', overflow:'hidden' }}>
+        <TopBar project={project} onAction={nav} onSearch={() => setCmdOpen(true)}/>
+        <div style={{ flex:1, overflow:'auto' }}>{body}</div>
+      </main>
+
+      <CommandPalette open={cmdOpen} onClose={() => setCmdOpen(false)} onNavigate={nav}/>
+      <WidgetConfigDialog open={widgetOpen} onClose={() => setWidgetOpen(false)}/>
+
+      {tweaksOn && <TweaksPanel
+        theme={theme} setTheme={(t) => { setTheme(t); persist({ theme: t }); }}
+        openWidget={() => setWidgetOpen(true)}
+        openCmd={() => setCmdOpen(true)}
+      />}
+    </div>
+  );
+}
+
+function TweaksPanel({ theme, setTheme, openWidget, openCmd }) {
+  return (
+    <div style={{
+      position:'fixed', right:16, bottom:16, zIndex:10000,
+      width:260, background:'var(--surface)', border:'1px solid var(--border)',
+      borderRadius:10, boxShadow:'var(--shadow-lg)', fontFamily:'var(--font-sans)',
+      overflow:'hidden'
+    }}>
+      <div style={{
+        display:'flex', alignItems:'center', padding:'10px 12px',
+        borderBottom:'1px solid var(--border)', background:'var(--bg-muted)'
+      }}>
+        <div style={{ fontSize:12, fontWeight:600, color:'var(--fg)', letterSpacing:'-0.01em' }}>Tweaks</div>
+        <div style={{ flex:1 }}/>
+        <span style={{ fontSize:10, color:'var(--fg-muted)', fontFamily:'var(--font-mono)' }}>persists to file</span>
+      </div>
+      <div style={{ padding:12, display:'flex', flexDirection:'column', gap:10 }}>
+        <div>
+          <div style={{ fontSize:11, fontWeight:600, color:'var(--fg-muted)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:6 }}>Theme preset</div>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:4 }}>
+            {Object.entries(window.NIA_THEMES).map(([id, t]) => {
+              const active = id === theme;
+              return (
+                <button key={id} onClick={() => setTheme(id)} style={{
+                  display:'flex', alignItems:'center', gap:6, padding:'6px 8px',
+                  border: active ? '1px solid var(--nia-forest)' : '1px solid var(--border)',
+                  background: active ? 'var(--bg-muted)' : 'var(--surface)',
+                  borderRadius:6, cursor:'pointer', textAlign:'left',
+                  fontFamily:'var(--font-sans)', fontSize:12, color:'var(--fg)',
+                  fontWeight: active ? 600 : 500
+                }}>
+                  <span style={{ width:10, height:10, borderRadius:99, background: t.primary, border:'1px solid var(--border)' }}/>
+                  {t.name}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div>
+          <div style={{ fontSize:11, fontWeight:600, color:'var(--fg-muted)', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:6 }}>Open dialog</div>
+          <div style={{ display:'flex', gap:6 }}>
+            <button onClick={openCmd} style={{ ...btnOutline, flex:1, padding:'6px 8px', fontSize:12 }}>Command ⌘K</button>
+            <button onClick={openWidget} style={{ ...btnOutline, flex:1, padding:'6px 8px', fontSize:12 }}>Widget editor</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('app')).render(<App/>);
+</script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+---
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import AnimatedCounter from "@/components/alt/motion/AnimatedCounter.tsx";
+import AmborellaMockup from "@/components/alt/portail/AmborellaMockup.astro";
+
+interface FigureCaption {
+  intro: string;
+  body: string;
+}
+
+interface StatBlock {
+  value: number;
+  label: string;
+}
+
+interface Props {
+  num: string;
+  label: string;
+  title: string;
+  body: string;
+  pull?: string;
+  stat?: StatBlock;
+  snippet?: string;
+  figureCaption?: FigureCaption;
+  locale: "en" | "fr";
+}
+
+const { num, label, title, body, pull, stat, snippet, figureCaption, locale } = Astro.props;
+const numberLocale = locale === "fr" ? "fr-FR" : "en-US";
+---
+
+<section class="strate-chapter" id={`ch-${num}`}>
+  <FadeUpOnView client:visible y={28} className="strate-chapter__inner">
+    <aside class="strate-chapter__meta">
+      <span class="strate-chapter-num">{num}</span>
+      <span class="strate-chapter__label">{label}</span>
+    </aside>
+
+    <div class="strate-chapter__main">
+      <h2 class="display strate-chapter__title">{title}</h2>
+      <p class="strate-chapter__body">{body}</p>
+
+      {pull && (
+        <blockquote class="strate-pullquote">
+          <p>{pull}</p>
+        </blockquote>
+      )}
+
+      {stat && (
+        <div class="strate-stat">
+          <span class="strate-stat__value stat-number">
+            <AnimatedCounter client:visible value={stat.value} locale={numberLocale} />
+          </span>
+          <span class="strate-stat__label">{stat.label}</span>
+        </div>
+      )}
+
+      {snippet && (
+        <pre class="strate-snippet"><code>{snippet}</code></pre>
+      )}
+
+      {figureCaption && (
+        <figure class="strate-figure">
+          <div class="strate-figure__media">
+            <AmborellaMockup />
+          </div>
+          <figcaption class="strate-caption">
+            <strong>{figureCaption.intro}</strong> {figureCaption.body}
+          </figcaption>
+        </figure>
+      )}
+    </div>
+  </FadeUpOnView>
+</section>
+
+<style>
+  .strate-chapter {
+    padding: 3rem 1.5rem;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  .strate-chapter__inner {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .strate-chapter__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    position: sticky;
+    top: 6rem;
+  }
+  .strate-chapter-num {
+    font-size: 0.72rem;
+  }
+  .strate-chapter__label {
+    font-family: var(--f-body);
+    font-size: 0.78rem;
+    color: var(--c-muted);
+    line-height: 1.45;
+  }
+
+  .strate-chapter__main {
+    max-width: 44rem;
+  }
+  .strate-chapter__title {
+    font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+    font-variation-settings: "opsz" 90, "wght" 500, "WONK" 0, "SOFT" 75;
+    color: var(--c-ink);
+    letter-spacing: -0.028em;
+    margin-bottom: 1.25rem;
+  }
+  .strate-chapter__body {
+    color: var(--c-ink);
+    font-size: 1.075rem;
+    line-height: 1.7;
+    opacity: 0.9;
+    margin: 0;
+  }
+
+  .strate-pullquote {
+    margin: 2rem 0 0.5rem;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--c-accent-alt);
+  }
+  .strate-pullquote p {
+    margin: 0;
+  }
+
+  .strate-stat {
+    margin-top: 2rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--c-surface);
+    border-left: 3px solid var(--c-accent);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .strate-stat__value {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    color: var(--c-ink);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+  }
+  .strate-stat__label {
+    color: var(--c-muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .strate-snippet {
+    margin: 1.75rem 0 0.5rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--c-surface);
+    border: 1px solid var(--c-hairline);
+    border-radius: 0.5rem;
+    font-family: var(--f-mono);
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--c-ink);
+    overflow-x: auto;
+  }
+
+  .strate-figure {
+    margin: 2rem 0 0.75rem;
+  }
+  .strate-figure__media {
+    aspect-ratio: 600 / 420;
+    border: 1px solid var(--c-hairline);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: var(--c-surface);
+  }
+  .strate-caption {
+    margin-top: 0.75rem;
+    max-width: 42rem;
+  }
+
+  @media (max-width: 900px) {
+    .strate-chapter__inner {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .strate-chapter__meta {
+      position: static;
+      flex-direction: row;
+      gap: 1rem;
+      align-items: baseline;
+    }
+    .strate-chapter {
+      padding: 2rem 1rem;
+    }
+  }
+</style>

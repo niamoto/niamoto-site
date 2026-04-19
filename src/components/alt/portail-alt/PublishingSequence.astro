@@ -1,0 +1,95 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+
+interface Item {
+  number: string;
+  title: string;
+  body: string;
+}
+
+interface Props {
+  kicker: string;
+  heading: string;
+  sub: string;
+  items: readonly Item[];
+}
+
+const { kicker, heading, sub, items } = Astro.props;
+---
+
+<section class="portail-alt-section" aria-labelledby="portail-alt-sequence-heading">
+  <div class="portail-alt-head">
+    <EyebrowTag variant="outlined">{kicker}</EyebrowTag>
+    <h2 id="portail-alt-sequence-heading" class="display portail-alt-heading">{heading}</h2>
+    <p class="portail-alt-sub">{sub}</p>
+  </div>
+
+  <div class="portail-alt-sequence">
+    {items.map((item, index) => (
+      <FadeUpOnView client:visible delay={index * 0.05} className="portail-alt-sequence__item">
+        <div class="portail-alt-sequence__row">
+          <span class="portail-alt-sequence__number">{item.number}</span>
+          <div class="portail-alt-sequence__content">
+            <h3 class="display portail-alt-sequence__title">{item.title}</h3>
+            <p class="portail-alt-sequence__body">{item.body}</p>
+          </div>
+        </div>
+      </FadeUpOnView>
+    ))}
+  </div>
+</section>
+
+<style>
+  .portail-alt-sequence {
+    border-top: 1px solid var(--c-hairline);
+  }
+
+  .portail-alt-sequence__item {
+    border-bottom: 1px solid var(--c-hairline);
+  }
+
+  .portail-alt-sequence__row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    align-items: start;
+  }
+
+  .portail-alt-sequence__number {
+    font-family: var(--f-display);
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--c-accent);
+  }
+
+  .portail-alt-sequence__content {
+    display: grid;
+    grid-template-columns: minmax(180px, 240px) 1fr;
+    gap: 1.5rem;
+    align-items: baseline;
+  }
+
+  .portail-alt-sequence__title {
+    font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+    color: var(--c-ink);
+  }
+
+  .portail-alt-sequence__body {
+    margin: 0;
+    max-width: 52rem;
+    color: var(--c-muted);
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 820px) {
+    .portail-alt-sequence__row,
+    .portail-alt-sequence__content {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+  }
+</style>

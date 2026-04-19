@@ -35,6 +35,7 @@ export default {
     herbarium: "Herbier",
     observatory: "Observatoire",
     portail: "Portail",
+    "portail-alt": "Portail Alt",
     strate: "Strate",
     manifeste: "Manifeste",
     cockpit: "Cockpit",
@@ -42,6 +43,7 @@ export default {
     sporee: "Sporée",
     canopee: "Canopée",
     planche: "Planche",
+    frond: "Frond",
   },
   variantTaglines: {
     atlas: "Creme et sauge. Un atlas scientifique.",
@@ -50,6 +52,7 @@ export default {
     herbarium: "Gravite espresso. Un herbier vivant.",
     observatory: "OLED profond. Un observatoire ecologique vivant.",
     portail: "Du terrain au portail, la preuve en sortie.",
+    "portail-alt": "Le portail comme publication, pas comme tableau de score.",
     strate: "Longform editorial, strate par strate.",
     manifeste: "Un manifeste pour une écologie en libre lecture.",
     cockpit: "Niamoto en direct. Chiffres réels de trois portails.",
@@ -57,6 +60,7 @@ export default {
     sporee: "Niamoto est une graine. Chaque instance dessine un monde.",
     canopee: "Une forêt, de la canopée au sol.",
     planche: "Spécimens pour l'herbier de données à venir.",
+    frond: "Le design system Niamoto, appliqué tel quel.",
   },
   waveLabels: {
     wave1Eyebrow: "VAGUE I — COMPATIBLE NIAMOTO",

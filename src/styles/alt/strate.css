@@ -1,0 +1,111 @@
+/* V7 Strate -- warm linen / mossy green / bronze
+ * Registre : longform editorial, pagination numerotee, magazine scientifique.
+ * Light mode. Fraunces display monumental + Geist body.
+ *
+ * Palette reasoning :
+ *   --c-canvas    #EFEBE2   linen (warmer than cream, hint of yellow-green)
+ *   --c-ink       #1A1815   deep warm brown-black
+ *   --c-muted     #74726A   linen-toned graphite
+ *   --c-accent    #4B6150   mossy green
+ *   --c-accent-alt#8A6D3D   warm bronze (pull-quotes, emphases)
+ */
+
+[data-theme="strate"] {
+  --c-canvas: #EFEBE2;
+  --c-ink: #1A1815;
+  --c-muted: #74726A;
+  --c-accent: #4B6150;
+  --c-accent-alt: #8A6D3D;
+  --c-surface: rgba(26, 24, 21, 0.035);
+  --c-hairline: rgba(26, 24, 21, 0.11);
+  --c-grain-opacity: 0.035;
+
+  --f-display: "Fraunces Variable", Georgia, serif;
+  --f-body: "Geist Variable", system-ui, -apple-system, sans-serif;
+  --f-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Fraunces tuned for longform display -- medium opsz, semibold, softness
+   * intermediate. Italic opens on <em> for emphasis and pull-quotes. */
+  --fvs-display: "opsz" 90, "wght" 500, "WONK" 0, "SOFT" 75;
+  --fvs-body: "wght" 400;
+
+  --ls-display: -0.03em;
+  --ls-body: -0.005em;
+  --lh-display: 1.02;
+  --lh-body: 1.65;
+}
+
+/* Italic accent inside Fraunces display. */
+[data-theme="strate"] .display em,
+[data-theme="strate"] .strate-headline em {
+  font-style: italic;
+  color: var(--c-accent-alt);
+  font-variation-settings: "opsz" 90, "wght" 500, "WONK" 0, "SOFT" 75;
+}
+
+/* Duotone botanical voile -- very subtle bg wash at section breaks. */
+[data-theme="strate"] body {
+  background-color: var(--c-canvas);
+  background-image:
+    radial-gradient(
+      70rem 50rem at 88% 8%,
+      rgba(75, 97, 80, 0.07),
+      transparent 60%
+    ),
+    radial-gradient(
+      50rem 50rem at 6% 60%,
+      rgba(138, 109, 61, 0.06),
+      transparent 62%
+    );
+  background-attachment: fixed;
+}
+
+/* Pull-quote block. */
+[data-theme="strate"] .strate-pullquote {
+  font-family: var(--f-display);
+  font-variation-settings: "opsz" 144, "wght" 400, "WONK" 0, "SOFT" 75;
+  font-style: italic;
+  font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--c-ink);
+}
+
+[data-theme="strate"] .strate-pullquote::before {
+  content: "\201C";
+  display: block;
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 0.6;
+  color: var(--c-accent-alt);
+  opacity: 0.6;
+  margin-bottom: 0.5rem;
+}
+
+/* Chapter number (01/06 etc.) -- mono, small caps. */
+[data-theme="strate"] .strate-chapter-num {
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--c-accent);
+  text-transform: uppercase;
+}
+
+/* Caption for figures. */
+[data-theme="strate"] .strate-caption {
+  font-family: var(--f-body);
+  font-size: 0.8rem;
+  color: var(--c-muted);
+  line-height: 1.55;
+  font-style: italic;
+}
+[data-theme="strate"] .strate-caption strong {
+  color: var(--c-ink);
+  font-weight: 500;
+  font-style: normal;
+}
+
+[data-theme="strate"] .stat-number {
+  font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}

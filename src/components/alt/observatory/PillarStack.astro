@@ -1,0 +1,110 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import StaggeredReveal from "@/components/alt/motion/StaggeredReveal.tsx";
+
+interface PillarItem {
+  kicker: string;
+  title: string;
+  body: string;
+}
+
+interface Props {
+  heading: string;
+  items: readonly PillarItem[];
+  locale: "en" | "fr";
+}
+
+const { heading, items, locale } = Astro.props;
+---
+
+<section class="obs-pillars" aria-label={heading}>
+  <FadeUpOnView client:visible className="obs-pillars__head">
+    <EyebrowTag variant="outlined">{locale === "fr" ? "PIPELINE" : "PIPELINE"}</EyebrowTag>
+    <h2 class="display obs-pillars__heading">{heading}</h2>
+  </FadeUpOnView>
+
+  <StaggeredReveal client:visible stagger={0.08} as="ol" className="obs-pillars__list">
+    {items.map((p) => (
+      <li class="obs-pillar">
+        <span class="obs-pillar__kicker alt-mono">{p.kicker}</span>
+        <h3 class="display obs-pillar__title">{p.title}</h3>
+        <p class="obs-pillar__body">{p.body}</p>
+      </li>
+    ))}
+  </StaggeredReveal>
+</section>
+
+<style is:global>
+  .obs-pillars {
+    padding: 3rem 1.5rem 6rem;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .obs-pillars__head {
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 48rem;
+  }
+  .obs-pillars__heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-variation-settings: "wght" 500;
+    color: var(--c-ink);
+  }
+
+  .obs-pillars__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .obs-pillar {
+    padding: 2rem 2.25rem 2rem 0;
+    border-right: 1px solid var(--c-hairline);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .obs-pillar:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+  .obs-pillar:not(:first-child) {
+    padding-left: 2.25rem;
+  }
+  .obs-pillar__kicker {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    color: var(--c-accent);
+    text-transform: uppercase;
+  }
+  .obs-pillar__title {
+    font-size: 1.5rem;
+    font-variation-settings: "wght" 500;
+    color: var(--c-ink);
+    letter-spacing: -0.025em;
+  }
+  .obs-pillar__body {
+    margin: 0;
+    color: var(--c-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 900px) {
+    .obs-pillars__list {
+      grid-template-columns: 1fr;
+    }
+    .obs-pillar {
+      border-right: none;
+      border-bottom: 1px solid var(--c-hairline);
+      padding: 1.5rem 0;
+    }
+    .obs-pillar:not(:first-child) { padding-left: 0; }
+    .obs-pillar:last-child { border-bottom: none; }
+  }
+</style>

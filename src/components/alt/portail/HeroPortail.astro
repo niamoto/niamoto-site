@@ -1,0 +1,95 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import ButtonInButton from "@/components/alt/shared/ButtonInButton.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+
+type TitleLine = string | { italic: true; text: string };
+
+interface Props {
+  eyebrow: string;
+  titleLines: readonly TitleLine[];
+  sub: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
+}
+
+const { eyebrow, titleLines, sub, ctaPrimary, ctaSecondary } = Astro.props;
+---
+
+<section class="portail-hero" aria-label="Hero">
+  <FadeUpOnView client:visible blur={0} className="portail-hero__inner">
+    <EyebrowTag variant="outlined">{eyebrow}</EyebrowTag>
+
+    <h1 class="display portail-hero__title">
+      {titleLines.map((line) => {
+        if (typeof line === "string") {
+          return <span class="portail-hero__line">{line}</span>;
+        }
+        return <span class="portail-hero__line portail-hero__line--italic"><em>{line.text}</em></span>;
+      })}
+    </h1>
+
+    <p class="portail-hero__sub">{sub}</p>
+
+    <div class="portail-hero__cta">
+      <ButtonInButton variant="primary" href="https://github.com/niamoto/niamoto">
+        {ctaPrimary}
+      </ButtonInButton>
+      <ButtonInButton variant="secondary" href="#rail">
+        {ctaSecondary}
+      </ButtonInButton>
+    </div>
+  </FadeUpOnView>
+</section>
+
+<style>
+  .portail-hero {
+    padding: 10rem 1.5rem 4rem;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .portail-hero__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 62rem;
+  }
+  .portail-hero__title {
+    display: flex;
+    flex-direction: column;
+    font-size: clamp(3.5rem, 9.5vw, 8.5rem);
+    font-variation-settings: "wght" 500;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    color: var(--c-ink);
+  }
+  .portail-hero__line {
+    display: block;
+  }
+  .portail-hero__line--italic em {
+    font-style: italic;
+    font-variation-settings: "wght" 400;
+    color: var(--c-accent);
+  }
+  .portail-hero__sub {
+    max-width: 44rem;
+    color: var(--c-muted);
+    font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+    line-height: 1.6;
+    margin: 0;
+  }
+  .portail-hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .portail-hero {
+      padding: 7rem 1rem 3rem;
+    }
+    .portail-hero__title {
+      font-size: clamp(2.8rem, 13vw, 4.5rem);
+    }
+  }
+</style>

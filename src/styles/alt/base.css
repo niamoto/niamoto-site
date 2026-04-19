@@ -19,6 +19,7 @@
 @import "./herbarium.css";
 @import "./observatory.css";
 @import "./portail.css";
+@import "./portail-alt.css";
 @import "./strate.css";
 @import "./manifeste.css";
 @import "./cockpit.css";
@@ -26,6 +27,7 @@
 @import "./sporee.css";
 @import "./canopee.css";
 @import "./planche.css";
+@import "./frond.css";
 
 /* Semantic token defaults. Each variant's [data-theme] selector overrides. */
 :where([data-theme]) {

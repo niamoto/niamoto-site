@@ -1,0 +1,45 @@
+---
+import AltLayout from "@/layouts/AltLayout.astro";
+import IslandNav from "@/components/alt/shared/IslandNav.astro";
+import type { Locale } from "@/i18n/config";
+import enCopy from "@/i18n/alt/portail-alt.en";
+import frCopy from "@/i18n/alt/portail-alt.fr";
+import PortailAltHero from "./PortailAltHero.astro";
+import PortalReadingAtlas from "./PortalReadingAtlas.astro";
+import PublishingSequence from "./PublishingSequence.astro";
+import PortalPrinciples from "./PortalPrinciples.astro";
+import PortailAltClosing from "./PortailAltClosing.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = locale === "fr" ? frCopy : enCopy;
+---
+
+<AltLayout
+  theme="portail-alt"
+  locale={locale}
+  title={t.meta.title}
+  description={t.meta.description}
+  slug="portail-alt"
+>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <IslandNav locale={locale} slug="portail-alt" />
+
+  <main id="main" class="portail-alt-shell">
+    <PortailAltHero locale={locale} {...t.hero} />
+    <PortalReadingAtlas locale={locale} {...t.reading} />
+    <PublishingSequence {...t.sequence} />
+    <PortalPrinciples {...t.principles} />
+    <PortailAltClosing
+      eyebrow={t.closing.eyebrow}
+      title={t.closing.title}
+      body={t.closing.body}
+      ctaPrimary={t.closing.ctaPrimary}
+      ctaSecondary={t.closing.ctaSecondary}
+      fundersHeading={t.funders.heading}
+    />
+  </main>
+</AltLayout>

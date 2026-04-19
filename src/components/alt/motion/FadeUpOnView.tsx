@@ -13,6 +13,16 @@ interface Props {
   className?: string;
 }
 
+/**
+ * Fades in + lifts up its children.
+ *
+ * Implementation note: uses `initial` + `animate` (fires on mount), NOT
+ * `whileInView`. The enclosing Astro island uses `client:visible`, so
+ * hydration only happens when the element enters the viewport -- which gives
+ * us the same "reveal on scroll" effect without relying on framer-motion's
+ * IntersectionObserver, whose `whileInView` can stall on elements that are
+ * already in the viewport at the moment hydration completes.
+ */
 function FadeUpOnViewInner({
   children,
   delay = 0,
@@ -31,8 +41,7 @@ function FadeUpOnViewInner({
   return (
     <Component
       initial={{ opacity: 0, y, filter: `blur(${blur}px)` }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, margin: "-8% 0px -8% 0px" }}
+      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       transition={{
         duration: 0.8,
         delay,

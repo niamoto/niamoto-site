@@ -1,0 +1,141 @@
+<div class="ed-publish">
+  <div class="ed-publish__card">
+    <div class="ed-publish__band" aria-hidden="true"></div>
+
+    <div class="ed-publish__head">
+      <div class="ed-publish__check" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
+      <div class="ed-publish__titles">
+        <div class="ed-publish__title">Portal published</div>
+        <div class="ed-publish__status">Live · 2.4 s build</div>
+      </div>
+    </div>
+
+    <div class="ed-publish__url">
+      <span class="ed-publish__url-arrow">→</span>
+      <span class="ed-publish__url-value">niamoto.github.io/nc-2025</span>
+    </div>
+
+    <div class="ed-publish__meta">
+      <span><span class="ed-publish__bullet"></span> 216 pages</span>
+      <span><span class="ed-publish__bullet"></span> 3.8 MB</span>
+      <span><span class="ed-publish__bullet"></span> SSG</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ed-publish {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.04) 1px, transparent 0) 0 0 / 14px 14px,
+      linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  }
+
+  .ed-publish__card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    width: 100%;
+    max-width: 18rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ed-publish__band {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #228b22, #2d8f47, #4caf50);
+  }
+
+  .ed-publish__head {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .ed-publish__check {
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 50%;
+    background: rgba(74, 175, 80, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .ed-publish__titles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .ed-publish__title {
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: #111827;
+  }
+
+  .ed-publish__status {
+    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.5rem;
+    color: #4caf50;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ed-publish__url {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    padding: 0.4rem 0.55rem;
+    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.6rem;
+    color: #334155;
+    margin-bottom: 0.55rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .ed-publish__url-arrow {
+    color: #94a3b8;
+  }
+
+  .ed-publish__url-value {
+    color: #2e7d32;
+  }
+
+  .ed-publish__meta {
+    display: flex;
+    gap: 0.85rem;
+    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.52rem;
+    color: #6b7280;
+  }
+
+  .ed-publish__bullet {
+    display: inline-block;
+    width: 0.3rem;
+    height: 0.3rem;
+    background: #2e7d32;
+    border-radius: 50%;
+    margin-right: 0.2rem;
+    vertical-align: middle;
+  }
+</style>

@@ -25,13 +25,15 @@ interface VariantCard {
     | "herbarium"
     | "observatory"
     | "portail"
+    | "portail-alt"
     | "strate"
     | "manifeste"
     | "cockpit"
     | "silex"
     | "sporee"
     | "canopee"
-    | "planche";
+    | "planche"
+    | "frond";
   wave: "alt" | "lab";
   swatches: string[];
   font: string;
@@ -96,6 +98,15 @@ const variants: VariantCard[] = [
     url: `${altRoot}/portail`,
   },
   {
+    slug: "portail-alt",
+    theme: "portail-alt",
+    wave: "alt",
+    swatches: ["#F4F1EA", "#355848", "#9A5E36", "#151716"],
+    font: "Clash Display + Geist",
+    layout: { en: "Editorial Proof Sequence", fr: "Séquence éditoriale de preuve" },
+    url: `${altRoot}/portail-alt`,
+  },
+  {
     slug: "strate",
     theme: "strate",
     wave: "alt",
@@ -133,6 +144,15 @@ const variants: VariantCard[] = [
     layout: { en: "Radical Minimal", fr: "Minimal radical" },
     url: `${altRoot}/silex`,
   },
+  {
+    slug: "frond",
+    theme: "frond",
+    wave: "alt",
+    swatches: ["#F5F6F8", "#2E7D32", "#4BAF50", "#5B86B0"],
+    font: "Plus Jakarta Sans + JetBrains Mono",
+    layout: { en: "Niamoto Design System", fr: "Design System Niamoto" },
+    url: `${altRoot}/frond`,
+  },
 
   // ---- Wave 2 Lab (off-rule) ----
   {
@@ -165,20 +185,20 @@ const variants: VariantCard[] = [
 ];
 
 const wave1 = variants.filter((v) =>
-  ["atlas", "field-journal", "methode", "herbarium", "observatory", "portail", "strate"].includes(v.slug)
+  ["atlas", "field-journal", "methode", "herbarium", "observatory", "portail", "portail-alt", "strate"].includes(v.slug)
 );
 const wave2Alt = variants.filter((v) =>
-  ["manifeste", "cockpit", "silex"].includes(v.slug)
+  ["manifeste", "cockpit", "silex", "frond"].includes(v.slug)
 );
 const wave2Lab = variants.filter((v) => v.wave === "lab");
 
 const titleText = isFr
-  ? "Treize directions de design pour niamoto.org"
-  : "Thirteen design directions for niamoto.org";
+  ? "Quatorze directions de design pour niamoto.org"
+  : "Fourteen design directions for niamoto.org";
 
 const introText = isFr
-  ? "Vague I : sept variantes compatibles avec l'identité Niamoto. Vague II : six explorations plus libres, dont trois en laboratoire hors-règle. Les deux vagues partagent le même contenu ; chacune applique une grammaire visuelle différente."
-  : "Wave I: seven variants compatible with Niamoto's identity. Wave II: six looser explorations, three of which break the editorial rule. Both waves share the same subject; each applies a different visual grammar.";
+  ? "Vague I : huit variantes compatibles avec l'identité Niamoto. Vague II : six explorations plus libres, dont trois en laboratoire hors-règle. Les deux vagues partagent le même contenu ; chacune applique une grammaire visuelle différente."
+  : "Wave I: eight variants compatible with Niamoto's identity. Wave II: six looser explorations, three of which break the editorial rule. Both waves share the same subject; each applies a different visual grammar.";
 ---
 
 <AltLayout
@@ -186,8 +206,8 @@ const introText = isFr
   locale={locale}
   title={isFr ? "Niamoto - Variantes de design" : "Niamoto - Design variants"}
   description={isFr
-    ? "Treize variantes de landing page pour le site Niamoto, en deux vagues de design."
-    : "Thirteen landing page variants for the Niamoto site, in two design waves."}
+    ? "Quatorze variantes de landing page pour le site Niamoto, en deux vagues de design."
+    : "Fourteen landing page variants for the Niamoto site, in two design waves."}
   slug=""
 >
   <a href="#main" class="skip-link">Skip to content</a>
@@ -425,6 +445,12 @@ const introText = isFr
   .dispatcher-card--manifeste .dispatcher-card__preview { background: #F5F1E8; }
   .dispatcher-card--cockpit .dispatcher-card__preview { background: #0B1220; }
   .dispatcher-card--silex .dispatcher-card__preview { background: #F7F5F0; }
+  .dispatcher-card--frond .dispatcher-card__preview {
+    background:
+      radial-gradient(18rem 12rem at 15% 85%, rgba(46, 125, 50, 0.12), transparent 60%),
+      radial-gradient(16rem 12rem at 85% 15%, rgba(91, 134, 176, 0.10), transparent 62%),
+      #F5F6F8;
+  }
   .dispatcher-card--sporee .dispatcher-card__preview { background: #F3EEE2; }
   .dispatcher-card--canopee .dispatcher-card__preview {
     background:
@@ -458,7 +484,8 @@ const introText = isFr
   .dispatcher-card--manifeste .dispatcher-card__layout,
   .dispatcher-card--silex .dispatcher-card__layout,
   .dispatcher-card--sporee .dispatcher-card__layout,
-  .dispatcher-card--planche .dispatcher-card__layout {
+  .dispatcher-card--planche .dispatcher-card__layout,
+  .dispatcher-card--frond .dispatcher-card__layout {
     color: rgba(0, 0, 0, 0.5);
   }
   /* Dark preview cards - light text */

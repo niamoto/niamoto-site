@@ -14,6 +14,14 @@ interface Props {
   className?: string;
 }
 
+/**
+ * Staggered reveal for a list of children.
+ *
+ * Fires on mount (`initial` -> `animate`). Paired with Astro's `client:visible`
+ * directive on the island, this triggers when the container enters the viewport
+ * -- same UX as whileInView but without its stall on elements that were already
+ * in view at hydration time.
+ */
 function StaggeredRevealInner({
   children,
   stagger = 0.08,
@@ -55,15 +63,13 @@ function StaggeredRevealInner({
     },
   };
 
-  /* Wrap each child in a motion.div with the item variants. */
   const childArray = Array.isArray(children) ? children : [children];
 
   return (
     <Container
       className={className}
       initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-8% 0px -8% 0px" }}
+      animate="show"
       variants={containerVariants}
     >
       {childArray.map((child, i) => (

@@ -1,0 +1,84 @@
+---
+import AnimatedCounter from "@/components/alt/motion/AnimatedCounter.tsx";
+
+interface StatItem {
+  value: number;
+  label: string;
+  suffix?: string;
+}
+
+interface Props {
+  kicker: string;
+  items: readonly StatItem[];
+  locale: "en" | "fr";
+}
+
+const { kicker, items, locale } = Astro.props;
+const numberLocale = locale === "fr" ? "fr-FR" : "en-US";
+---
+
+<article class="obs-tile obs-stats obs-grid-bg">
+  <header class="obs-stats__header">
+    <span class="alt-mono obs-stats__kicker">{kicker}</span>
+  </header>
+  <ul class="obs-stats__grid">
+    {items.map((item) => (
+      <li class="obs-stats__item">
+        <span class="obs-stats__value stat-number">
+          <AnimatedCounter
+            client:visible
+            value={item.value}
+            suffix={item.suffix ?? ""}
+            locale={numberLocale}
+          />
+        </span>
+        <span class="obs-stats__label">{item.label}</span>
+      </li>
+    ))}
+  </ul>
+</article>
+
+<style>
+  .obs-stats {
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    min-height: 100%;
+  }
+  .obs-stats__header {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--c-hairline);
+  }
+  .obs-stats__kicker {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+  .obs-stats__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem 1.5rem;
+  }
+  .obs-stats__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .obs-stats__value {
+    font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+    color: var(--c-ink);
+    letter-spacing: -0.02em;
+    font-weight: 500;
+  }
+  .obs-stats__label {
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--c-muted);
+  }
+</style>

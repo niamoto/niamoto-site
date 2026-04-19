@@ -19,13 +19,15 @@ type Theme =
   | "herbarium"
   | "observatory"
   | "portail"
+  | "portail-alt"
   | "strate"
   | "manifeste"
   | "cockpit"
   | "silex"
   | "sporee"
   | "canopee"
-  | "planche";
+  | "planche"
+  | "frond";
 type Locale = "en" | "fr";
 
 interface Props {
@@ -56,6 +58,7 @@ const themeColorMap: Record<Theme, string> = {
   herbarium: "#1A1410",
   observatory: "#070908",
   portail: "#F7F4EE",
+  "portail-alt": "#F4F1EA",
   strate: "#EFEBE2",
   manifeste: "#F5F1E8",
   cockpit: "#0B1220",
@@ -63,6 +66,7 @@ const themeColorMap: Record<Theme, string> = {
   sporee: "#F3EEE2",
   canopee: "#0A0E0B",
   planche: "#EDE4D0",
+  frond: "#F5F6F8",
 };
 
 // Build hreflang alternate URLs for the FR/EN counterpart.

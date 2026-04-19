@@ -1,0 +1,107 @@
+---
+interface TickerLine {
+  dot: boolean;
+  label: string;
+  sub: string;
+  time: string;
+}
+
+interface Props {
+  kicker: string;
+  lines: readonly TickerLine[];
+}
+
+const { kicker, lines } = Astro.props;
+---
+
+<article class="obs-tile obs-ticker">
+  <header class="obs-ticker__header">
+    <span class="obs-ticker__kicker alt-mono">{kicker}</span>
+    <span class="obs-pulse" aria-label="Live"></span>
+  </header>
+
+  <ol class="obs-ticker__list">
+    {lines.map((line) => (
+      <li class="obs-ticker__row">
+        <span class="obs-ticker__dot" data-active={line.dot}></span>
+        <span class="obs-ticker__label">{line.label}</span>
+        <span class="obs-ticker__sub alt-mono">{line.sub}</span>
+        <span class="obs-ticker__time alt-mono">{line.time}</span>
+      </li>
+    ))}
+  </ol>
+</article>
+
+<style>
+  .obs-ticker {
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    min-height: 100%;
+  }
+  .obs-ticker__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--c-hairline);
+  }
+  .obs-ticker__kicker {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+  .obs-ticker__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .obs-ticker__row {
+    display: grid;
+    grid-template-columns: 16px 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 0.15rem 0.9rem;
+    align-items: baseline;
+  }
+  .obs-ticker__dot {
+    grid-row: 1 / 3;
+    grid-column: 1;
+    align-self: center;
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: var(--c-muted);
+    opacity: 0.35;
+  }
+  .obs-ticker__dot[data-active="true"] {
+    background: var(--c-accent);
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(107, 217, 155, 0.55);
+  }
+  .obs-ticker__label {
+    grid-column: 2;
+    color: var(--c-ink);
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+  .obs-ticker__sub {
+    grid-column: 2;
+    color: var(--c-muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+  }
+  .obs-ticker__time {
+    grid-row: 1 / 3;
+    grid-column: 3;
+    align-self: center;
+    color: var(--c-muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+</style>

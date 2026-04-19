@@ -1,0 +1,91 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import StaggeredReveal from "@/components/alt/motion/StaggeredReveal.tsx";
+
+interface Item {
+  number: string;
+  title: string;
+  body: string;
+}
+
+interface Props {
+  kicker: string;
+  heading: string;
+  items: readonly Item[];
+}
+
+const { kicker, heading, items } = Astro.props;
+---
+
+<section class="portail-process" aria-label={heading}>
+  <FadeUpOnView client:visible className="portail-process__head">
+    <EyebrowTag variant="outlined">{kicker}</EyebrowTag>
+    <h2 class="display portail-process__heading">{heading}</h2>
+  </FadeUpOnView>
+
+  <StaggeredReveal client:visible stagger={0.08} as="ol" className="portail-process__grid">
+    {items.map((item) => (
+      <li class="portail-process__item">
+        <span class="portail-step-number">{item.number}</span>
+        <h3 class="display portail-process__title">{item.title}</h3>
+        <p class="portail-process__body">{item.body}</p>
+      </li>
+    ))}
+  </StaggeredReveal>
+</section>
+
+<style is:global>
+  .portail-process {
+    padding: 3rem 1.5rem 6rem;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .portail-process__head {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 48rem;
+    margin-bottom: 3.5rem;
+  }
+  .portail-process__heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-variation-settings: "wght" 500;
+    color: var(--c-ink);
+    letter-spacing: -0.035em;
+  }
+
+  .portail-process__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+  .portail-process__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .portail-process__title {
+    font-size: 1.6rem;
+    font-variation-settings: "wght" 500;
+    color: var(--c-ink);
+    letter-spacing: -0.03em;
+    margin-top: 0.25rem;
+  }
+  .portail-process__body {
+    margin: 0;
+    color: var(--c-muted);
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 900px) {
+    .portail-process__grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

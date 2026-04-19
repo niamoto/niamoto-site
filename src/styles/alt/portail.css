@@ -1,0 +1,93 @@
+/* V6 Portail -- soft structuralism, off-white cream / deep sage / copper
+ * Registre : du terrain au portail -- proof of output.
+ * Light mode. Massive Grotesk. Very diffused shadows.
+ *
+ * Palette reasoning :
+ *   --c-canvas    #F7F4EE   off-white cream (warmer than pure white, less
+ *                           cottony than Atlas #FDFBF7)
+ *   --c-ink       #121414   near-black with slight cool cast
+ *   --c-muted     #7A7A72   muted graphite warm
+ *   --c-accent    #3A4F42   deep sage (CTA)
+ *   --c-accent-alt#AE6A3B   copper (links / eyebrow)
+ *   --c-surface   2% ink
+ */
+
+[data-theme="portail"] {
+  --c-canvas: #F7F4EE;
+  --c-ink: #121414;
+  --c-muted: #7A7A72;
+  --c-accent: #3A4F42;
+  --c-accent-alt: #AE6A3B;
+  --c-surface: rgba(18, 20, 20, 0.028);
+  --c-hairline: rgba(18, 20, 20, 0.085);
+  --c-grain-opacity: 0.025;
+
+  --f-display: "Clash Display", "Cabinet Grotesk", system-ui, sans-serif;
+  --f-body: "Geist Variable", system-ui, -apple-system, sans-serif;
+  --f-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --fvs-display: "wght" 500;
+  --fvs-body: "wght" 400;
+
+  --ls-display: -0.045em;
+  --ls-body: -0.005em;
+  --lh-display: 0.92;
+  --lh-body: 1.6;
+}
+
+/* Portal card -- the hero rail's flagship component.
+ * Long, airy diffused shadow. Subtle inner highlight. */
+[data-theme="portail"] .portal-card {
+  background: var(--c-canvas);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(18, 20, 20, 0.06);
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgba(18, 20, 20, 0.04),
+    0 28px 60px -20px rgba(18, 20, 20, 0.18),
+    0 60px 120px -30px rgba(18, 20, 20, 0.12);
+  transition:
+    transform 600ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 600ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+[data-theme="portail"] .portal-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 2px 4px rgba(18, 20, 20, 0.05),
+    0 36px 70px -20px rgba(18, 20, 20, 0.22),
+    0 76px 140px -30px rgba(18, 20, 20, 0.14);
+}
+
+/* The shadow behind the portal rail card (Z-axis micro-tilt). */
+[data-theme="portail"] .portal-card--tilt-a { transform: rotate(-1.6deg); }
+[data-theme="portail"] .portal-card--tilt-b { transform: rotate(0.8deg); }
+[data-theme="portail"] .portal-card--tilt-c { transform: rotate(-0.6deg); }
+
+[data-theme="portail"] .portal-card--tilt-a:hover { transform: rotate(-1.6deg) translateY(-6px); }
+[data-theme="portail"] .portal-card--tilt-b:hover { transform: rotate(0.8deg) translateY(-6px); }
+[data-theme="portail"] .portal-card--tilt-c:hover { transform: rotate(-0.6deg) translateY(-6px); }
+
+/* Caption badge sitting over a portal preview. */
+[data-theme="portail"] .portal-caption {
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+/* Oversized line-break numeric eyebrow ("01", "02", "03"). */
+[data-theme="portail"] .portail-step-number {
+  font-family: var(--f-display);
+  font-variation-settings: "wght" 400;
+  font-size: clamp(3rem, 7vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--c-accent);
+}
+
+[data-theme="portail"] .stat-number {
+  font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}

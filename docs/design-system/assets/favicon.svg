@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="niamoto-wave" x1="8" y1="52" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3FA9F5"></stop>
+      <stop offset="1" stop-color="#4BAF50"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#FFFFFF"></rect>
+  <path d="M14 12.5C14 11.672 14.672 11 15.5 11H24.5C25.328 11 26 11.672 26 12.5V42.7C26 43.35 25.582 43.926 24.964 44.129L15.964 47.086C14.992 47.405 14 46.681 14 45.658V12.5Z" fill="#1E1E22"></path>
+  <path d="M25.265 11H33.154C33.696 11 34.198 11.291 34.468 11.762L49.877 38.61C50.54 39.765 49.707 41.208 48.375 41.208H41.248C40.706 41.208 40.205 40.918 39.935 40.448L24.526 13.599C23.863 12.445 24.696 11 26.028 11H25.265Z" fill="#2E7D32"></path>
+  <path d="M39 12.5C39 11.672 39.672 11 40.5 11H49.5C50.328 11 51 11.672 51 12.5V51.5C51 52.828 49.395 53.493 48.456 52.554L39.456 43.554C39.175 43.273 39 42.892 39 42.494V12.5Z" fill="#4BAF50"></path>
+  <path d="M11 48.5C17.495 51.84 25.232 53.5 34.212 53.5C42.347 53.5 49.61 52.153 56 49.458" stroke="url(#niamoto-wave)" stroke-linecap="round" stroke-width="4"></path>
+  <path d="M16 54C21.423 56.005 27.68 57 34.771 57C40.785 57 46.195 56.284 51 54.852" stroke="url(#niamoto-wave)" stroke-linecap="round" stroke-opacity=".8" stroke-width="2.5"></path>
+</svg>

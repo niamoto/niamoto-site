@@ -1,0 +1,129 @@
+<div class="ed-dashboard">
+  <div class="ed-dashboard__card">
+    <div class="ed-dashboard__head">
+      <div class="ed-dashboard__logo" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" />
+          <path d="M2 17l10 5 10-5" />
+          <path d="M2 12l10 5 10-5" />
+        </svg>
+      </div>
+      <div class="ed-dashboard__titles">
+        <div class="ed-dashboard__name">Nouvelle-Calédonie</div>
+        <div class="ed-dashboard__sub">Portail de la forêt</div>
+      </div>
+    </div>
+
+    <div class="ed-dashboard__stats">
+      <div>
+        <div class="ed-dashboard__stat-value">14 K</div>
+        <div class="ed-dashboard__stat-label">Occur.</div>
+      </div>
+      <div>
+        <div class="ed-dashboard__stat-value">3 452</div>
+        <div class="ed-dashboard__stat-label">Taxons</div>
+      </div>
+      <div>
+        <div class="ed-dashboard__stat-value">216</div>
+        <div class="ed-dashboard__stat-label">Plots</div>
+      </div>
+    </div>
+
+    <div class="ed-dashboard__cta">Continue →</div>
+  </div>
+</div>
+
+<style>
+  .ed-dashboard {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.04) 1px, transparent 0) 0 0 / 14px 14px,
+      linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  }
+
+  .ed-dashboard__card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    width: 100%;
+    max-width: 17rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .ed-dashboard__head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ed-dashboard__logo {
+    width: 1.5rem;
+    height: 1.5rem;
+    background: #2e7d32;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ed-dashboard__titles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .ed-dashboard__name {
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: #111827;
+  }
+
+  .ed-dashboard__sub {
+    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.5rem;
+    color: #6b7280;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .ed-dashboard__stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.6rem;
+    padding: 0.55rem 0;
+    border-top: 1px solid #f1f5f9;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 0.7rem;
+  }
+
+  .ed-dashboard__stat-value {
+    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .ed-dashboard__stat-label {
+    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.5rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .ed-dashboard__cta {
+    background: #2e7d32;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.72rem;
+  }
+</style>

@@ -1,0 +1,164 @@
+---
+import EditorialDashboard from "./editorial/EditorialDashboard.astro";
+import EditorialImport from "./editorial/EditorialImport.astro";
+import EditorialWidgets from "./editorial/EditorialWidgets.astro";
+import EditorialPublish from "./editorial/EditorialPublish.astro";
+
+interface AppLabels {
+  dashboard: string;
+  import: string;
+  widgets: string;
+  publish: string;
+}
+
+interface PortalSlide {
+  src: string;
+  alt: string;
+  label: string;
+}
+
+interface Props {
+  appLabels: AppLabels;
+  portalSlides: readonly PortalSlide[];
+}
+
+const { appLabels, portalSlides } = Astro.props;
+
+const appSlides = [
+  { component: EditorialDashboard, label: appLabels.dashboard },
+  { component: EditorialImport,    label: appLabels.import    },
+  { component: EditorialWidgets,   label: appLabels.widgets   },
+  { component: EditorialPublish,   label: appLabels.publish   },
+] as const;
+
+const total = appSlides.length + portalSlides.length;
+---
+
+<div class="frond-slider" data-slider aria-label="Niamoto screenshots" role="region">
+  <div class="frond-slider__track" aria-live="polite" aria-atomic="false">
+    {appSlides.map((slide, i) => {
+      const Component = slide.component;
+      const isActive = i === 0;
+      return (
+        <div
+          class={`frond-slider__slide${isActive ? " frond-slider__slide--active" : ""}`}
+          role="group"
+          aria-roledescription="slide"
+          aria-label={`${i + 1} of ${total}`}
+          aria-hidden={!isActive ? "true" : undefined}
+        >
+          <Component />
+          <div class="frond-slider__caption">
+            <span class="frond-status-chip frond-status-chip--steel">
+              <span class="frond-status-chip__dot" aria-hidden="true"></span>
+              App
+            </span>
+            <span class="frond-slider__caption-label">{slide.label}</span>
+          </div>
+        </div>
+      );
+    })}
+
+    {portalSlides.map((slide, i) => {
+      const index = appSlides.length + i;
+      return (
+        <div
+          class="frond-slider__slide"
+          role="group"
+          aria-roledescription="slide"
+          aria-label={`${index + 1} of ${total}`}
+          aria-hidden="true"
+        >
+          <img src={slide.src} alt={slide.alt} loading="lazy" decoding="async" />
+          <div class="frond-slider__caption">
+            <span class="frond-status-chip frond-status-chip--leaf">
+              <span class="frond-status-chip__dot" aria-hidden="true"></span>
+              Portal
+            </span>
+            <span class="frond-slider__caption-label">{slide.label}</span>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+
+  <button class="frond-slider__arrow frond-slider__arrow--prev" aria-label="Previous slide" type="button">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+  <button class="frond-slider__arrow frond-slider__arrow--next" aria-label="Next slide" type="button">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <div class="frond-slider__dots" role="tablist" aria-label="Slides">
+    {Array.from({ length: total }).map((_, i) => (
+      <button
+        class={`frond-slider__dot${i === 0 ? " frond-slider__dot--active" : ""}`}
+        role="tab"
+        aria-selected={i === 0 ? "true" : "false"}
+        aria-label={`Slide ${i + 1}`}
+        type="button"
+        data-index={i}
+      ></button>
+    ))}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-slider]").forEach((slider) => {
+    const slides = Array.from(slider.querySelectorAll<HTMLElement>(".frond-slider__slide"));
+    const dots = Array.from(slider.querySelectorAll<HTMLButtonElement>(".frond-slider__dot"));
+    const prevBtn = slider.querySelector<HTMLButtonElement>(".frond-slider__arrow--prev");
+    const nextBtn = slider.querySelector<HTMLButtonElement>(".frond-slider__arrow--next");
+    const total = slides.length;
+    let current = 0;
+    let timer: ReturnType<typeof setInterval> | null = null;
+
+    function goTo(index: number) {
+      slides[current].classList.remove("frond-slider__slide--active");
+      slides[current].setAttribute("aria-hidden", "true");
+      dots[current].classList.remove("frond-slider__dot--active");
+      dots[current].setAttribute("aria-selected", "false");
+
+      current = (index + total) % total;
+
+      slides[current].classList.add("frond-slider__slide--active");
+      slides[current].removeAttribute("aria-hidden");
+      dots[current].classList.add("frond-slider__dot--active");
+      dots[current].setAttribute("aria-selected", "true");
+    }
+
+    function startTimer() {
+      timer = setInterval(() => goTo(current + 1), 4000);
+    }
+
+    function stopTimer() {
+      if (timer !== null) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    function resetTimer() {
+      stopTimer();
+      startTimer();
+    }
+
+    prevBtn?.addEventListener("click", () => { goTo(current - 1); resetTimer(); });
+    nextBtn?.addEventListener("click", () => { goTo(current + 1); resetTimer(); });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => { goTo(i); resetTimer(); });
+    });
+
+    slider.addEventListener("mouseenter", stopTimer);
+    slider.addEventListener("mouseleave", startTimer);
+    slider.addEventListener("focusin", stopTimer);
+    slider.addEventListener("focusout", startTimer);
+
+    startTimer();
+  });
+</script>

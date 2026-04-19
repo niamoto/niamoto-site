@@ -1,0 +1,130 @@
+<div class="ed-import">
+  <div class="ed-import__stack">
+    <div class="ed-import__drop">
+      <svg class="ed-import__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="17 8 12 3 7 8" />
+        <line x1="12" y1="3" x2="12" y2="15" />
+      </svg>
+      <div class="ed-import__drop-title">Drop data sources</div>
+      <div class="ed-import__drop-sub">csv · geojson · gpkg · raster</div>
+    </div>
+
+    <div class="ed-import__files">
+      <div class="ed-import__file">
+        <span class="ed-import__tag ed-import__tag--csv">CSV</span>
+        <span class="ed-import__name">occurrences.csv</span>
+        <span class="ed-import__count">✓ 14 280</span>
+      </div>
+      <div class="ed-import__file">
+        <span class="ed-import__tag ed-import__tag--gpkg">GPKG</span>
+        <span class="ed-import__name">plots.gpkg</span>
+        <span class="ed-import__count">✓ 216</span>
+      </div>
+      <div class="ed-import__file">
+        <span class="ed-import__tag ed-import__tag--json">JSON</span>
+        <span class="ed-import__name">taxonomy.json</span>
+        <span class="ed-import__count">✓ 3 452</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ed-import {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.04) 1px, transparent 0) 0 0 / 14px 14px,
+      linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  }
+
+  .ed-import__stack {
+    width: 100%;
+    max-width: 17rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ed-import__drop {
+    background: rgba(75, 175, 80, 0.08);
+    border: 1.5px dashed #4ade80;
+    border-radius: 8px;
+    padding: 0.9rem;
+    text-align: center;
+  }
+
+  .ed-import__icon {
+    margin-bottom: 0.25rem;
+  }
+
+  .ed-import__drop-title {
+    font-weight: 600;
+    font-size: 0.72rem;
+    color: #bbf7d0;
+  }
+
+  .ed-import__drop-sub {
+    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.55rem;
+    color: #94a3b8;
+    margin-top: 0.15rem;
+  }
+
+  .ed-import__files {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .ed-import__file {
+    background: #1e293b;
+    border: 1px solid #475569;
+    border-radius: 5px;
+    padding: 0.35rem 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .ed-import__tag {
+    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.5rem;
+    font-weight: 700;
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+  }
+
+  .ed-import__tag--csv {
+    color: #5b86b0;
+    background: rgba(91, 134, 176, 0.15);
+  }
+
+  .ed-import__tag--gpkg {
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.15);
+  }
+
+  .ed-import__tag--json {
+    color: #a78bfa;
+    background: rgba(167, 139, 250, 0.15);
+  }
+
+  .ed-import__name {
+    flex: 1;
+    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.6rem;
+    color: #cbd5e1;
+  }
+
+  .ed-import__count {
+    font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.55rem;
+    color: #4ade80;
+  }
+</style>

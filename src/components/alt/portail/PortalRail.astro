@@ -1,0 +1,103 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import PortalPreviewCard from "./PortalPreviewCard.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import StaggeredReveal from "@/components/alt/motion/StaggeredReveal.tsx";
+
+interface CardCopy {
+  code: string;
+  name: string;
+  role: string;
+  body: string;
+  image: string | null;
+  alt: string;
+  href: string;
+}
+
+interface Props {
+  kicker: string;
+  heading: string;
+  sub: string;
+  cards: readonly CardCopy[];
+}
+
+const { kicker, heading, sub, cards } = Astro.props;
+const tiltClasses = ["portal-card--tilt-a", "portal-card--tilt-b", "portal-card--tilt-c"];
+---
+
+<section id="rail" class="portail-rail" aria-label={heading}>
+  <FadeUpOnView client:visible className="portail-rail__head">
+    <EyebrowTag variant="outlined">{kicker}</EyebrowTag>
+    <h2 class="display portail-rail__heading">{heading}</h2>
+    <p class="portail-rail__sub">{sub}</p>
+  </FadeUpOnView>
+
+  <StaggeredReveal client:visible stagger={0.08} y={24} as="ul" className="portail-rail__grid">
+    {cards.map((c, i) => (
+      <li class="portail-rail__item">
+        <PortalPreviewCard
+          code={c.code}
+          name={c.name}
+          role={c.role}
+          body={c.body}
+          image={c.image}
+          alt={c.alt}
+          href={c.href}
+          tiltClass={tiltClasses[i] ?? ""}
+        />
+      </li>
+    ))}
+  </StaggeredReveal>
+</section>
+
+<style is:global>
+  .portail-rail {
+    padding: 4rem 1.5rem 6rem;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .portail-rail__head {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 50rem;
+    margin-bottom: 4rem;
+  }
+  .portail-rail__heading {
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    font-variation-settings: "wght" 500;
+    color: var(--c-ink);
+    letter-spacing: -0.035em;
+  }
+  .portail-rail__sub {
+    margin: 0;
+    color: var(--c-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .portail-rail__grid {
+    list-style: none;
+    margin: 0;
+    padding: 2rem 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+  .portail-rail__item {
+    display: flex;
+  }
+  .portail-rail__item > * {
+    flex: 1;
+  }
+
+  @media (max-width: 900px) {
+    .portail-rail__grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .portail-rail {
+      padding: 3rem 1rem 5rem;
+    }
+  }
+</style>

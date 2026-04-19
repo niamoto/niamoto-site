@@ -35,6 +35,7 @@ export default {
     herbarium: "Herbarium",
     observatory: "Observatory",
     portail: "Portail",
+    "portail-alt": "Portail Alt",
     strate: "Strate",
     manifeste: "Manifeste",
     cockpit: "Cockpit",
@@ -42,6 +43,7 @@ export default {
     sporee: "Sporée",
     canopee: "Canopée",
     planche: "Planche",
+    frond: "Frond",
   },
   variantTaglines: {
     atlas: "Cream and sage. A scientific atlas read.",
@@ -50,6 +52,7 @@ export default {
     herbarium: "Espresso gravity. A living herbarium.",
     observatory: "Deep OLED. A live ecological observatory.",
     portail: "From field to portal, proof of output.",
+    "portail-alt": "A portal as publication, not a scoreboard.",
     strate: "Longform editorial, layer by layer.",
     manifeste: "A manifesto for open ecological data.",
     cockpit: "Niamoto, live. Real numbers, three portals.",
@@ -57,6 +60,7 @@ export default {
     sporee: "Niamoto is a seed. Every run draws a new world.",
     canopee: "A forest, from canopy to soil.",
     planche: "Specimens for the data herbarium of tomorrow.",
+    frond: "The Niamoto design system, applied as-is.",
   },
   waveLabels: {
     wave1Eyebrow: "WAVE I — NIAMOTO-COMPATIBLE",

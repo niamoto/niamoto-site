@@ -1,0 +1,37 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+
+interface Item {
+  number: string;
+  title: string;
+  body: string;
+}
+
+interface Props {
+  kicker: string;
+  heading: string;
+  sub: string;
+  items: readonly Item[];
+}
+
+const { kicker, heading, sub, items } = Astro.props;
+---
+
+<section class="frond-section" aria-labelledby="frond-sequence-heading">
+  <FadeUpOnView client:visible className="frond-head">
+    <EyebrowTag variant="outlined">{kicker}</EyebrowTag>
+    <h2 id="frond-sequence-heading" class="display frond-heading">{heading}</h2>
+    <p class="frond-sub">{sub}</p>
+  </FadeUpOnView>
+
+  <div class="frond-sequence">
+    {items.map((item, index) => (
+      <FadeUpOnView client:visible delay={index * 0.05} className="frond-sequence__item">
+        <span class="frond-sequence__number">{item.number}</span>
+        <h3 class="frond-sequence__title">{item.title}</h3>
+        <p class="frond-sequence__body">{item.body}</p>
+      </FadeUpOnView>
+    ))}
+  </div>
+</section>
