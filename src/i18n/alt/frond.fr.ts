@@ -11,7 +11,7 @@ export default {
     signage: "NIAMOTO · PUBLICATION ÉCOLOGIQUE LIBRE",
     eyebrow: "OPEN SOURCE · GPL V3",
     titleLines: [
-      "Des données de terrain à la ",
+      "Du terrain à la ",
       { italic: true, text: "publication" },
       " de portails écologiques.",
     ],
