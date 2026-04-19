@@ -569,6 +569,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   gap: 0;
+  align-items: stretch;
 }
 
 [data-theme="frond"] .frond-reading-card--sheet .frond-reading-card__inner {
@@ -578,8 +579,15 @@
 [data-theme="frond"] .frond-reading-card__media {
   position: relative;
   background: var(--c-surface-muted);
-  border-right: 1px solid var(--c-hairline);
-  min-height: 280px;
+  aspect-ratio: 5 / 4;
+  align-self: start;
+  overflow: hidden;
+}
+
+/* Body owns the vertical rule so it spans the full card height
+   regardless of which column is taller. */
+[data-theme="frond"] .frond-reading-card__body {
+  border-left: 1px solid var(--c-hairline);
 }
 
 [data-theme="frond"] .frond-reading-card__topline {
@@ -611,10 +619,10 @@
 }
 
 [data-theme="frond"] .frond-reading-card__image {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  min-height: 280px;
-  max-height: 420px;
   display: block;
   object-fit: cover;
   object-position: top center;
@@ -659,6 +667,12 @@
   gap: 0.9rem;
   padding-top: 0.65rem;
   border-top: 1px solid var(--c-hairline);
+}
+
+/* Narrow cards (index) — stack key above body to avoid word-per-line wrapping */
+[data-theme="frond"] .frond-reading-card--index .frond-reading-card__notes li {
+  grid-template-columns: 1fr;
+  gap: 0.3rem;
 }
 
 [data-theme="frond"] .frond-reading-card__notes li:first-child {
@@ -1093,9 +1107,11 @@
     grid-template-columns: 1fr;
   }
   [data-theme="frond"] .frond-reading-card__media {
-    border-right: none;
-    border-bottom: 1px solid var(--c-hairline);
-    min-height: 220px;
+    aspect-ratio: 16 / 9;
+  }
+  [data-theme="frond"] .frond-reading-card__body {
+    border-left: none;
+    border-top: 1px solid var(--c-hairline);
   }
   [data-theme="frond"] .frond-reading-card__notes li {
     grid-template-columns: 1fr;
