@@ -65,3 +65,62 @@ const total = slides.length;
     ))}
   </div>
 </div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-slider]").forEach((slider) => {
+    const slides = Array.from(slider.querySelectorAll<HTMLElement>(".frond-slider__slide"));
+    const dots = Array.from(slider.querySelectorAll<HTMLButtonElement>(".frond-slider__dot"));
+    const prevBtn = slider.querySelector<HTMLButtonElement>(".frond-slider__arrow--prev");
+    const nextBtn = slider.querySelector<HTMLButtonElement>(".frond-slider__arrow--next");
+    const total = slides.length;
+    let current = 0;
+    let timer: ReturnType<typeof setInterval> | null = null;
+
+    function goTo(index: number) {
+      slides[current].classList.remove("frond-slider__slide--active");
+      slides[current].setAttribute("aria-hidden", "true");
+      dots[current].classList.remove("frond-slider__dot--active");
+      dots[current].setAttribute("aria-selected", "false");
+
+      current = (index + total) % total;
+
+      slides[current].classList.add("frond-slider__slide--active");
+      slides[current].removeAttribute("aria-hidden");
+      dots[current].classList.add("frond-slider__dot--active");
+      dots[current].setAttribute("aria-selected", "true");
+    }
+
+    function startTimer() {
+      timer = setInterval(() => goTo(current + 1), 4000);
+    }
+
+    function stopTimer() {
+      if (timer !== null) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    function resetTimer() {
+      stopTimer();
+      startTimer();
+    }
+
+    // Arrow buttons
+    prevBtn?.addEventListener("click", () => { goTo(current - 1); resetTimer(); });
+    nextBtn?.addEventListener("click", () => { goTo(current + 1); resetTimer(); });
+
+    // Dot buttons
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => { goTo(i); resetTimer(); });
+    });
+
+    // Pause on hover / focus
+    slider.addEventListener("mouseenter", stopTimer);
+    slider.addEventListener("mouseleave", startTimer);
+    slider.addEventListener("focusin", stopTimer);
+    slider.addEventListener("focusout", startTimer);
+
+    startTimer();
+  });
+</script>
