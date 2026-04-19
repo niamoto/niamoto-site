@@ -51,7 +51,7 @@ export default {
         title: "Importer n'importe quelles données écologiques.",
         body:
           "CSV, GeoPackage, GeoJSON, raster. L'auto-configuration détecte les types de fichiers et mappe les champs. Compatible Darwin Core.",
-        snippet: "sources:\n  occurrences:\n    type: csv\n    path: occurrences.csv",
+        snippet: "datasets:\n  occurrences:\n    connector:\n      type: file\n      format: csv\n      path: imports/occurrences.csv",
       },
       {
         stage: "02 · TRANSFORMATIONS",
@@ -59,7 +59,7 @@ export default {
         title: "Transformer avec des plugins.",
         body:
           "Des transformations YAML déclaratives changent les données brutes en index, statistiques, distributions et widgets. Étendez ce qui manque.",
-        snippet: "transforms:\n  - plugin: taxonomy_tree\n  - plugin: plot_summary",
+        snippet: "- group_by: taxons\n  widgets_data:\n    top_species:\n      plugin: top_ranking\n    distribution_map:\n      plugin: geospatial_extractor",
       },
       {
         stage: "03 · SITE",
@@ -67,7 +67,7 @@ export default {
         title: "Publier un portail statique.",
         body:
           "Site auto-généré avec cartes, graphiques et pages taxons. Déployez partout — GitHub Pages, Netlify, votre propre serveur.",
-        snippet: "niamoto export\n# → exports/web/ prêt à servir",
+        snippet: "niamoto run\n# → exports/web/ prêt à déployer",
       },
     ],
   },
@@ -181,7 +181,7 @@ export default {
       label: "Niamoto CLI",
       title: "Pour les développeurs et l'automatisation.",
       body: "Python-first, orienté plugins. Scriptable pour des pipelines reproductibles et des workflows CI.",
-      snippet: "pip install niamoto\nniamoto init mon-projet\nniamoto run --all",
+      snippet: "pip install niamoto\nniamoto init mon-projet\nniamoto run",
       cta: { label: "Lire la documentation", href: "/fr/documentation" },
     },
   },
