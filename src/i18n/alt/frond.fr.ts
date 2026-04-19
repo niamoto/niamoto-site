@@ -95,20 +95,20 @@ export default {
         meta: "SURFACE DE PARCOURS",
         title: "Une liste devient une manière de lire le corpus.",
         body:
-          "Les taxons ne sont pas seulement stockés. Ils sont exposés dans un index lisible, que l'on peut parcourir, filtrer et revisiter selon différents usages.",
+          "Les taxons ne sont pas seulement stockés. Ils sont présentés dans un index lisible, que l'on peut parcourir, filtrer et revisiter selon différents usages.",
         image: "index" as const,
         notes: [
-          { key: "Corpus", body: "La liste donne l'échelle sans obliger la page à prouver sa valeur par un chiffre héroïque." },
+          { key: "Corpus", body: "La liste donne l'échelle du corpus : chaque taxon y reste accessible et lisible individuellement." },
           { key: "Filtres", body: "Le parcours reste attaché à des catégories écologiques, pas seulement à des champs techniques." },
-          { key: "Continuité", body: "Depuis cet index, chaque fiche espèce conserve le même langage visuel et narratif." },
+          { key: "Continuité", body: "Depuis cet index, chaque fiche taxon conserve le même langage visuel et narratif." },
         ],
       },
       {
         label: "03 · FICHE",
         meta: "SURFACE DE RÉFÉRENCE",
-        title: "La fiche espèce est l'endroit où carte, preuve et méthode se rencontrent.",
+        title: "La fiche taxon est l'endroit où carte, preuve et méthode se rencontrent.",
         body:
-          "La fiche espèce est la preuve la plus forte du résultat : une page unique qui assemble occurrences, contexte territorial et repères de lecture dans un format durable.",
+          "La fiche taxon est le résultat le plus abouti : une page unique qui assemble occurrences, contexte territorial et repères de lecture dans un format durable.",
         image: "sheet" as const,
         notes: [
           { key: "Carte", body: "Les occurrences deviennent une forme territoriale visible, pas un attribut caché." },

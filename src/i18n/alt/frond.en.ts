@@ -82,7 +82,7 @@ export default {
         meta: "ENTRY SURFACE",
         title: "The portal opens with orientation, not noise.",
         body:
-          "Maps, recent additions, and portal sections are presented as reading landmarks. The page introduces a territory and its data structure at the same time.",
+          "Maps, recent additions, and portal sections are presented as reading landmarks. The page introduces a territory and the way its data is organised at the same time.",
         image: "home" as const,
         notes: [
           { key: "Context", body: "The territory is named and situated before any stat becomes meaningful." },
@@ -95,20 +95,20 @@ export default {
         meta: "BROWSING SURFACE",
         title: "A list becomes a way of reading the corpus.",
         body:
-          "Taxons are not just stored. They are exposed through a legible index that can be scanned, filtered, and revisited by botanists, managers, or contributors.",
+          "Taxons are not just stored. They are presented as a legible index that can be scanned, filtered, and revisited by botanists, managers, or contributors.",
         image: "index" as const,
         notes: [
-          { key: "Corpus", body: "The list establishes scale without forcing the page to perform through a hero metric." },
+          { key: "Corpus", body: "The list shows the scale of the corpus — every taxon accessible and individually readable." },
           { key: "Filters", body: "Sorting and browsing remain attached to ecological categories, not only technical fields." },
-          { key: "Continuity", body: "From this index, every species sheet keeps the same visual and narrative language." },
+          { key: "Continuity", body: "From this index, every taxon sheet keeps the same visual and narrative language." },
         ],
       },
       {
         label: "03 · SHEET",
         meta: "REFERENCE SURFACE",
-        title: "A species page is where map, evidence, and method meet.",
+        title: "A taxon page is where map, evidence, and method meet.",
         body:
-          "The species sheet is the strongest proof of output: a single page that assembles occurrences, territorial context, and reading cues into a durable reference.",
+          "The taxon sheet is the clearest output: a single page that assembles occurrences, territorial context, and reading cues into a durable reference.",
         image: "sheet" as const,
         notes: [
           { key: "Map", body: "Occurrences are visible as a territorial pattern, not a hidden attribute." },
