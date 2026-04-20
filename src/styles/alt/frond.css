@@ -1171,9 +1171,11 @@
 }
 
 [data-theme="frond"] .frond-funders {
+  /* Sibling of .frond-closing — spans the full frond-shell width. */
   margin-top: 3rem;
   padding-top: 2.5rem;
   border-top: 1px solid var(--c-hairline);
+  width: 100%;
 }
 
 /* -------------------------------------------------------------------------

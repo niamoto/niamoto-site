@@ -141,6 +141,7 @@ const funders: Funder[] = [
   /* ---------- narrative variant ("Our partners" section) ---------- */
   .alt-funder-grid--narrative {
     text-align: center;
+    width: 100%;
   }
   .alt-funder-grid__narrative-heading {
     font-family: var(--f-display);
@@ -159,9 +160,9 @@ const funders: Funder[] = [
   .alt-funder-grid--narrative .alt-funder-grid__list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     align-items: flex-end;
-    gap: 2rem 2.5rem;
+    gap: 2rem 1.5rem;
     grid-template-columns: none;
   }
   .alt-funder-grid--narrative .alt-funder-grid__list > li {

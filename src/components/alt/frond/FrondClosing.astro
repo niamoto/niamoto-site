@@ -38,8 +38,8 @@ const { eyebrow, title, body, ctaPrimary, ctaSecondary, license, fundersHeading,
     </div>
     <p class="frond-closing__license">{license}</p>
   </FadeUpOnView>
-
-  <FadeUpOnView client:visible delay={0.12} className="frond-funders">
-    <FunderGrid heading={fundersHeading} subtitle={fundersSubtitle} variant="narrative" />
-  </FadeUpOnView>
 </section>
+
+<FadeUpOnView client:visible delay={0.12} className="frond-funders">
+  <FunderGrid heading={fundersHeading} subtitle={fundersSubtitle} variant="narrative" />
+</FadeUpOnView>
