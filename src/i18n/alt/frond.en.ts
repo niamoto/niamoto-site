@@ -206,6 +206,7 @@ export default {
     license: "GPL v3 · Maintained by Arsis",
   },
   funders: {
-    heading: "Built with",
+    heading: "Our partners",
+    subtitle: "Funders, research institutions, and data providers",
   },
 } as const;

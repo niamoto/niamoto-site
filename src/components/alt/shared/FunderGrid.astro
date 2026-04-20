@@ -8,12 +8,19 @@
 interface Props {
   /** Optional title/heading shown above the grid. */
   heading?: string;
+  /** Optional subtitle rendered beneath the heading (narrative variant only). */
+  subtitle?: string;
   /** Variant of presentation. */
-  variant?: "default" | "compact";
+  variant?: "default" | "compact" | "narrative";
   class?: string;
 }
 
-const { heading, variant = "default", class: extraClass = "" } = Astro.props;
+const {
+  heading,
+  subtitle,
+  variant = "default",
+  class: extraClass = "",
+} = Astro.props;
 
 interface Funder {
   name: string;
@@ -21,21 +28,29 @@ interface Funder {
   url: string;
 }
 
+// Default ordering (institutions first, research labs, then data providers).
 const funders: Funder[] = [
   { name: "Province Nord",                   src: "/funders/pn_100.png",        url: "https://www.province-nord.nc" },
   { name: "Province Sud",                    src: "/funders/ps_100.png",        url: "https://www.province-sud.nc" },
-  { name: "Endemia",                         src: "/funders/endemia_100.png",   url: "https://endemia.nc" },
-  { name: "UMR AMAP",                        src: "/funders/amap_100.png",      url: "https://amap.cirad.fr" },
-  { name: "Herbier de Nouvelle-Caledonie",   src: "/funders/herbarium_100.png", url: "http://publish.plantnet-project.org/project/herbier-noumea" },
-  { name: "IAC",                             src: "/funders/iac_100.png",       url: "https://iac.nc" },
+  { name: "OFB",                             src: "/funders/ofb_100.png",       url: "https://www.ofb.gouv.fr" },
   { name: "IRD",                             src: "/funders/ird_100.png",       url: "https://nouvelle-caledonie.ird.fr" },
   { name: "CIRAD",                           src: "/funders/cirad_100.png",     url: "https://www.cirad.fr" },
-  { name: "OFB",                             src: "/funders/ofb_100.png",       url: "https://www.ofb.gouv.fr" },
+  { name: "UMR AMAP",                        src: "/funders/amap_100.png",      url: "https://amap.cirad.fr" },
+  { name: "IAC",                             src: "/funders/iac_100.png",       url: "https://iac.nc" },
+  { name: "Endemia",                         src: "/funders/endemia_100.png",   url: "https://endemia.nc" },
+  { name: "Herbier de Nouvelle-Calédonie",   src: "/funders/herbarium_100.png", url: "http://publish.plantnet-project.org/project/herbier-noumea" },
 ];
 ---
 
 <section class:list={["alt-funder-grid", `alt-funder-grid--${variant}`, extraClass]}>
-  {heading && <h3 class="alt-funder-grid__heading">{heading}</h3>}
+  {heading && (
+    variant === "narrative"
+      ? <h2 class="alt-funder-grid__narrative-heading">{heading}</h2>
+      : <h3 class="alt-funder-grid__heading">{heading}</h3>
+  )}
+  {subtitle && variant === "narrative" && (
+    <p class="alt-funder-grid__narrative-sub">{subtitle}</p>
+  )}
   <ul class="alt-funder-grid__list">
     {funders.map((f) => (
       <li>
@@ -45,8 +60,12 @@ const funders: Funder[] = [
           rel="noopener noreferrer"
           aria-label={f.name}
           class="alt-funder-grid__link"
+          title={f.name}
         >
           <img src={f.src} alt={f.name} loading="lazy" decoding="async" />
+          {variant === "narrative" && (
+            <span class="alt-funder-grid__name">{f.name}</span>
+          )}
         </a>
       </li>
     ))}
@@ -116,6 +135,72 @@ const funders: Funder[] = [
   @media (max-width: 480px) {
     .alt-funder-grid__list {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* ---------- narrative variant ("Our partners" section) ---------- */
+  .alt-funder-grid--narrative {
+    text-align: center;
+  }
+  .alt-funder-grid__narrative-heading {
+    font-family: var(--f-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--c-ink);
+    margin: 0 0 0.25rem;
+    letter-spacing: -0.01em;
+  }
+  .alt-funder-grid__narrative-sub {
+    font-size: 0.9rem;
+    color: var(--c-muted);
+    margin: 0 auto 2.5rem;
+    max-width: 40ch;
+  }
+  .alt-funder-grid--narrative .alt-funder-grid__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 2rem 2.5rem;
+    grid-template-columns: none;
+  }
+  .alt-funder-grid--narrative .alt-funder-grid__list > li {
+    flex: 0 0 auto;
+  }
+  .alt-funder-grid--narrative .alt-funder-grid__link {
+    height: auto;
+    flex-direction: column;
+    gap: 0.5rem;
+    opacity: 0.75;
+    min-width: 100px;
+  }
+  .alt-funder-grid--narrative .alt-funder-grid__link img {
+    height: 48px;
+    max-height: 48px;
+    max-width: 120px;
+    filter: grayscale(1);
+    transition: filter 240ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .alt-funder-grid--narrative .alt-funder-grid__link:hover img,
+  .alt-funder-grid--narrative .alt-funder-grid__link:focus-visible img {
+    filter: grayscale(0);
+  }
+  .alt-funder-grid--narrative .alt-funder-grid__link:hover,
+  .alt-funder-grid--narrative .alt-funder-grid__link:focus-visible {
+    opacity: 1;
+  }
+  .alt-funder-grid__name {
+    font-family: var(--f-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-muted);
+    text-align: center;
+    line-height: 1.2;
+  }
+  @media (max-width: 640px) {
+    .alt-funder-grid--narrative .alt-funder-grid__list {
+      gap: 1.5rem 1.25rem;
     }
   }
 </style>

@@ -17,9 +17,10 @@ interface Props {
   ctaSecondary: Cta;
   license: string;
   fundersHeading: string;
+  fundersSubtitle?: string;
 }
 
-const { eyebrow, title, body, ctaPrimary, ctaSecondary, license, fundersHeading } = Astro.props;
+const { eyebrow, title, body, ctaPrimary, ctaSecondary, license, fundersHeading, fundersSubtitle } = Astro.props;
 ---
 
 <section class="frond-section frond-closing" aria-labelledby="frond-closing-heading">
@@ -39,6 +40,6 @@ const { eyebrow, title, body, ctaPrimary, ctaSecondary, license, fundersHeading 
   </FadeUpOnView>
 
   <FadeUpOnView client:visible delay={0.12} className="frond-funders">
-    <FunderGrid heading={fundersHeading} variant="compact" />
+    <FunderGrid heading={fundersHeading} subtitle={fundersSubtitle} variant="narrative" />
   </FadeUpOnView>
 </section>
