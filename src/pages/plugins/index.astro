@@ -2,6 +2,7 @@
 import AltLayout from "@/layouts/AltLayout.astro";
 import FrondHeader from "@/components/alt/frond-live/FrondHeader.astro";
 import FrondFooter from "@/components/alt/shared/FrondFooter.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
 
 type PluginType = "transformer" | "widget" | "loader" | "exporter";
 
@@ -56,27 +57,31 @@ const filters = [
   <!-- Hero -->
   <section class="py-16">
     <div class="mx-auto max-w-[1200px] px-6 text-center">
-      <h1 class="text-5xl font-bold tracking-[-0.02em] text-ink">
-        Plugins for every ecological workflow
-      </h1>
-      <p class="mx-auto mt-3 max-w-[720px] text-lg text-muted">
-        Niamoto is extended through four plugin types. Mix and match to shape
-        your pipeline — from raw CSVs to published portals.
-      </p>
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-2">
-        <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
-          42 Transformers
-        </span>
-        <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
-          28 Widgets
-        </span>
-        <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
-          12 Loaders
-        </span>
-        <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
-          8 Exporters
-        </span>
-      </div>
+      <FadeUpOnView client:visible blur={0}>
+        <h1 class="text-5xl font-bold tracking-[-0.02em] text-ink">
+          Plugins for every ecological workflow
+        </h1>
+        <p class="mx-auto mt-3 max-w-[720px] text-lg text-muted">
+          Niamoto is extended through four plugin types. Mix and match to shape
+          your pipeline — from raw CSVs to published portals.
+        </p>
+      </FadeUpOnView>
+      <FadeUpOnView client:visible delay={0.12}>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-2">
+          <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
+            42 Transformers
+          </span>
+          <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
+            28 Widgets
+          </span>
+          <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
+            12 Loaders
+          </span>
+          <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
+            8 Exporters
+          </span>
+        </div>
+      </FadeUpOnView>
     </div>
   </section>
 
@@ -121,24 +126,26 @@ const filters = [
   <section class="mx-auto max-w-[1200px] px-6 py-16">
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {
-        plugins.map((p) => {
+        plugins.map((p, index) => {
           const chip = typeChip[p.type];
           return (
-            <div class="flex flex-col rounded-[12px] bg-surface p-6 shadow-[var(--shadow-widget)]">
-              <span class={`frond-status-chip frond-status-chip--${chip.variant} self-start`}>
-                {chip.label}
-              </span>
-              <h3 class="mt-3 alt-mono text-lg font-bold text-ink">
-                {p.name}
-              </h3>
-              <p class="mt-2 flex-1 text-sm leading-relaxed" style="color: color-mix(in srgb, var(--c-ink) 80%, transparent)">
-                {p.body}
-              </p>
-              <div class="mt-4 flex items-center justify-between text-xs text-muted">
-                <span>Used by {p.usedBy} projects</span>
-                <span class="alt-mono">v{p.version}</span>
+            <FadeUpOnView client:visible delay={0.04 + (index % 6) * 0.05}>
+              <div class="flex h-full flex-col rounded-[12px] bg-surface p-6 shadow-[var(--shadow-widget)]">
+                <span class={`frond-status-chip frond-status-chip--${chip.variant} self-start`}>
+                  {chip.label}
+                </span>
+                <h3 class="mt-3 alt-mono text-lg font-bold text-ink">
+                  {p.name}
+                </h3>
+                <p class="mt-2 flex-1 text-sm leading-relaxed" style="color: color-mix(in srgb, var(--c-ink) 80%, transparent)">
+                  {p.body}
+                </p>
+                <div class="mt-4 flex items-center justify-between text-xs text-muted">
+                  <span>Used by {p.usedBy} projects</span>
+                  <span class="alt-mono">v{p.version}</span>
+                </div>
               </div>
-            </div>
+            </FadeUpOnView>
           );
         })
       }
@@ -148,31 +155,37 @@ const filters = [
   <!-- Contribute -->
   <section class="py-24">
     <div class="mx-auto max-w-[800px] px-6 text-center">
-      <h2 class="text-[32px] font-bold text-ink">Build your own</h2>
-      <p class="mt-3 text-[15px] leading-relaxed text-muted">
-        Plugins are plain Python with a YAML contract. Clone the template,
-        implement your logic, register it with a decorator.
-      </p>
+      <FadeUpOnView client:visible>
+        <h2 class="text-[32px] font-bold text-ink">Build your own</h2>
+        <p class="mt-3 text-[15px] leading-relaxed text-muted">
+          Plugins are plain Python with a YAML contract. Clone the template,
+          implement your logic, register it with a decorator.
+        </p>
+      </FadeUpOnView>
 
-      <pre class="mx-auto mt-8 max-w-[640px] overflow-auto rounded-[8px] bg-[#16161A] p-4 text-left alt-mono text-[13px] leading-relaxed text-[#E5E7EB]"><code>@register("my_plugin", PluginType.TRANSFORMER)
+      <FadeUpOnView client:visible delay={0.1}>
+        <pre class="mx-auto mt-8 max-w-[640px] overflow-auto rounded-[8px] bg-[#16161A] p-4 text-left alt-mono text-[13px] leading-relaxed text-[#E5E7EB]"><code>@register("my_plugin", PluginType.TRANSFORMER)
 class MyPlugin(Transformer):
     config_model = MyPluginConfig
     ...</code></pre>
+      </FadeUpOnView>
 
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
-        <a
-          href="/documentation"
-          class="frond-btn frond-btn--outline"
-        >
-          Read the Plugin API
-        </a>
-        <a
-          href="https://github.com/niamoto/niamoto-plugin-template"
-          class="text-sm font-medium text-accent hover:underline"
-        >
-          Plugin template repo →
-        </a>
-      </div>
+      <FadeUpOnView client:visible delay={0.18}>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <a
+            href="/documentation"
+            class="frond-btn frond-btn--outline"
+          >
+            Read the Plugin API
+          </a>
+          <a
+            href="https://github.com/niamoto/niamoto-plugin-template"
+            class="text-sm font-medium text-accent hover:underline"
+          >
+            Plugin template repo →
+          </a>
+        </div>
+      </FadeUpOnView>
     </div>
   </section>
 

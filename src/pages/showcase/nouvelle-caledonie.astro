@@ -2,6 +2,7 @@
 import AltLayout from "@/layouts/AltLayout.astro";
 import FrondHeader from "@/components/alt/frond-live/FrondHeader.astro";
 import FrondFooter from "@/components/alt/shared/FrondFooter.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
 
 const stats = [
   { value: "1,278", label: "species catalogued" },
@@ -56,7 +57,7 @@ const techStack = [
   <!-- Hero 50/50 -->
   <section>
     <div class="mx-auto grid max-w-[1400px] grid-cols-1 lg:grid-cols-2">
-      <div class="flex flex-col justify-center px-6 py-20 lg:px-20">
+      <FadeUpOnView client:visible blur={0} className="flex flex-col justify-center px-6 py-20 lg:px-20">
         <span class="frond-status-chip frond-status-chip--leaf self-start">
           <span class="frond-status-chip__dot" aria-hidden="true"></span>
           Active since 2024
@@ -76,7 +77,7 @@ const techStack = [
             Build yours with Niamoto
           </a>
         </div>
-      </div>
+      </FadeUpOnView>
 
       <div class="relative bg-[#1B1F2A] p-6 lg:p-10">
         <div class="overflow-hidden rounded-[12px] shadow-[0_16px_44px_rgba(15,23,42,0.4)]">
@@ -131,61 +132,64 @@ const techStack = [
     >
       {
         stats.map((s, i) => (
-          <div
-            class:list={[
-              "text-center",
-              i > 0 && "md:border-l md:border-hairline",
-            ]}
+          <FadeUpOnView
+            client:visible
+            delay={0.05 + i * 0.08}
+            className={i > 0 ? "text-center md:border-l md:border-hairline" : "text-center"}
           >
             <div class="alt-mono text-5xl font-bold text-accent">
               {s.value}
             </div>
             <div class="mt-2 text-sm text-muted">{s.label}</div>
-          </div>
+          </FadeUpOnView>
         ))
       }
     </div>
-    <p class="mt-8 text-center alt-mono text-xs text-muted opacity-60">
-      Source partners: Province Nord, Province Sud, Endemia, AMAP,
-      Herbier de Nouvelle-Calédonie, IAC, IRD, CIRAD, OFB
-    </p>
+    <FadeUpOnView client:visible delay={0.4}>
+      <p class="mt-8 text-center alt-mono text-xs text-muted opacity-60">
+        Source partners: Province Nord, Province Sud, Endemia, AMAP,
+        Herbier de Nouvelle-Calédonie, IAC, IRD, CIRAD, OFB
+      </p>
+    </FadeUpOnView>
   </section>
 
   <!-- Inside the portal -->
   <section class="py-24">
     <div class="mx-auto max-w-[1200px] px-6">
-      <div class="mb-12 text-center">
+      <FadeUpOnView client:visible className="mb-12 text-center">
         <h2 class="text-[32px] font-bold text-ink">Inside the portal</h2>
         <p class="mt-2 text-[15px] text-muted">
           Three page types power the portal — each generated automatically from
           the underlying data.
         </p>
-      </div>
+      </FadeUpOnView>
       <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
         {
-          insideThePortal.map((item) => (
-            <div class="overflow-hidden rounded-[12px] bg-surface shadow-[var(--shadow-widget)]">
-              <div class="aspect-[16/10]" style="background: var(--c-surface-muted)">
-                {item.image ? (
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    class="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-forest-green/10 to-steel-blue/10">
-                    <span class="alt-mono text-xs text-muted">
-                      Screenshot pending
-                    </span>
-                  </div>
-                )}
+          insideThePortal.map((item, index) => (
+            <FadeUpOnView client:visible delay={0.06 + index * 0.08}>
+              <div class="h-full overflow-hidden rounded-[12px] bg-surface shadow-[var(--shadow-widget)]">
+                <div class="aspect-[16/10]" style="background: var(--c-surface-muted)">
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      class="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-forest-green/10 to-steel-blue/10">
+                      <span class="alt-mono text-xs text-muted">
+                        Screenshot pending
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div class="p-5">
+                  <h3 class="text-base font-semibold text-ink">{item.title}</h3>
+                  <p class="mt-1 text-sm text-muted">{item.caption}</p>
+                </div>
               </div>
-              <div class="p-5">
-                <h3 class="text-base font-semibold text-ink">{item.title}</h3>
-                <p class="mt-1 text-sm text-muted">{item.caption}</p>
-              </div>
-            </div>
+            </FadeUpOnView>
           ))
         }
       </div>
@@ -195,29 +199,30 @@ const techStack = [
   <!-- Quote -->
   <section class="py-20">
     <div class="mx-auto max-w-[800px] px-6">
-      <div class="relative">
-        <span
-          class="absolute -left-4 -top-6 font-serif text-7xl leading-none text-accent"
-          style="opacity: 0.3"
-          aria-hidden="true">"</span
-        >
-        <blockquote class="text-2xl font-medium italic leading-relaxed text-ink">
-          Niamoto turned a decade of forest data into a living portal.
-          Researchers, managers, and the public all read the same source of
-          truth.
-        </blockquote>
-        <footer class="mt-4 text-sm text-muted">
-          — <span class="italic">[Nom du responsable scientifique]</span>,
-          Institut Agronomique néo-Calédonien
-        </footer>
-      </div>
+      <FadeUpOnView client:visible>
+        <div class="relative">
+          <span
+            class="absolute -left-4 -top-6 font-serif text-7xl leading-none text-accent"
+            style="opacity: 0.3"
+            aria-hidden="true">"</span
+          >
+          <blockquote class="text-2xl font-medium italic leading-relaxed text-ink">
+            Niamoto turned a decade of forest data into a living portal.
+            Researchers, managers, and the public all read the same source of
+            truth.
+          </blockquote>
+          <footer class="mt-4 text-sm text-muted">
+            — Institut Agronomique néo-Calédonien
+          </footer>
+        </div>
+      </FadeUpOnView>
     </div>
   </section>
 
   <!-- Technical details -->
   <section class="py-24">
     <div class="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-6 md:grid-cols-[3fr_2fr]">
-      <div>
+      <FadeUpOnView client:visible>
         <h2 class="text-[28px] font-bold text-ink">How it's built</h2>
         <p class="mt-4 text-base leading-relaxed" style="color: color-mix(in srgb, var(--c-ink) 85%, transparent)">
           The portal is a static site generated by Niamoto. Data is pulled from
@@ -241,53 +246,59 @@ const techStack = [
             ))
           }
         </ul>
-      </div>
+      </FadeUpOnView>
 
-      <div class="rounded-[12px] bg-surface p-6 shadow-[var(--shadow-widget)]">
-        <h4 class="alt-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
-          Stack
-        </h4>
-        <ul class="mt-4 space-y-3 text-sm text-ink">
-          {
-            techStack.map((tech) => (
-              <li class="flex items-center gap-2 alt-mono">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                {tech}
-              </li>
-            ))
-          }
-        </ul>
-      </div>
+      <FadeUpOnView client:visible delay={0.1}>
+        <div class="rounded-[12px] bg-surface p-6 shadow-[var(--shadow-widget)]">
+          <h4 class="alt-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
+            Stack
+          </h4>
+          <ul class="mt-4 space-y-3 text-sm text-ink">
+            {
+              techStack.map((tech) => (
+                <li class="flex items-center gap-2 alt-mono">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent)" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  {tech}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </FadeUpOnView>
     </div>
   </section>
 
   <!-- Other portals -->
   <section class="pb-24">
     <div class="mx-auto max-w-[1200px] px-6">
-      <h3 class="mb-6 text-xl font-bold text-ink">Other portals</h3>
+      <FadeUpOnView client:visible>
+        <h3 class="mb-6 text-xl font-bold text-ink">Other portals</h3>
+      </FadeUpOnView>
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {
           [
             { name: "Congo Basin Forest Portal", subtitle: "Gabon – Cameroun" },
             { name: "Amazonian Flora Portal", subtitle: "Guyane" },
-          ].map((portal) => (
-            <div class="flex items-start gap-4 rounded-[12px] bg-surface p-5 opacity-75 shadow-[var(--shadow-widget)]">
-              <div class="flex h-16 w-24 shrink-0 items-center justify-center rounded-[6px]" style="background: var(--c-surface-muted)">
-                <span class="alt-mono text-[10px] text-muted">2026</span>
+          ].map((portal, index) => (
+            <FadeUpOnView client:visible delay={0.06 + index * 0.08}>
+              <div class="flex items-start gap-4 rounded-[12px] bg-surface p-5 opacity-75 shadow-[var(--shadow-widget)]">
+                <div class="flex h-16 w-24 shrink-0 items-center justify-center rounded-[6px]" style="background: var(--c-surface-muted)">
+                  <span class="alt-mono text-[10px] text-muted">2026</span>
+                </div>
+                <div class="flex-1">
+                  <span class="frond-status-chip frond-status-chip--steel">
+                    <span class="frond-status-chip__dot" aria-hidden="true"></span>
+                    Upcoming 2026
+                  </span>
+                  <h4 class="mt-2 text-base font-semibold text-ink">
+                    {portal.name}
+                  </h4>
+                  <p class="text-sm text-muted">{portal.subtitle}</p>
+                </div>
               </div>
-              <div class="flex-1">
-                <span class="frond-status-chip frond-status-chip--steel">
-                  <span class="frond-status-chip__dot" aria-hidden="true"></span>
-                  Upcoming 2026
-                </span>
-                <h4 class="mt-2 text-base font-semibold text-ink">
-                  {portal.name}
-                </h4>
-                <p class="text-sm text-muted">{portal.subtitle}</p>
-              </div>
-            </div>
+            </FadeUpOnView>
           ))
         }
       </div>
