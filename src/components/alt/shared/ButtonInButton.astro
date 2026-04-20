@@ -1,0 +1,155 @@
+---
+/*
+ * ButtonInButton — pill CTA with optional trailing icon nested in its own
+ * circle. Pattern from high-end-visual-design §4.B.
+ *
+ * Anti-AI-slop notes:
+ *   - On :active, the button scale-down (0.98) for tactile feedback.
+ *   - Inner icon translates and scales on parent :hover (group-like).
+ *   - No outer glow shadows; uses tinted shadow matching background.
+ */
+
+type Variant = "primary" | "secondary" | "ghost";
+
+interface Props {
+  href?: string;
+  variant?: Variant;
+  /** Show trailing arrow icon in nested circle. */
+  trailingIcon?: boolean;
+  /** Additional class on the button. */
+  class?: string;
+  /** Optional aria-label. */
+  ariaLabel?: string;
+  /** Optional rel attr (e.g., "noopener" for external). */
+  rel?: string;
+  /** Optional target. */
+  target?: string;
+}
+
+const {
+  href,
+  variant = "primary",
+  trailingIcon = true,
+  class: extraClass = "",
+  ariaLabel,
+  rel,
+  target,
+} = Astro.props;
+
+const Element = href ? "a" : "button";
+---
+
+<Element
+  href={href}
+  rel={rel}
+  target={target}
+  aria-label={ariaLabel}
+  class:list={["alt-bib", `alt-bib--${variant}`, extraClass]}
+>
+  <span class="alt-bib__label">
+    <slot />
+  </span>
+  {trailingIcon && (
+    <span class="alt-bib__icon" aria-hidden="true">
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 13 L13 3" />
+        <path d="M6 3 L13 3 L13 10" />
+      </svg>
+    </span>
+  )}
+</Element>
+
+<style>
+  .alt-bib {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: 48px;
+    padding: 0 0.4rem 0 1.4rem;
+    border-radius: 9999px;
+    font-family: var(--f-body);
+    font-variation-settings: var(--fvs-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform 180ms cubic-bezier(0.32, 0.72, 0, 1),
+                background-color 220ms cubic-bezier(0.32, 0.72, 0, 1),
+                color 220ms cubic-bezier(0.32, 0.72, 0, 1),
+                box-shadow 220ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .alt-bib:active {
+    transform: translateY(0.5px) scale(0.98);
+  }
+  .alt-bib__label {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+  }
+
+  .alt-bib__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    margin-left: 0.25rem;
+    border-radius: 9999px;
+    transition: transform 220ms cubic-bezier(0.32, 0.72, 0, 1),
+                background-color 220ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  /* Primary - ink background, canvas text, accent hover */
+  .alt-bib--primary {
+    background: var(--c-ink);
+    color: var(--c-canvas);
+    border-color: var(--c-ink);
+  }
+  .alt-bib--primary .alt-bib__icon {
+    background: color-mix(in srgb, var(--c-canvas) 18%, transparent);
+  }
+  .alt-bib--primary:hover {
+    background: var(--c-accent);
+    border-color: var(--c-accent);
+  }
+  .alt-bib--primary:hover .alt-bib__icon {
+    transform: translate(2px, -1px) scale(1.04);
+    background: color-mix(in srgb, var(--c-canvas) 26%, transparent);
+  }
+
+  /* Secondary - hairline border, ink text, accent on hover */
+  .alt-bib--secondary {
+    background: transparent;
+    color: var(--c-ink);
+    border-color: var(--c-hairline);
+  }
+  .alt-bib--secondary .alt-bib__icon {
+    background: var(--c-surface);
+  }
+  .alt-bib--secondary:hover {
+    color: var(--c-canvas);
+    background: var(--c-ink);
+    border-color: var(--c-ink);
+  }
+  .alt-bib--secondary:hover .alt-bib__icon {
+    transform: translate(2px, -1px) scale(1.04);
+    background: color-mix(in srgb, var(--c-canvas) 18%, transparent);
+  }
+
+  /* Ghost - text only, subtle hover */
+  .alt-bib--ghost {
+    background: transparent;
+    color: var(--c-muted);
+    padding: 0 0.6rem;
+    height: 40px;
+  }
+  .alt-bib--ghost:hover {
+    color: var(--c-ink);
+  }
+  .alt-bib--ghost .alt-bib__icon {
+    width: 24px;
+    height: 24px;
+    margin-left: 0.1rem;
+  }
+</style>

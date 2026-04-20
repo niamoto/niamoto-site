@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Niamoto — Published Site Kit</title>
+  <link rel="stylesheet" href="../../colors_and_type.css">
+  <link rel="stylesheet" href="./site.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/babel" src="./Nav.jsx"></script>
+<script type="text/babel" src="./Widgets.jsx"></script>
+<script type="text/babel" src="./HomePage.jsx"></script>
+<script type="text/babel" src="./TaxonPage.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+function App() {
+  const [route, setRoute] = React.useState(() => {
+    try { return JSON.parse(localStorage.getItem('nia-site-route')) || { page:'home' }; }
+    catch { return { page:'home' }; }
+  });
+  React.useEffect(() => { localStorage.setItem('nia-site-route', JSON.stringify(route)); }, [route]);
+
+  const onNavigate = (id) => {
+    if (id === 'home') setRoute({ page:'home' });
+    else if (id === 'taxa') setRoute({ page:'taxon', id:'araucaria-montana' });
+    else setRoute({ page:'stub', id });
+  };
+  const onSelectTaxon = (id) => setRoute({ page:'taxon', id });
+
+  let body;
+  if (route.page === 'home')   body = <HomePage onNavigate={onNavigate} onSelectTaxon={onSelectTaxon}/>;
+  else if (route.page === 'taxon') body = <TaxonPage taxonId={route.id} onNavigate={onNavigate}/>;
+  else body = (
+    <div className="nia-container" style={{ padding:'40px 24px' }}>
+      <h1 style={{ fontSize:28, letterSpacing:'-0.02em' }}>{route.id}</h1>
+      <p style={{ color:'var(--fg-muted)' }}>This surface exists in the generated site but is stubbed in this UI kit.</p>
+    </div>
+  );
+
+  const currentNav = route.page === 'taxon' ? 'taxa' : route.page === 'home' ? 'home' : route.id;
+
+  return (
+    <div data-screen-label={route.page === 'taxon' ? `taxon-${route.id}` : route.page}>
+      <Nav current={currentNav} onNavigate={onNavigate}/>
+      {body}
+      <Footer/>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('app')).render(<App/>);
+</script>
+</body>
+</html>

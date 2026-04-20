@@ -1,0 +1,42 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+
+interface Item {
+  stage: string;
+  color: "steel" | "leaf" | "forest";
+  title: string;
+  body: string;
+  snippet?: string;
+}
+
+interface Props {
+  kicker: string;
+  heading: string;
+  sub: string;
+  items: readonly Item[];
+}
+
+const { kicker, heading, sub, items } = Astro.props;
+---
+
+<section class="frond-section" aria-labelledby="frond-pillars-heading">
+  <FadeUpOnView client:visible className="frond-head">
+    <EyebrowTag variant="outlined">{kicker}</EyebrowTag>
+    <h2 id="frond-pillars-heading" class="display frond-heading">{heading}</h2>
+    <p class="frond-sub">{sub}</p>
+  </FadeUpOnView>
+
+  <div class="frond-pillars">
+    {items.map((item, index) => (
+      <FadeUpOnView client:visible delay={0.06 + index * 0.06} className={`frond-stage-card frond-stage-card--${item.color}`}>
+        <span class="frond-stage-card__tag">{item.stage}</span>
+        <h3 class="frond-stage-card__title">{item.title}</h3>
+        <p class="frond-stage-card__body">{item.body}</p>
+        {item.snippet && (
+          <pre class="frond-stage-card__code"><code>{item.snippet}</code></pre>
+        )}
+      </FadeUpOnView>
+    ))}
+  </div>
+</section>

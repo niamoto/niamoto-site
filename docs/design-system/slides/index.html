@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Niamoto — Slide kit</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* -------- deck-scoped tokens -------- */
+  :root {
+    --slide-bg: oklch(0.985 0.003 250);
+    --slide-ink: oklch(0.14 0.01 270);
+    --slide-ink-soft: oklch(0.45 0.01 260);
+    --slide-rule: oklch(0.88 0.005 250);
+    --slide-rule-strong: oklch(0.78 0.005 250);
+    --slide-card: #ffffff;
+    --slide-accent: #228b22;          /* published-site forest — used on gradient bands */
+    --slide-accent-2: #2E7D32;        /* GUI primary */
+    --slide-accent-3: #4BAF50;        /* leaf */
+    --slide-steel: #5B86B0;
+    --slide-dbh-1: #C28E5F;
+    --slide-dbh-2: #A0693F;
+    --slide-amber: #F2B94B;
+    --slide-violet: #9333EA;
+  }
+
+  /* The deck-stage lives in light DOM; style each slide as a 1920×1080 surface. */
+  html, body { background:#0A0B0D; }
+  body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: var(--slide-ink); }
+
+  .slide {
+    width: 1920px; height: 1080px;
+    background: var(--slide-bg);
+    color: var(--slide-ink);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    padding: 88px 112px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* shared atoms */
+  .eyebrow {
+    font-size: 18px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--slide-ink-soft);
+  }
+  .caption { font-size: 16px; color: var(--slide-ink-soft); }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  .latin { font-style: italic; }
+  .rule { height: 1px; background: var(--slide-rule); }
+  .big-num { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+
+  /* page footer strip — every slide except the title */
+  .footer {
+    position: absolute; left: 112px; right: 112px; bottom: 48px;
+    display: flex; align-items: center; gap: 16px;
+    font-size: 15px; color: var(--slide-ink-soft);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+  .footer .logo-mark {
+    width: 22px; height: 22px; border-radius: 5px;
+    background: var(--slide-accent-2); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-weight: 700; font-size: 14px;
+  }
+  .footer .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--slide-rule-strong); }
+  .footer .page { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-variant-numeric: tabular-nums; }
+
+  /* --- Widget header (published-site signature: animated diagonal gradient) --- */
+  .widget {
+    background: var(--slide-card);
+    border: 1px solid var(--slide-rule);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,.06), 0 2px 4px -1px rgba(0,0,0,.03);
+  }
+  .widget-head {
+    background: linear-gradient(135deg, #228b22 0%, #2d8f47 50%, #1f7a1f 100%);
+    background-size: 200% 200%;
+    animation: grad 8s ease-in-out infinite;
+    color: #fff;
+    padding: 10px 18px;
+    font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .widget-head .info {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size: 11px; font-weight: 600;
+  }
+  @keyframes grad { 0%,100% { background-position: 0% 0%; } 50% { background-position: 100% 100%; } }
+
+  /* --- Title slide --- */
+  .title .logo-stripe {
+    position: absolute; inset: 0 auto 0 0; width: 20px;
+    background: linear-gradient(180deg, #228b22, #2E7D32);
+  }
+  .title .brand {
+    display: flex; align-items: center; gap: 14px;
+    position: absolute; top: 72px; left: 132px;
+  }
+  .title .brand-mark {
+    width: 52px; height: 52px; border-radius: 12px; background: var(--slide-accent-2);
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 32px; letter-spacing: -0.04em;
+  }
+  .title .brand-name {
+    font-family: "Arial Black", "Helvetica Neue", sans-serif;
+    font-size: 28px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--slide-ink);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+  }
+  .title .body {
+    position: absolute; left: 132px; right: 132px; bottom: 180px;
+  }
+  .title h1 {
+    font-size: 136px; font-weight: 700; line-height: 0.98;
+    letter-spacing: -0.035em; margin: 0 0 28px;
+  }
+  .title h1 .dot { color: var(--slide-accent); }
+  .title .dek {
+    font-size: 30px; font-weight: 400; line-height: 1.35;
+    color: var(--slide-ink-soft); max-width: 1250px;
+    text-wrap: pretty;
+  }
+  .title .meta {
+    position: absolute; left: 132px; bottom: 72px;
+    display: flex; align-items: center; gap: 18px;
+    font-size: 16px; color: var(--slide-ink-soft);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .title .meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--slide-rule-strong); }
+  .title .corner-seal {
+    position: absolute; right: 132px; bottom: 72px;
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--slide-ink-soft);
+  }
+  .title .corner-seal .glyph {
+    width: 44px; height: 44px; border: 1px solid var(--slide-rule-strong); border-radius: 50%;
+    display:flex; align-items:center; justify-content:center; color: var(--slide-accent-2);
+  }
+
+  /* --- Agenda --- */
+  .agenda .head { display:flex; align-items:flex-end; gap: 24px; margin-bottom: 56px; }
+  .agenda h1 { font-size: 84px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin: 12px 0 0; }
+  .agenda-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 28px 80px;
+  }
+  .agenda-item {
+    display: grid; grid-template-columns: 128px 1fr;
+    column-gap: 28px; align-items: start;
+    padding: 28px 0; border-top: 1px solid var(--slide-rule);
+  }
+  .agenda-item:first-child, .agenda-item:nth-child(2) { border-top: 1px solid var(--slide-ink); }
+  .agenda-item .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 52px; font-weight: 500;
+    letter-spacing: -0.04em; color: var(--slide-accent-2);
+  }
+  .agenda-item h3 { font-size: 32px; font-weight: 600; letter-spacing: -0.015em; margin: 0 0 8px; }
+  .agenda-item p { font-size: 18px; color: var(--slide-ink-soft); line-height: 1.5; margin: 0; max-width: 540px; text-wrap: pretty; }
+  .agenda-item .dur {
+    display:inline-block; margin-top:10px;
+    font-family:'JetBrains Mono', monospace; font-size: 13px;
+    color: var(--slide-ink-soft);
+    background: oklch(0.95 0.005 250); border-radius: 999px;
+    padding: 3px 10px;
+  }
+
+  /* --- Quote --- */
+  .quote {
+    padding: 120px 160px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .quote .mark {
+    font-family: "Plus Jakarta Sans", serif; font-weight: 700;
+    font-size: 280px; line-height: 0.7;
+    color: var(--slide-accent-2); opacity: 0.12;
+    position: absolute; left: 100px; top: 130px;
+    pointer-events: none;
+  }
+  .quote blockquote {
+    margin: 0; position: relative;
+    font-size: 74px; line-height: 1.15;
+    font-weight: 400; letter-spacing: -0.02em;
+    color: var(--slide-ink);
+    max-width: 1400px;
+    text-wrap: balance;
+  }
+  .quote blockquote em { font-style: italic; color: var(--slide-accent-2); }
+  .quote .attrib {
+    margin-top: 72px;
+    display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center;
+    max-width: 720px;
+  }
+  .quote .portrait {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: linear-gradient(135deg, oklch(0.55 0.08 145), oklch(0.38 0.09 145));
+    display:flex; align-items:center; justify-content:center;
+    font-size: 26px; font-weight:700; color:#fff; letter-spacing: -0.02em;
+    box-shadow: 0 4px 12px rgba(34,139,34,0.18);
+  }
+  .quote .attrib .name { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .quote .attrib .role { font-size: 16px; color: var(--slide-ink-soft); margin-top: 2px; }
+
+  /* --- Data slide --- */
+  .data-slide h1 { font-size: 56px; font-weight: 700; letter-spacing: -0.025em; margin: 6px 0 4px; line-height: 1.05; }
+  .data-slide .sub { font-size: 20px; color: var(--slide-ink-soft); margin-bottom: 32px; text-wrap: pretty; }
+  .data-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; }
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+  .kpi {
+    background: var(--slide-card); border: 1px solid var(--slide-rule); border-radius: 10px;
+    padding: 18px 22px;
+  }
+  .kpi .label { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; color: var(--slide-ink-soft); margin-bottom: 10px; }
+  .kpi .v { font-size: 46px; font-weight: 500; letter-spacing: -0.03em; font-family:'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+  .kpi .delta { font-size: 13px; color: var(--slide-accent-3); font-family:'JetBrains Mono', monospace; margin-top: 4px; }
+  .kpi .delta.neg { color: #E85D5D; }
+
+  /* DBH chart body (recreates the earthy DBH widget from the taxon detail) */
+  .widget-body { padding: 18px 22px 22px; }
+  .bars { display:flex; align-items:flex-end; gap: 22px; height: 380px; padding: 8px 4px 0; border-left: 1px solid var(--slide-rule); border-bottom: 1px solid var(--slide-rule); }
+  .bar { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .bar .val { font-family:'JetBrains Mono', monospace; font-size: 15px; font-weight: 500; color: var(--slide-ink); }
+  .bar .col {
+    width: 100%;
+    background: linear-gradient(180deg, var(--slide-dbh-1) 0%, var(--slide-dbh-2) 100%);
+    border-radius: 3px 3px 0 0;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,0.08);
+  }
+  .bar .lab { font-family:'JetBrains Mono', monospace; font-size: 13px; color: var(--slide-ink-soft); }
+
+  /* habitat donut */
+  .habitat-list { display:flex; flex-direction: column; gap: 16px; padding: 18px 22px; }
+  .hab-row { display: grid; grid-template-columns: 140px 1fr 64px; gap: 16px; align-items: center; }
+  .hab-row .name { font-size: 17px; font-weight: 500; }
+  .hab-row .track { height: 12px; background: oklch(0.93 0.005 250); border-radius: 999px; overflow: hidden; position: relative; }
+  .hab-row .track > span { position:absolute; inset:0 auto 0 0; border-radius: 999px; }
+  .hab-row .pct { font-family:'JetBrains Mono', monospace; font-size: 15px; color: var(--slide-ink); text-align: right; }
+
+  /* --- Comparison slide --- */
+  .compare h1 { font-size: 56px; font-weight: 700; letter-spacing: -0.025em; margin: 6px 0 6px; line-height: 1.05; }
+  .compare .sub { font-size: 19px; color: var(--slide-ink-soft); margin-bottom: 34px; max-width: 1200px; text-wrap: pretty; }
+  .cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .cmp-card {
+    background: var(--slide-card); border: 1px solid var(--slide-rule);
+    border-left: 3px solid var(--c);
+    border-radius: 7px; padding: 30px 32px;
+    display: flex; flex-direction: column; gap: 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .cmp-card .tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--c);
+    background: color-mix(in oklch, var(--c), white 88%);
+    padding: 4px 10px; border-radius: 999px; align-self: flex-start;
+  }
+  .cmp-card h2 { font-size: 38px; font-weight: 700; letter-spacing: -0.02em; margin: 0; line-height: 1.1; }
+  .cmp-card .lede { font-size: 18px; color: var(--slide-ink-soft); line-height: 1.5; margin: 0; text-wrap: pretty; }
+  .cmp-card ul { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .cmp-card li {
+    display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start;
+    font-size: 17px; line-height: 1.5; color: var(--slide-ink);
+  }
+  .cmp-card li svg { width: 22px; height: 22px; color: var(--c); margin-top: 2px; }
+  .cmp-card .foot { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--slide-rule);
+    display: flex; align-items: baseline; gap: 10px;
+    font-family:'JetBrains Mono', monospace; font-size: 14px; color: var(--slide-ink-soft);
+  }
+  .cmp-card .foot .k { color: var(--slide-ink); font-size: 32px; font-weight: 500; letter-spacing: -0.02em; }
+
+  /* --- Taxon spotlight --- */
+  .taxon { padding: 0; display: grid; grid-template-columns: 880px 1fr; }
+  .taxon .hero {
+    position: relative;
+    background:
+      radial-gradient(ellipse 70% 50% at 30% 40%, oklch(0.58 0.11 145 / 0.85), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 75%, oklch(0.42 0.09 145 / 0.8), transparent 70%),
+      linear-gradient(160deg, oklch(0.32 0.07 150), oklch(0.22 0.08 145) 55%, oklch(0.18 0.06 155));
+  }
+  .taxon .hero .leaves {
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 22% 28%, oklch(0.72 0.14 145 / 0.25) 0 2px, transparent 3px),
+      radial-gradient(circle at 68% 18%, oklch(0.72 0.14 145 / 0.18) 0 2px, transparent 3px),
+      radial-gradient(circle at 82% 62%, oklch(0.72 0.14 145 / 0.22) 0 2px, transparent 3px);
+    background-size: 220px 220px, 320px 320px, 280px 280px;
+    mix-blend-mode: screen;
+  }
+  .taxon .hero svg.fern {
+    position: absolute; bottom: 60px; left: 60px; right: 60px;
+    width: calc(100% - 120px); opacity: 0.55;
+  }
+  .taxon .hero-label {
+    position: absolute; top: 36px; left: 44px;
+    font-family:'JetBrains Mono', monospace; font-size: 13px; color: rgba(255,255,255,0.85);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .taxon .hero-label .chip {
+    padding: 4px 10px; background: rgba(255,255,255,0.14); border-radius: 999px; backdrop-filter: blur(4px);
+  }
+  .taxon .hero-caption {
+    position: absolute; bottom: 36px; left: 44px; right: 44px;
+    font-size: 14px; color: rgba(255,255,255,0.7);
+    font-family:'JetBrains Mono', monospace;
+    display: flex; gap: 14px; align-items: center;
+  }
+
+  .taxon .body {
+    padding: 72px 88px 72px 72px;
+    display: flex; flex-direction: column;
+  }
+  .taxon .eyebrow { margin-bottom: 18px; }
+  .taxon h1 {
+    font-size: 76px; font-weight: 400; line-height: 0.98;
+    letter-spacing: -0.02em; margin: 0 0 6px;
+    font-style: italic; color: var(--slide-ink);
+  }
+  .taxon .authority { font-size: 22px; color: var(--slide-ink-soft); font-weight: 400; margin-bottom: 18px; }
+  .taxon .family {
+    display: inline-flex; align-items:center; gap: 8px;
+    font-size: 15px; color: var(--slide-ink);
+    font-family:'JetBrains Mono', monospace;
+    border: 1px solid var(--slide-rule-strong); border-radius: 999px;
+    padding: 6px 12px; width: max-content; margin-bottom: 34px;
+  }
+  .taxon .family .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--slide-accent-2); }
+
+  .taxon .lede {
+    font-size: 22px; line-height: 1.5; color: var(--slide-ink);
+    margin: 0 0 34px; max-width: 720px; text-wrap: pretty;
+  }
+  .taxon .stat-strip { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--slide-ink); border-bottom: 1px solid var(--slide-rule); }
+  .taxon .stat-strip .cell { padding: 22px 0 20px; }
+  .taxon .stat-strip .cell + .cell { border-left: 1px solid var(--slide-rule); padding-left: 24px; }
+  .taxon .stat-strip .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slide-ink-soft); font-weight: 600; margin-bottom: 10px; }
+  .taxon .stat-strip .v { font-family:'JetBrains Mono', monospace; font-size: 34px; letter-spacing: -0.02em; font-weight: 500; }
+
+  /* mini dbh */
+  .mini-dbh { margin-top: 34px; }
+  .mini-dbh .h { display:flex; align-items:baseline; gap: 10px; margin-bottom: 14px; }
+  .mini-dbh .t { font-size: 16px; font-weight: 600; }
+  .mini-dbh .sub { font-size: 13px; color: var(--slide-ink-soft); font-family:'JetBrains Mono', monospace; }
+  .mini-dbh .bars { height: 130px; gap: 14px; }
+  .mini-dbh .bar .val { font-size: 12px; }
+  .mini-dbh .bar .lab { font-size: 11px; }
+
+  /* hero divider echoes gui sidebar accent */
+  .taxon .hero::after {
+    content: ""; position: absolute; top: 0; right: -1px; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, transparent, var(--slide-accent-2), transparent);
+  }
+</style>
+</head>
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- ───────── 1 · TITLE ───────── -->
+  <section class="slide title" data-label="Title">
+    <div class="logo-stripe"></div>
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-name">Niamoto</div>
+    </div>
+
+    <div class="body">
+      <h1>Import. Structure.<br>Publish<span class="dot">.</span></h1>
+      <p class="dek">Turn heterogeneous ecological files into a clear, structured biodiversity portal — without gluing scripts together.</p>
+    </div>
+
+    <div class="meta">
+      <span>v1.4.2</span>
+      <span class="dot"></span>
+      <span>niamoto-nc</span>
+      <span class="dot"></span>
+      <span>march 2026</span>
+    </div>
+
+    <div class="corner-seal">
+      <div class="glyph">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19.2 2.3c.5.5 1.6 4.25 2 6.7.8 4.9-2.1 9.8-7 10.9a9 9 0 0 1-3.2.1z"/>
+          <path d="M2 21c0-3 1.85-5.36 5.08-6"/>
+        </svg>
+      </div>
+      <span>New Caledonia<br>ecological portal</span>
+    </div>
+  </section>
+
+  <!-- ───────── 2 · AGENDA ───────── -->
+  <section class="slide agenda" data-label="Agenda">
+    <div class="head">
+      <div class="eyebrow">This session</div>
+    </div>
+    <h1 style="margin-bottom: 72px;">What we'll cover</h1>
+
+    <div class="agenda-grid">
+      <div class="agenda-item">
+        <div class="num">01</div>
+        <div>
+          <h3>Data model</h3>
+          <p>Taxa, occurrences, plots, shapes — how the four core collections fit together and why that shape matters.</p>
+          <span class="dur">8 min</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="num">02</div>
+        <div>
+          <h3>Import pipeline</h3>
+          <p>From Darwin Core archive to SQLite: loaders, transformers, and the CLI equivalents for each GUI action.</p>
+          <span class="dur">12 min</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="num">03</div>
+        <div>
+          <h3>Configuring widgets</h3>
+          <p>Per-page layouts with YAML — DBH distributions, phenology, habitat profiles, phylogeny.</p>
+          <span class="dur">10 min</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="num">04</div>
+        <div>
+          <h3>Publishing</h3>
+          <p>Static-site output, deploy targets (GitHub Pages / Netlify / IPFS), and how to version a portal.</p>
+          <span class="dur">6 min</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="num">05</div>
+        <div>
+          <h3>Plugins &amp; extensions</h3>
+          <p>Writing a Python package that extends the loader, transformer, or widget layer.</p>
+          <span class="dur">8 min</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="num">06</div>
+        <div>
+          <h3>Q &amp; A</h3>
+          <p>Open discussion — bring your schemas, your field datasets, or your publishing constraints.</p>
+          <span class="dur">open</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="logo-mark">N</div><span>Niamoto</span><span class="sep"></span><span>Session agenda</span>
+      <span class="page">02 / 06</span>
+    </div>
+  </section>
+
+  <!-- ───────── 3 · QUOTE ───────── -->
+  <section class="slide quote" data-label="Quote">
+    <div class="mark">&ldquo;</div>
+    <blockquote>
+      A herbarium is not a list of names — it's a <em>description of place</em>.<br>
+      Niamoto lets the description travel with the data.
+    </blockquote>
+    <div class="attrib">
+      <div class="portrait">SV</div>
+      <div>
+        <div class="name">Sylvain Vincent</div>
+        <div class="role">Botanist · Institut Agronomique Néo-Calédonien · core contributor</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="logo-mark">N</div><span>Niamoto</span><span class="sep"></span><span>Field notes</span>
+      <span class="page">03 / 06</span>
+    </div>
+  </section>
+
+  <!-- ───────── 4 · DATA ───────── -->
+  <section class="slide data-slide" data-label="Data">
+    <div class="eyebrow">Collection · Taxon</div>
+    <h1><span class="latin">Fabaceae</span></h1>
+    <p class="sub">5 465 occurrences across 34 endemic genera. A snapshot of the data the portal will publish.</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="label">Occurrences</div><div class="v">5 465</div><div class="delta">+218 this import</div></div>
+      <div class="kpi"><div class="label">Sub-taxa</div><div class="v">34</div><div class="delta">no change</div></div>
+      <div class="kpi"><div class="label">Plots</div><div class="v">128</div><div class="delta">+3 plots</div></div>
+      <div class="kpi"><div class="label">Validated</div><div class="v">88%</div><div class="delta neg">−1.2% since jan</div></div>
+    </div>
+
+    <div class="data-grid">
+      <div class="widget">
+        <div class="widget-head">Distribution DBH <span class="info">i</span></div>
+        <div class="widget-body">
+          <div class="bars">
+            <div class="bar" style="height:100%"><div class="val">52.11</div><div class="col" style="height:90%"></div><div class="lab">10–20</div></div>
+            <div class="bar" style="height:100%"><div class="val">17.72</div><div class="col" style="height:35%"></div><div class="lab">20–30</div></div>
+            <div class="bar" style="height:100%"><div class="val">12.92</div><div class="col" style="height:26%"></div><div class="lab">30–40</div></div>
+            <div class="bar" style="height:100%"><div class="val">8.64</div><div class="col" style="height:18%"></div><div class="lab">40–50</div></div>
+            <div class="bar" style="height:100%"><div class="val">5.42</div><div class="col" style="height:12%"></div><div class="lab">50–75</div></div>
+            <div class="bar" style="height:100%"><div class="val">1.48</div><div class="col" style="height:5%"></div><div class="lab">75–100</div></div>
+            <div class="bar" style="height:100%"><div class="val">0.29</div><div class="col" style="height:3%"></div><div class="lab">100–200</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="widget">
+        <div class="widget-head">Milieu de vie (Holdridge) <span class="info">i</span></div>
+        <div class="habitat-list">
+          <div class="hab-row"><div class="name">Sec</div><div class="track"><span style="width:50%; background:var(--slide-amber)"></span></div><div class="pct">39.9%</div></div>
+          <div class="hab-row"><div class="name">Humide</div><div class="track"><span style="width:38%; background:var(--slide-accent-3)"></span></div><div class="pct">38.8%</div></div>
+          <div class="hab-row"><div class="name">Très humide</div><div class="track"><span style="width:25%; background:var(--slide-steel)"></span></div><div class="pct">20.3%</div></div>
+          <div class="hab-row"><div class="name">Sur-humide</div><div class="track"><span style="width:3%;  background:var(--slide-violet)"></span></div><div class="pct">1.0%</div></div>
+        </div>
+        <div style="padding: 0 22px 22px; font-family:'JetBrains Mono',monospace; font-size: 13px; color: var(--slide-ink-soft); border-top: 1px solid var(--slide-rule); padding-top: 14px;">
+          n = 5 465 · grouped by habitat · source occurrences.holdridge
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="logo-mark">N</div><span>Niamoto</span><span class="sep"></span><span class="mono">niamoto-nc/taxa/fabaceae</span>
+      <span class="page">04 / 06</span>
+    </div>
+  </section>
+
+  <!-- ───────── 5 · COMPARISON ───────── -->
+  <section class="slide compare" data-label="Comparison">
+    <div class="eyebrow">Before · After</div>
+    <h1>From scattered files to a single portal</h1>
+    <p class="sub">The same dataset, before and after running through a Niamoto project. Nothing is generated or invented — the pipeline only structures what already exists.</p>
+
+    <div class="cmp-grid">
+      <div class="cmp-card" style="--c: #5B86B0">
+        <span class="tag">Before</span>
+        <h2>A folder of files</h2>
+        <p class="lede">Seven years of occurrences, three shapefiles, and a working spreadsheet that only one person can read.</p>
+        <ul>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            <span>16 files · 4 formats · no shared vocabulary</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m10.3 3.9-8.1 14a2 2 0 0 0 1.7 3h16.2a2 2 0 0 0 1.7-3l-8.1-14a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+            <span>Taxon names spelled four different ways</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>No pipeline — each update is a manual merge</span>
+          </li>
+        </ul>
+        <div class="foot"><span class="k">2–3 weeks</span><span>to prepare a single report</span></div>
+      </div>
+
+      <div class="cmp-card" style="--c: #2E7D32">
+        <span class="tag">After</span>
+        <h2>A versioned portal</h2>
+        <p class="lede">The same data, loaded once, enriched by plugins, then rendered as a browsable biodiversity portal you can rebuild on demand.</p>
+        <ul>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>One SQLite · four collections · shared schema</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>Names matched against World Flora Online</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            <span><code class="mono" style="font-size:14px; background:oklch(0.95 0.005 250); padding:1px 6px; border-radius:4px;">niamoto publish</code> · 2.4s to rebuild</span>
+          </li>
+        </ul>
+        <div class="foot"><span class="k">2.4 seconds</span><span>to rebuild the full site</span></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="logo-mark">N</div><span>Niamoto</span><span class="sep"></span><span>Pipeline</span>
+      <span class="page">05 / 06</span>
+    </div>
+  </section>
+
+  <!-- ───────── 6 · TAXON SPOTLIGHT ───────── -->
+  <section class="slide taxon" data-label="Taxon spotlight">
+    <div class="hero">
+      <div class="leaves"></div>
+      <!-- stylised fern silhouette (placeholder; swap for real photograph) -->
+      <svg class="fern" viewBox="0 0 800 700" preserveAspectRatio="xMidYMax meet">
+        <g fill="none" stroke="rgba(220,240,220,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M400 680 Q 420 540 380 400 T 420 160 Q 430 80 400 30"/>
+          <!-- left fronds -->
+          <g stroke-width="1.5">
+            <path d="M390 560 Q 320 540 260 570 Q 220 580 200 600"/>
+            <path d="M392 500 Q 300 470 230 480 Q 180 490 150 510"/>
+            <path d="M394 440 Q 290 400 220 390 Q 160 390 120 410"/>
+            <path d="M398 380 Q 290 340 220 320 Q 150 310 110 330"/>
+            <path d="M402 320 Q 310 280 250 260 Q 190 250 155 270"/>
+            <path d="M406 260 Q 320 220 270 200 Q 220 190 190 210"/>
+            <path d="M410 200 Q 340 170 300 155 Q 255 145 230 160"/>
+          </g>
+          <!-- right fronds -->
+          <g stroke-width="1.5">
+            <path d="M408 560 Q 480 540 540 570 Q 580 580 600 600"/>
+            <path d="M406 500 Q 500 470 570 480 Q 620 490 650 510"/>
+            <path d="M404 440 Q 510 400 580 390 Q 640 390 680 410"/>
+            <path d="M400 380 Q 510 340 580 320 Q 650 310 690 330"/>
+            <path d="M396 320 Q 490 280 550 260 Q 610 250 645 270"/>
+            <path d="M392 260 Q 480 220 530 200 Q 580 190 610 210"/>
+            <path d="M388 200 Q 460 170 500 155 Q 545 145 570 160"/>
+          </g>
+          <!-- frondlets -->
+          <g stroke-width="0.9" opacity="0.75">
+            <path d="M300 557 q -8 -15 -20 -18"/><path d="M260 562 q -8 -15 -22 -18"/>
+            <path d="M280 495 q -8 -15 -20 -18"/><path d="M500 495 q 8 -15 22 -18"/>
+            <path d="M520 555 q 8 -15 22 -18"/><path d="M560 485 q 10 -16 28 -20"/>
+          </g>
+        </g>
+      </svg>
+
+      <div class="hero-label">
+        <span class="chip">Spotlight</span>
+        <span>01 of 34 in this collection</span>
+      </div>
+
+      <div class="hero-caption">
+        <span>Photograph: placeholder</span>
+        <span style="opacity:0.5">·</span>
+        <span>Grande Terre, Parc de la Rivière Bleue, 2022</span>
+      </div>
+    </div>
+
+    <div class="body">
+      <div class="eyebrow">Endemic · New Caledonia</div>
+      <h1>Araucaria columnaris</h1>
+      <div class="authority">(G. Forster) Hook. · 1852</div>
+      <div class="family">
+        <span class="dot"></span>
+        <span>Family</span>
+        <span style="color: var(--slide-ink-soft)">·</span>
+        <span style="font-weight:500">Araucariaceae</span>
+      </div>
+
+      <p class="lede">Known locally as the <em>Cook pine</em>. A tall, columnar conifer endemic to the coastal islets of New Caledonia. Its characteristic tilt — always toward the equator — is thought to be the strongest across any tree species documented to date.</p>
+
+      <div class="stat-strip">
+        <div class="cell"><div class="label">Occurrences</div><div class="v">2,408</div></div>
+        <div class="cell"><div class="label">Plots</div><div class="v">47</div></div>
+        <div class="cell"><div class="label">Red List</div><div class="v">LC</div></div>
+      </div>
+
+      <div class="mini-dbh">
+        <div class="h">
+          <div class="t">DBH distribution</div>
+          <div class="sub">cm · n = 2,408</div>
+        </div>
+        <div class="bars mini">
+          <div class="bar"><div class="val">38%</div><div class="col" style="height:80%"></div><div class="lab">10–20</div></div>
+          <div class="bar"><div class="val">24%</div><div class="col" style="height:55%"></div><div class="lab">20–30</div></div>
+          <div class="bar"><div class="val">18%</div><div class="col" style="height:42%"></div><div class="lab">30–40</div></div>
+          <div class="bar"><div class="val">12%</div><div class="col" style="height:28%"></div><div class="lab">40–50</div></div>
+          <div class="bar"><div class="val">6%</div><div class="col" style="height:15%"></div><div class="lab">50–75</div></div>
+          <div class="bar"><div class="val">2%</div><div class="col" style="height:6%"></div><div class="lab">75+</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer" style="left:960px; right:88px;">
+      <span class="mono" style="color:var(--slide-ink-soft)">niamoto-nc/taxa/araucaria-columnaris</span>
+      <span class="page">06 / 06</span>
+    </div>
+  </section>
+
+</deck-stage>
+
+<script src="./deck-stage.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+---
+/*
+ * FrondHeader — sticky top header for the landing.
+ * Replaces the old IslandNav pill with a classic full-width sticky bar.
+ * Stays within AltLayout + frond theme tokens — no dependency on main site
+ * Tailwind utilities that live in global.css.
+ */
+
+import type { Locale } from "@/i18n/config";
+import { getShared } from "@/i18n/alt";
+import NiamotoLogo from "@/components/NiamotoLogo.astro";
+import LanguageSwitch from "@/components/alt/shared/LanguageSwitch.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getShared(locale);
+
+const prefix = locale === "fr" ? "/fr" : "";
+---
+
+<header class="frond-header">
+  <div class="frond-header__inner">
+    <NiamotoLogo size="lg" locale={locale} />
+
+    <nav class="frond-header__nav" aria-label="Primary">
+      <a href={`${prefix}/documentation`}>{t.nav.documentation}</a>
+      <a href={`${prefix}/plugins`}>{t.nav.plugins}</a>
+      <a href={`${prefix}/showcase/nouvelle-caledonie`}>{t.nav.showcase}</a>
+      <a href={`${prefix}/changelog`}>{t.nav.changelog}</a>
+      <a href="https://github.com/niamoto/niamoto" target="_blank" rel="noopener">
+        {t.nav.github}
+      </a>
+    </nav>
+
+    <div class="frond-header__actions">
+      <LanguageSwitch locale={locale} />
+    </div>
+  </div>
+</header>

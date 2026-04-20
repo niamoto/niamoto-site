@@ -1,0 +1,60 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import ButtonInButton from "@/components/alt/shared/ButtonInButton.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+
+interface Cta {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  kicker: string;
+  heading: string;
+  gui: {
+    label: string;
+    title: string;
+    body: string;
+    cta: Cta;
+  };
+  cli: {
+    label: string;
+    title: string;
+    body: string;
+    snippet: string;
+    cta: Cta;
+  };
+}
+
+const { kicker, heading, gui, cli } = Astro.props;
+---
+
+<section class="frond-section" aria-labelledby="frond-twoways-heading">
+  <FadeUpOnView client:visible className="frond-head">
+    <EyebrowTag variant="outlined">{kicker}</EyebrowTag>
+    <h2 id="frond-twoways-heading" class="display frond-heading">{heading}</h2>
+  </FadeUpOnView>
+
+  <div class="frond-twoways">
+    <FadeUpOnView client:visible delay={0.08} className="frond-twoways-card frond-twoways-card--gui">
+      <span class="frond-twoways-card__label">{gui.label}</span>
+      <h3 class="frond-twoways-card__title">{gui.title}</h3>
+      <p class="frond-twoways-card__body">{gui.body}</p>
+      <div class="frond-twoways-card__cta">
+        <ButtonInButton variant="primary" href={gui.cta.href} target="_blank" rel="noopener">
+          {gui.cta.label}
+        </ButtonInButton>
+      </div>
+    </FadeUpOnView>
+
+    <FadeUpOnView client:visible delay={0.14} className="frond-twoways-card frond-twoways-card--cli">
+      <span class="frond-twoways-card__label">{cli.label}</span>
+      <h3 class="frond-twoways-card__title">{cli.title}</h3>
+      <p class="frond-twoways-card__body">{cli.body}</p>
+      <pre class="frond-twoways-card__code"><code>{cli.snippet}</code></pre>
+      <div class="frond-twoways-card__cta">
+        <a href={cli.cta.href}>{cli.cta.label} →</a>
+      </div>
+    </FadeUpOnView>
+  </div>
+</section>

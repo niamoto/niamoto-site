@@ -1,0 +1,18 @@
+---
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+
+interface Props {
+  eyebrow: string;
+  verbs: readonly string[];
+  caption: string;
+}
+
+const { verbs, caption } = Astro.props;
+---
+
+<FadeUpOnView client:visible className="frond-widget-band frond-section-gap">
+  <div class="frond-widget-band__verbs" aria-hidden="false">
+    {verbs.map((v) => <span>{v}</span>)}
+  </div>
+  <p class="frond-widget-band__caption">{caption}</p>
+</FadeUpOnView>

@@ -1,0 +1,109 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import ButtonInButton from "@/components/alt/shared/ButtonInButton.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import FrondLiveSlider from "./FrondLiveSlider.astro";
+
+type TitleLine = string | { italic: true; text: string };
+
+interface Cta {
+  label: string;
+  href: string;
+}
+
+interface AppLabels {
+  dashboard: string;
+  import: string;
+  widgets: string;
+  publish: string;
+}
+
+interface PortalSlide {
+  src: string;
+  alt: string;
+  label: string;
+}
+
+interface Props {
+  signage: string;
+  eyebrow: string;
+  titleLines: readonly TitleLine[];
+  sub: string;
+  ctaPrimary: Cta;
+  ctaSecondary: Cta;
+  install: {
+    label: string;
+    snippet: string;
+    copyAria: string;
+  };
+  slides: {
+    app: AppLabels;
+    portal: readonly PortalSlide[];
+  };
+}
+
+const { signage, eyebrow, titleLines, sub, ctaPrimary, ctaSecondary, install, slides } = Astro.props;
+---
+
+<section class="frond-hero frond-section" id="download" aria-label="Niamoto hero">
+  <FadeUpOnView client:visible blur={0} className="frond-hero__copy">
+    <span class="frond-hero__signage">{signage}</span>
+
+    <EyebrowTag variant="accent">{eyebrow}</EyebrowTag>
+
+    <h1 class="frond-hero__title display">
+      {titleLines.map((line) => {
+        if (typeof line === "string") return line;
+        return <em>{line.text}</em>;
+      })}
+    </h1>
+
+    <p class="frond-hero__sub">{sub}</p>
+
+    <div class="frond-hero__install" role="group" aria-label="Install command">
+      <span class="frond-hero__install-label">{install.label}</span>
+      <code class="frond-hero__install-snippet">{install.snippet}</code>
+      <button
+        type="button"
+        class="frond-hero__install-copy"
+        aria-label={install.copyAria}
+        data-copy={install.snippet}
+      >
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="frond-hero__cta">
+      <ButtonInButton variant="primary" href={ctaPrimary.href}>
+        {ctaPrimary.label}
+      </ButtonInButton>
+      <ButtonInButton variant="secondary" href={ctaSecondary.href} target="_blank" rel="noopener">
+        {ctaSecondary.label}
+      </ButtonInButton>
+    </div>
+  </FadeUpOnView>
+
+  <FadeUpOnView client:visible delay={0.12} className="frond-hero__stage">
+    <FrondLiveSlider appLabels={slides.app} portalSlides={slides.portal} />
+  </FadeUpOnView>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const text = btn.dataset.copy ?? "";
+      try {
+        await navigator.clipboard.writeText(text);
+        const original = btn.innerHTML;
+        btn.innerHTML =
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        setTimeout(() => (btn.innerHTML = original), 1400);
+      } catch {
+        /* noop */
+      }
+    });
+  });
+</script>

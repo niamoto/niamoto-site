@@ -1,0 +1,127 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import type { Locale } from "@/i18n/config";
+
+type ImageKey =
+  | "home"
+  | "taxons-index"
+  | "plots-index"
+  | "taxon-detail"
+  | "plot-detail";
+
+type CardKind = "home" | "index" | "sheet";
+
+interface Note {
+  key: string;
+  body: string;
+}
+
+interface Card {
+  label: string;
+  meta: string;
+  title: string;
+  body: string;
+  images: readonly [ImageKey] | readonly [ImageKey, ImageKey];
+  notes: readonly Note[];
+}
+
+interface Props {
+  locale: Locale;
+  kicker: string;
+  heading: string;
+  sub: string;
+  cards: readonly Card[];
+}
+
+const { locale, kicker, heading, sub, cards } = Astro.props;
+
+const FILE_MAP: Record<ImageKey, (loc: Locale) => string> = {
+  "home":         (loc) => `/showcase/portail-alt/home-${loc}.png`,
+  "taxons-index": (loc) => `/showcase/portail-alt/preview-taxons-${loc}.png`,
+  "plots-index":  (loc) => `/showcase/portail-alt/plots-index-${loc}.png`,
+  "taxon-detail": (loc) => `/showcase/portail-alt/species-${loc}.png`,
+  "plot-detail":  (loc) => `/showcase/portail-alt/plot-${loc}.png`,
+};
+
+const ALT_MAP_EN: Record<ImageKey, string> = {
+  "home":         "Preview of the Niamoto portal home page",
+  "taxons-index": "Preview of the Niamoto taxons index",
+  "plots-index":  "Preview of the Niamoto plots index",
+  "taxon-detail": "Preview of a Niamoto taxon detail page",
+  "plot-detail":  "Preview of a Niamoto plot detail page",
+};
+
+const ALT_MAP_FR: Record<ImageKey, string> = {
+  "home":         "Aperçu de la page d'accueil du portail Niamoto",
+  "taxons-index": "Aperçu de l'index des taxons Niamoto",
+  "plots-index":  "Aperçu de l'index des parcelles Niamoto",
+  "taxon-detail": "Aperçu d'une fiche taxon Niamoto",
+  "plot-detail":  "Aperçu d'une fiche parcelle Niamoto",
+};
+
+const ALT_MAP = locale === "fr" ? ALT_MAP_FR : ALT_MAP_EN;
+
+// CSS grid layout modifier — dérivé de la PREMIÈRE image de la carte.
+// Conserve les hooks CSS existants `.frond-reading-card--{home,index,sheet}`.
+const KIND_MAP: Record<ImageKey, CardKind> = {
+  "home":         "home",
+  "taxons-index": "index",
+  "plots-index":  "index",
+  "taxon-detail": "sheet",
+  "plot-detail":  "sheet",
+};
+
+function kindOf(images: readonly ImageKey[]): CardKind {
+  return KIND_MAP[images[0]];
+}
+
+function imgClass(idx: number, total: number): string {
+  if (total < 2) return "frond-reading-card__image";
+  return `frond-reading-card__image frond-reading-card__image--${idx === 0 ? "a" : "b"}`;
+}
+---
+
+<section id="reading" class="frond-section" aria-labelledby="frond-reading-heading">
+  <FadeUpOnView client:visible className="frond-head">
+    <EyebrowTag variant="accent">{kicker}</EyebrowTag>
+    <h2 id="frond-reading-heading" class="display frond-heading">{heading}</h2>
+    <p class="frond-sub">{sub}</p>
+  </FadeUpOnView>
+
+  <div class="frond-reading-grid">
+    {cards.map((card, index) => (
+      <FadeUpOnView client:visible delay={0.05 + index * 0.08} className={`frond-reading-card frond-reading-card--${kindOf(card.images)}`}>
+        <div class="frond-reading-card__inner">
+          <div class="frond-reading-card__media">
+            <div class="frond-reading-card__topline">
+              <span class="frond-reading-card__label">{card.label}</span>
+              <span class="frond-reading-card__meta">{card.meta}</span>
+            </div>
+            {card.images.map((key, i) => (
+              <img
+                class={imgClass(i, card.images.length)}
+                src={FILE_MAP[key](locale)}
+                alt={ALT_MAP[key]}
+                loading="lazy"
+                decoding="async"
+              />
+            ))}
+          </div>
+          <div class="frond-reading-card__body">
+            <h3 class="frond-reading-card__title">{card.title}</h3>
+            <p class="frond-reading-card__copy">{card.body}</p>
+            <ul class="frond-reading-card__notes">
+              {card.notes.map((n) => (
+                <li>
+                  <span class="frond-reading-card__note-key">{n.key}</span>
+                  <span class="frond-reading-card__note-body">{n.body}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </FadeUpOnView>
+    ))}
+  </div>
+</section>

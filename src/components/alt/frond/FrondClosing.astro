@@ -1,0 +1,44 @@
+---
+import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
+import ButtonInButton from "@/components/alt/shared/ButtonInButton.astro";
+import FunderGrid from "@/components/alt/shared/FunderGrid.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+
+interface Cta {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  body: string;
+  ctaPrimary: Cta;
+  ctaSecondary: Cta;
+  license: string;
+  fundersHeading: string;
+}
+
+const { eyebrow, title, body, ctaPrimary, ctaSecondary, license, fundersHeading } = Astro.props;
+---
+
+<section class="frond-section frond-closing" aria-labelledby="frond-closing-heading">
+  <FadeUpOnView client:visible>
+    <EyebrowTag variant="outlined">{eyebrow}</EyebrowTag>
+    <h2 id="frond-closing-heading" class="display frond-heading" style="margin-top: 1rem;">{title}</h2>
+    <p class="frond-sub" style="margin-top: 1rem;">{body}</p>
+    <div class="frond-closing__cta">
+      <ButtonInButton variant="primary" href={ctaPrimary.href} target="_blank" rel="noopener">
+        {ctaPrimary.label}
+      </ButtonInButton>
+      <ButtonInButton variant="secondary" href={ctaSecondary.href} target="_blank" rel="noopener">
+        {ctaSecondary.label}
+      </ButtonInButton>
+    </div>
+    <p class="frond-closing__license">{license}</p>
+  </FadeUpOnView>
+
+  <FadeUpOnView client:visible delay={0.12} className="frond-funders">
+    <FunderGrid heading={fundersHeading} variant="compact" />
+  </FadeUpOnView>
+</section>

@@ -1,0 +1,114 @@
+---
+import NiamotoLogo from "@/components/NiamotoLogo.astro";
+import type { Locale } from "@/i18n/config";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const prefix = locale === "fr" ? "/fr" : "";
+const isFr = locale === "fr";
+
+const t = isFr
+  ? {
+      projectTitle: "Projet",
+      communityTitle: "Communauté",
+      madeByTitle: "Réalisé par",
+      documentation: "Documentation",
+      plugins: "Plugins",
+      showcase: "Showcase",
+      roadmap: "Feuille de route",
+      changelog: "Changelog",
+      github: "GitHub",
+      discussions: "Discussions",
+      contributing: "Contribuer",
+      codeOfConduct: "Code de conduite",
+      arsis: "Arsis · Studio de dev indépendant",
+      city: "Montpellier, France",
+      tagline: "Données écologiques, du terrain au web.",
+      license: "GPL v3",
+      legal: "© 2026 contributeurs Niamoto",
+    }
+  : {
+      projectTitle: "Project",
+      communityTitle: "Community",
+      madeByTitle: "Made by",
+      documentation: "Documentation",
+      plugins: "Plugins",
+      showcase: "Showcase",
+      roadmap: "Roadmap",
+      changelog: "Changelog",
+      github: "GitHub",
+      discussions: "Discussions",
+      contributing: "Contributing",
+      codeOfConduct: "Code of Conduct",
+      arsis: "Arsis · Independent dev studio",
+      city: "Montpellier, France",
+      tagline: "Ecological data, from field to web.",
+      license: "GPL v3",
+      legal: "© 2026 Niamoto contributors",
+    };
+
+const cols = [
+  {
+    title: t.projectTitle,
+    links: [
+      { label: t.documentation, href: `${prefix}/documentation` },
+      { label: t.plugins, href: `${prefix}/plugins` },
+      { label: t.roadmap, href: `${prefix}/roadmap` },
+      { label: t.changelog, href: `${prefix}/changelog` },
+      { label: t.showcase, href: `${prefix}/showcase/nouvelle-caledonie` },
+    ],
+  },
+  {
+    title: t.communityTitle,
+    links: [
+      { label: t.github, href: "https://github.com/niamoto/niamoto" },
+      { label: t.discussions, href: "https://github.com/niamoto/niamoto/discussions" },
+      { label: t.contributing, href: "https://github.com/niamoto/niamoto/blob/main/CONTRIBUTING.md" },
+      { label: t.codeOfConduct, href: "https://github.com/niamoto/niamoto/blob/main/CODE_OF_CONDUCT.md" },
+    ],
+  },
+  {
+    title: t.madeByTitle,
+    links: [
+      { label: t.arsis, href: "https://arsis.dev" },
+      { label: t.city, href: null },
+    ],
+  },
+] as const;
+---
+
+<footer class="frond-footer">
+  <div class="frond-footer__inner">
+    <div class="frond-footer__brand">
+      <NiamotoLogo size="md" color="light" locale={locale} />
+      <p class="frond-footer__tagline">{t.tagline}</p>
+      <p class="frond-footer__license">{t.license}</p>
+    </div>
+
+    <div class="frond-footer__cols">
+      {cols.map((col) => (
+        <div class="frond-footer__col">
+          <h4 class="frond-footer__col-title">{col.title}</h4>
+          <ul>
+            {col.links.map((link) => (
+              <li>
+                {link.href ? (
+                  <a href={link.href} {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}>{link.label}</a>
+                ) : (
+                  <span>{link.label}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="frond-footer__legal">
+    {t.legal}
+  </div>
+</footer>

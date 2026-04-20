@@ -1,250 +1,89 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
+import AltLayout from "@/layouts/AltLayout.astro";
+import FrondHeader from "@/components/alt/frond-live/FrondHeader.astro";
+import FrondFooter from "@/components/alt/shared/FrondFooter.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import { getCollection } from "astro:content";
 
-const recipes = [
-  {
-    title: "Install Niamoto",
-    body: "Desktop app for macOS, Windows, Linux, or `pip install niamoto` for the CLI.",
-    minutes: 3,
-    icon: "download",
-  },
-  {
-    title: "Your first project",
-    body: "Create a project, drop your first CSV, and generate a sample portal.",
-    minutes: 8,
-    icon: "folder",
-  },
-  {
-    title: "Understand the data model",
-    body: "Entities, sources, and registries: how Niamoto thinks about ecological data.",
-    minutes: 12,
-    icon: "database",
-  },
-  {
-    title: "Write a Transformer plugin",
-    body: "Declare a transform in YAML, implement it in Python, register it.",
-    minutes: 15,
-    icon: "code",
-  },
-  {
-    title: "Design a portal",
-    body: "Pick widgets, arrange pages, customize the theme.",
-    minutes: 10,
-    icon: "layout",
-  },
-  {
-    title: "Deploy to GitHub Pages",
-    body: "From export/ to a live URL in under 5 minutes.",
-    minutes: 6,
-    icon: "globe",
-  },
-];
-
-const navSections = [
-  {
-    title: "Getting started",
-    active: true,
-    items: ["Install the desktop app", "Initialize a project", "Your first import"],
-  },
-  {
-    title: "Core concepts",
-    items: ["Data model", "Import → Transform → Export", "Plugins system"],
-  },
-  {
-    title: "Plugins",
-    items: ["Transformers", "Widgets", "Loaders", "Exporters"],
-  },
-  {
-    title: "Deployment",
-    items: ["Desktop app", "GitHub Pages", "Custom server"],
-  },
-  {
-    title: "API reference",
-    items: ["Python library", "CLI commands", "Plugin API"],
-  },
-  {
-    title: "Recipes",
-    items: ["Forest inventory", "Biodiversity portal", "Multi-region setup"],
-  },
-];
+const sections = (await getCollection("docsSections")).map((e) => e.data);
+sections.sort((a, b) => a.slug.localeCompare(b.slug));
 ---
 
-<BaseLayout
+<AltLayout
+  theme="frond"
+  locale="en"
   title="Documentation — Niamoto"
   description="Guides, concepts, and recipes to run Niamoto from data import to published portal."
 >
-  <Header active="docs" />
+  <FrondHeader locale="en" />
 
   <!-- Hero -->
-  <section class="border-b border-border bg-canvas py-16">
-    <div class="mx-auto max-w-[1200px] px-6 text-center">
-      <h1 class="text-5xl font-bold tracking-[-0.02em] text-ink">
-        Documentation
-      </h1>
-      <p class="mx-auto mt-3 max-w-[640px] text-lg text-stone">
-        Guides, concepts, and recipes to run Niamoto from data import to
-        published portal.
-      </p>
-      <div
-        class="mx-auto mt-8 flex max-w-[500px] items-center gap-2 rounded-[10px] border border-border bg-white px-4 py-3"
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2">
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="m21 21-4.3-4.3"></path>
-        </svg>
-        <input
-          type="search"
-          placeholder="Search the docs..."
-          class="flex-1 bg-transparent font-mono text-sm text-ink placeholder:text-stone-light focus:outline-none"
-        />
-        <kbd
-          class="rounded-[4px] border border-border-strong bg-surface-low px-1.5 py-0.5 font-mono text-xs text-stone"
-          >⌘K</kbd
-        >
-      </div>
-    </div>
-  </section>
-
-  <!-- Layout -->
-  <section class="mx-auto max-w-[1200px] px-6 py-16">
-    <div class="grid grid-cols-1 gap-12 md:grid-cols-[240px_1fr]">
-      <!-- Sidebar -->
-      <aside class="space-y-6">
-        <h3 class="font-mono text-[11px] font-semibold uppercase tracking-wider text-stone">
+  <section class="border-b border-hairline py-16" style="background: var(--c-surface-muted)">
+    <div class="mx-auto max-w-[960px] px-6 text-center">
+      <FadeUpOnView client:visible blur={0}>
+        <h1 class="text-5xl font-bold tracking-[-0.02em] text-ink">
           Documentation
-        </h3>
-        {
-          navSections.map((section) => (
-            <div>
-              <h4
-                class:list={[
-                  "mb-2 text-sm font-semibold",
-                  section.active ? "text-forest-green" : "text-ink",
-                ]}
-              >
-                {section.title}
-              </h4>
-              <ul class="space-y-2 pl-2">
-                {section.items.map((item) => (
-                  <li>
-                    <a
-                      href="#"
-                      class="text-[13px] text-stone hover:text-ink"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))
-        }
-      </aside>
-
-      <!-- Main content -->
-      <div class="max-w-[900px]">
-        <h2 class="text-[28px] font-bold text-ink">Start here</h2>
-        <p class="mt-3 text-base leading-relaxed text-ink/85">
-          Niamoto runs on three layers: import your ecological data, transform
-          it with plugins, publish a static portal. Pick where you want to
-          start.
+        </h1>
+        <p class="mx-auto mt-3 max-w-[640px] text-lg text-muted">
+          Pick a path. Every section below opens the full guide on
+          <a href="https://docs.niamoto.org" class="text-accent hover:underline">docs.niamoto.org</a>.
         </p>
-
-        <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {
-            recipes.map((r) => (
-              <a
-                href="#"
-                class="block rounded-[12px] bg-white p-6 shadow-[0_4px_12px_rgba(15,23,42,0.06)] transition-shadow hover:shadow-[0_8px_20px_rgba(15,23,42,0.08)]"
-              >
-                <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-[8px] bg-[rgba(46,125,50,0.08)]">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    {r.icon === "download" && (
-                      <>
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                        <polyline points="7 10 12 15 17 10" />
-                        <line x1="12" y1="15" x2="12" y2="3" />
-                      </>
-                    )}
-                    {r.icon === "folder" && (
-                      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-                    )}
-                    {r.icon === "database" && (
-                      <>
-                        <ellipse cx="12" cy="5" rx="9" ry="3" />
-                        <path d="M21 12c0 1.66-4.03 3-9 3s-9-1.34-9-3" />
-                        <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" />
-                      </>
-                    )}
-                    {r.icon === "code" && (
-                      <>
-                        <polyline points="16 18 22 12 16 6" />
-                        <polyline points="8 6 2 12 8 18" />
-                      </>
-                    )}
-                    {r.icon === "layout" && (
-                      <>
-                        <rect x="3" y="3" width="18" height="18" rx="2" />
-                        <line x1="3" y1="9" x2="21" y2="9" />
-                        <line x1="9" y1="21" x2="9" y2="9" />
-                      </>
-                    )}
-                    {r.icon === "globe" && (
-                      <>
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M2 12h20" />
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                      </>
-                    )}
-                  </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-ink">{r.title}</h3>
-                <p class="mt-1 line-clamp-2 text-sm leading-relaxed text-stone">
-                  {r.body}
-                </p>
-                <div class="mt-3 font-mono text-xs text-stone">
-                  ⏱ {r.minutes} min read
-                </div>
-              </a>
-            ))
-          }
-        </div>
-
-        <!-- Community callout -->
-        <div
-          class="mt-16 rounded-[12px] bg-white p-8 shadow-[0_4px_12px_rgba(15,23,42,0.06)]"
-        >
-          <h3 class="text-xl font-semibold text-ink">Need help?</h3>
-          <p class="mt-2 text-sm text-ink/80">
-            Niamoto is maintained by Arsis and its research partners. Open a
-            discussion, file an issue, or contribute.
-          </p>
-          <div class="mt-5 flex flex-wrap gap-3 text-sm">
-            <a
-              href="https://github.com/niamoto/niamoto/discussions"
-              class="rounded-[999px] border border-border-strong px-4 py-1.5 font-medium text-ink hover:bg-surface-low"
-            >
-              GitHub Discussions
-            </a>
-            <a
-              href="https://github.com/niamoto/niamoto/issues/new"
-              class="rounded-[999px] border border-border-strong px-4 py-1.5 font-medium text-ink hover:bg-surface-low"
-            >
-              File an issue
-            </a>
-            <a
-              href="https://github.com/niamoto/niamoto/blob/main/CONTRIBUTING.md"
-              class="rounded-[999px] border border-border-strong px-4 py-1.5 font-medium text-ink hover:bg-surface-low"
-            >
-              Contribute a plugin
-            </a>
-          </div>
-        </div>
-      </div>
+      </FadeUpOnView>
     </div>
   </section>
 
-  <Footer />
-</BaseLayout>
+  <!-- Sections grid -->
+  <section class="mx-auto max-w-[960px] px-6 py-16">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      {
+        sections.map((s, index) => (
+          <FadeUpOnView client:visible delay={0.05 + index * 0.06}>
+            <a
+              href={s.href}
+              target="_blank"
+              rel="noopener"
+              class="block h-full rounded-[12px] bg-surface p-6 shadow-[var(--shadow-widget)] transition-shadow hover:shadow-[var(--shadow-widget-hover)]"
+            >
+              <div class="alt-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
+                {s.slug.replace(/^\d+-/, "").replace(/-/g, " ")}
+              </div>
+              <h3 class="mt-2 text-lg font-semibold text-ink">{s.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed" style="color: color-mix(in srgb, var(--c-ink) 80%, transparent)">
+                {s.purpose}
+              </p>
+              {s.audience && (
+                <p class="mt-3 alt-mono text-xs text-muted">
+                  For: {s.audience}
+                </p>
+              )}
+            </a>
+          </FadeUpOnView>
+        ))
+      }
+    </div>
+
+    <!-- Community callout -->
+    <FadeUpOnView client:visible delay={0.1}>
+      <div class="mt-16 rounded-[12px] bg-surface p-8 shadow-[var(--shadow-widget)]">
+        <h3 class="text-xl font-semibold text-ink">Need help?</h3>
+        <p class="mt-2 text-sm" style="color: color-mix(in srgb, var(--c-ink) 80%, transparent)">
+          Niamoto is maintained by Arsis and its research partners. Open a
+          discussion, file an issue, or contribute.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-3 text-sm">
+          <a href="https://github.com/niamoto/niamoto/discussions" class="frond-btn frond-btn--outline">
+            GitHub Discussions
+          </a>
+          <a href="https://github.com/niamoto/niamoto/issues/new" class="frond-btn frond-btn--outline">
+            File an issue
+          </a>
+          <a href="https://github.com/niamoto/niamoto/blob/main/CONTRIBUTING.md" class="frond-btn frond-btn--outline">
+            Contribute
+          </a>
+        </div>
+      </div>
+    </FadeUpOnView>
+  </section>
+
+  <FrondFooter locale="en" />
+</AltLayout>
