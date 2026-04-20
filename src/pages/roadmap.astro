@@ -1,0 +1,118 @@
+---
+import AltLayout from "@/layouts/AltLayout.astro";
+import FrondHeader from "@/components/alt/frond-live/FrondHeader.astro";
+import FrondFooter from "@/components/alt/shared/FrondFooter.astro";
+import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import { getEntry } from "astro:content";
+import { marked } from "marked";
+import { rewriteNiamotoLinks } from "@/lib/rewrite-niamoto-links";
+
+interface Props {
+  locale?: "en" | "fr";
+}
+const { locale = "en" } = Astro.props;
+
+const entry = await getEntry("roadmap", "content");
+if (!entry) throw new Error("Roadmap content not loaded");
+
+const rewritten = rewriteNiamotoLinks(entry.data.body);
+const html = await marked.parse(rewritten, { gfm: true, breaks: false });
+
+const t = locale === "fr"
+  ? {
+      title: "Feuille de route",
+      lead: "Ce qui se prépare, ce qui vient, ce qui est à l'horizon.",
+    }
+  : {
+      title: "Roadmap",
+      lead: "What's shipping, what's next, what's on the horizon.",
+    };
+---
+
+<AltLayout
+  theme="frond"
+  locale={locale}
+  title={locale === "fr" ? "Feuille de route — Niamoto" : "Roadmap — Niamoto"}
+  description="Niamoto roadmap — current focus, upcoming milestones, and longer-term plans."
+>
+  <FrondHeader locale={locale} />
+
+  <section class="border-b border-hairline py-16" style="background: var(--c-surface-muted)">
+    <div class="mx-auto max-w-[760px] px-6 text-center">
+      <FadeUpOnView client:visible blur={0}>
+        <h1 class="text-5xl font-bold tracking-[-0.02em] text-ink">{t.title}</h1>
+        <p class="mx-auto mt-3 max-w-[600px] text-lg text-muted">{t.lead}</p>
+      </FadeUpOnView>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-[760px] px-6 py-16">
+    <FadeUpOnView client:visible>
+      <article class="niamoto-prose" set:html={html} />
+    </FadeUpOnView>
+  </section>
+
+  <FrondFooter locale={locale} />
+</AltLayout>
+
+<style is:global>
+  .niamoto-prose {
+    color: color-mix(in srgb, var(--c-ink) 90%, transparent);
+    line-height: 1.7;
+  }
+  .niamoto-prose h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--c-ink);
+    letter-spacing: -0.02em;
+  }
+  .niamoto-prose h3 {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--c-ink);
+  }
+  .niamoto-prose p {
+    margin: 1rem 0;
+  }
+  .niamoto-prose ul, .niamoto-prose ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  .niamoto-prose li {
+    margin: 0.35rem 0;
+  }
+  .niamoto-prose a {
+    color: var(--c-accent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--c-accent) 40%, transparent);
+  }
+  .niamoto-prose a:hover {
+    border-bottom-color: var(--c-accent);
+  }
+  .niamoto-prose code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--c-surface-muted);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+  }
+  .niamoto-prose strong {
+    color: var(--c-ink);
+    font-weight: 600;
+  }
+  .niamoto-prose hr {
+    margin: 2.5rem 0;
+    border: 0;
+    border-top: 1px solid var(--c-hairline);
+  }
+  .niamoto-prose blockquote {
+    margin: 1.5rem 0;
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--c-hairline);
+    color: var(--c-muted);
+  }
+</style>
