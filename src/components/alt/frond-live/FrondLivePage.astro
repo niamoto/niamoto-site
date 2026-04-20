@@ -4,6 +4,14 @@ import FrondHeader from "./FrondHeader.astro";
 import type { Locale } from "@/i18n/config";
 import enCopy from "@/i18n/alt/frond-live.en";
 import frCopy from "@/i18n/alt/frond-live.fr";
+import {
+  buildReleaseDownloads,
+  LATEST_JSON,
+  LATEST_RELEASE_API,
+  type Downloads,
+  type GitHubLatestRelease,
+  type TauriLatest,
+} from "@/lib/release-downloads";
 
 import FrondLiveHero from "./FrondLiveHero.astro";
 
@@ -24,6 +32,37 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = locale === "fr" ? frCopy : enCopy;
+
+let tauri: TauriLatest | null = null;
+let release: GitHubLatestRelease | null = null;
+
+try {
+  const res = await fetch(LATEST_JSON);
+  if (res.ok) {
+    tauri = (await res.json()) as TauriLatest;
+  } else {
+    console.warn(`[latest.json] HTTP ${res.status} — fallback partiel`);
+  }
+} catch (err) {
+  console.warn(`[latest.json] fetch failed (${(err as Error).message}) — fallback partiel`);
+}
+
+try {
+  const res = await fetch(LATEST_RELEASE_API, {
+    headers: {
+      Accept: "application/vnd.github+json",
+    },
+  });
+  if (res.ok) {
+    release = (await res.json()) as GitHubLatestRelease;
+  } else {
+    console.warn(`[latest release] HTTP ${res.status} — fallback partiel`);
+  }
+} catch (err) {
+  console.warn(`[latest release] fetch failed (${(err as Error).message}) — fallback partiel`);
+}
+
+const downloads: Downloads = buildReleaseDownloads({ release, tauri });
 ---
 
 <AltLayout
@@ -36,7 +75,7 @@ const t = locale === "fr" ? frCopy : enCopy;
   <FrondHeader locale={locale} />
 
   <main id="main" class="frond-shell">
-    <FrondLiveHero {...t.hero} />
+    <FrondLiveHero {...t.hero} downloads={downloads} />
     <FrondWidgetBand {...t.widgetBand} />
     <FrondPillars {...t.pillars} />
     <FrondReading locale={locale} {...t.reading} />

@@ -2,6 +2,7 @@
 import EyebrowTag from "@/components/alt/shared/EyebrowTag.astro";
 import ButtonInButton from "@/components/alt/shared/ButtonInButton.astro";
 import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import type { Downloads } from "@/lib/release-downloads";
 import FrondLiveSlider from "./FrondLiveSlider.astro";
 
 type TitleLine = string | { italic: true; text: string };
@@ -40,9 +41,10 @@ interface Props {
     app: AppLabels;
     portal: readonly PortalSlide[];
   };
+  downloads?: Downloads;
 }
 
-const { signage, eyebrow, titleLines, sub, ctaPrimary, ctaSecondary, install, slides } = Astro.props;
+const { signage, eyebrow, titleLines, sub, ctaPrimary, ctaSecondary, install, slides, downloads } = Astro.props;
 ---
 
 <section class="frond-hero frond-section" id="download" aria-label="Niamoto hero">
@@ -77,13 +79,20 @@ const { signage, eyebrow, titleLines, sub, ctaPrimary, ctaSecondary, install, sl
     </div>
 
     <div class="frond-hero__cta">
-      <ButtonInButton variant="primary" href={ctaPrimary.href}>
+      <ButtonInButton
+        variant="primary"
+        class="js-install-cta"
+        href={ctaPrimary.href}
+      >
         {ctaPrimary.label}
       </ButtonInButton>
       <ButtonInButton variant="secondary" href={ctaSecondary.href} target="_blank" rel="noopener">
         {ctaSecondary.label}
       </ButtonInButton>
     </div>
+    {downloads && (
+      <script type="application/json" id="niamoto-downloads" set:html={JSON.stringify(downloads)} />
+    )}
   </FadeUpOnView>
 
   <FadeUpOnView client:visible delay={0.12} className="frond-hero__stage">
@@ -106,4 +115,35 @@ const { signage, eyebrow, titleLines, sub, ctaPrimary, ctaSecondary, install, sl
       }
     });
   });
+
+  // Install CTA — point to the right release asset for the visitor's OS.
+  (() => {
+    const dataEl = document.getElementById("niamoto-downloads");
+    const btn = document.querySelector<HTMLAnchorElement>("a.js-install-cta");
+    if (!dataEl || !btn) return;
+    let downloads: Record<string, string>;
+    try {
+      downloads = JSON.parse(dataEl.textContent ?? "{}");
+    } catch {
+      return;
+    }
+    const ua = navigator.userAgent;
+    const platform = (navigator.platform || "").toLowerCase();
+    let url = downloads.fallback;
+    if (/mac|iphone|ipad|ipod/.test(platform)) {
+      const isArm = /arm|apple/i.test(ua);
+      url = (isArm ? downloads.macArm64 : downloads.macX64) || downloads.fallback;
+    } else if (/win/.test(platform)) {
+      url = downloads.windowsX64 || downloads.fallback;
+    } else if (/linux|x11|cros/.test(platform)) {
+      const isArm = /aarch64|arm64/i.test(ua);
+      url = (isArm ? downloads.linuxArm64 : downloads.linuxX64) || downloads.fallback;
+    }
+    btn.href = url;
+    // If we ended up on the releases page (no direct asset), open in a new tab.
+    if (url === downloads.fallback) {
+      btn.target = "_blank";
+      btn.rel = "noopener";
+    }
+  })();
 </script>
