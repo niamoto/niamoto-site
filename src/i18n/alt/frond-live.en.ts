@@ -8,10 +8,6 @@ const { slides: _oldSlides, ...heroBase } = frondBase.hero;
 
 export default {
   ...frondBase,
-  meta: {
-    ...frondBase.meta,
-    title: "Niamoto · Frond Live — Editorial app slides, same publishing grammar",
-  },
   hero: {
     ...heroBase,
     slides: {

@@ -3,7 +3,7 @@
 
 export default {
   meta: {
-    title: "Niamoto · Frond — Des données de terrain aux portails publiables",
+    title: "Niamoto — Du terrain à la publication de portails écologiques",
     description:
       "Le système de design Niamoto appliqué tel quel en variante de landing. Importer, structurer, publier des données écologiques sous forme de portails statiques durables.",
   },
