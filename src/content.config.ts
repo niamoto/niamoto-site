@@ -7,8 +7,7 @@ import {
 
 export const collections = {
   plugins: defineCollection({
-    // TODO(julien): revert to default ref once feat/marketing-sync is merged.
-    loader: pluginsLoader({ ref: "feat/marketing-sync" }),
+    loader: pluginsLoader(),
     schema: z.object({
       name: z.string(),
       type: z.enum([
