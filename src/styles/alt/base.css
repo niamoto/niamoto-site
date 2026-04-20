@@ -1,7 +1,18 @@
 /* Frond base stylesheet — loaded ONLY by AltLayout.astro.
  * Does NOT touch global.css. Tokens are scoped via [data-theme="frond"]. */
 
+/* Remote font stylesheets must come before any inlined CSS rules.
+ * Keeping them here avoids PostCSS warnings after Tailwind is flattened. */
+@import url("https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@200,400,500,700,800,900&f[]=satoshi@300,400,500,700,900&f[]=clash-display@200,300,400,500,600,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
 @import "tailwindcss";
+
+/* Fonts + Frond theme tokens must stay in the import block.
+ * `fonts.css` contains remote `@import url(...)`, so importing it after
+ * `@source` causes PostCSS to warn once the bundle is flattened. */
+@import "./fonts.css";
+@import "./frond.css";
 
 /* Tailwind v4 in this project requires explicit @source per subdirectory. */
 @source "../../components/alt/**/*.astro";
@@ -13,10 +24,6 @@
 @source "../../pages/documentation/**/*.astro";
 @source "../../pages/plugins/**/*.astro";
 @source "../../pages/showcase/**/*.astro";
-
-/* Fonts + Frond theme tokens. */
-@import "./fonts.css";
-@import "./frond.css";
 
 /* Semantic token defaults. Each variant's [data-theme] selector overrides. */
 :where([data-theme]) {

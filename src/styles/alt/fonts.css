@@ -5,21 +5,9 @@
  * Plus Jakarta Sans loads from Google Fonts CDN (V2 body).
  * IM Fell + Libre Caslon Text via @fontsource (V13 Planche).
  *
- * NOTE on @import order :
- *   CSS spec says all @import rules must appear BEFORE any other rule
- *   (including @font-face blocks). @fontsource-variable packages ship
- *   self-contained CSS that starts with @font-face, so their own @import
- *   statements here must be LAST in this file, after all remote @import url().
- *   Inverting this order produces LightningCSS warnings on build.
+ * Remote CDN imports live in `base.css` so they stay at the very top of the
+ * flattened bundle. This file only imports local font packages.
  * ------------------------------------------------------------------------- */
-
-/* --- Remote CDN imports FIRST (plain @import url()) --- */
-
-/* Cabinet Grotesk + Satoshi + Clash Display -- V3 Methode, V6 Portail. */
-@import url("https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@200,400,500,700,800,900&f[]=satoshi@300,400,500,700,900&f[]=clash-display@200,300,400,500,600,700&display=swap");
-
-/* Plus Jakarta Sans -- V2 Field Journal body. */
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 
 /* --- Self-hosted @fontsource packages (they ship @font-face) --- */
 
