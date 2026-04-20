@@ -3,8 +3,14 @@ import AltLayout from "@/layouts/AltLayout.astro";
 import FrondHeader from "@/components/alt/frond-live/FrondHeader.astro";
 import FrondFooter from "@/components/alt/shared/FrondFooter.astro";
 import FadeUpOnView from "@/components/alt/motion/FadeUpOnView.tsx";
+import { getCollection } from "astro:content";
 
-type PluginType = "transformer" | "widget" | "loader" | "exporter";
+type PluginType =
+  | "transformer"
+  | "widget"
+  | "loader"
+  | "exporter"
+  | "deployer";
 
 const typeChip: Record<
   PluginType,
@@ -14,35 +20,33 @@ const typeChip: Record<
   widget:      { label: "WIDGET",      variant: "steel" },
   loader:      { label: "LOADER",      variant: "violet" },
   exporter:    { label: "EXPORTER",    variant: "leaf" },
+  deployer:    { label: "DEPLOYER",    variant: "violet" },
 };
 
-const plugins: Array<{
-  name: string;
-  type: PluginType;
-  body: string;
-  usedBy: number;
-  version: string;
-}> = [
-  { name: "binary_counter", type: "transformer", body: "Count occurrences of binary values in a field (e.g., endemic/non-endemic, fertile/sterile).", usedBy: 24, version: "1.4.0" },
-  { name: "geographic_distribution_map", type: "widget", body: "Interactive Leaflet map with occurrence points, clustering, and optional heatmap layer.", usedBy: 38, version: "2.1.0" },
-  { name: "csv_loader", type: "loader", body: "Load tabular data from CSV files with type detection and field mapping.", usedBy: 67, version: "3.0.2" },
-  { name: "static_website", type: "exporter", body: "Render a full static HTML site with maps, charts, and taxon pages.", usedBy: 52, version: "2.5.1" },
-  { name: "field_statistics", type: "transformer", body: "Compute mean, median, min/max, and quartiles over numeric fields grouped by entity.", usedBy: 31, version: "1.2.0" },
-  { name: "phenology_timeline", type: "widget", body: "Horizontal timeline of phenological observations (flowering, fruiting) across a year.", usedBy: 15, version: "1.0.3" },
-  { name: "geopackage_loader", type: "loader", body: "Load spatial data from GeoPackage files (vectors + rasters) with CRS handling.", usedBy: 29, version: "1.5.0" },
-  { name: "darwin_core_export", type: "exporter", body: "Export occurrences as Darwin Core Archive (DwC-A) for GBIF submission.", usedBy: 18, version: "1.1.0" },
-  { name: "top_ranking", type: "transformer", body: "Rank the top N values of a field (e.g., most abundant species, most common families).", usedBy: 22, version: "1.3.1" },
-  { name: "scatter_plot", type: "widget", body: "X/Y scatter plot with optional color grouping and regression line.", usedBy: 28, version: "1.4.2" },
-  { name: "postgres_loader", type: "loader", body: "Stream data from a live PostgreSQL database via SQL queries.", usedBy: 9, version: "0.9.0" },
-  { name: "api_json_export", type: "exporter", body: "Expose entities as a REST-like JSON API (static files).", usedBy: 14, version: "1.0.0" },
-];
+const pluginEntries = await getCollection("plugins");
+const plugins = pluginEntries.map((e) => e.data);
+
+// Count by type for the filter pills.
+const counts: Record<PluginType, number> = {
+  transformer: 0, widget: 0, loader: 0, exporter: 0, deployer: 0,
+};
+for (const p of plugins) counts[p.type]++;
 
 const filters = [
-  { id: "all", label: "All", count: 90, active: true },
-  { id: "transformer", label: "Transformers", count: 42 },
-  { id: "widget", label: "Widgets", count: 28 },
-  { id: "loader", label: "Loaders", count: 12 },
-  { id: "exporter", label: "Exporters", count: 8 },
+  { id: "all",         label: "All",          count: plugins.length, active: true },
+  { id: "transformer", label: "Transformers", count: counts.transformer },
+  { id: "widget",      label: "Widgets",      count: counts.widget },
+  { id: "loader",      label: "Loaders",      count: counts.loader },
+  { id: "exporter",    label: "Exporters",    count: counts.exporter },
+  { id: "deployer",    label: "Deployers",    count: counts.deployer },
+];
+
+const pillCounts: Array<[string, number]> = [
+  ["Transformers", counts.transformer],
+  ["Widgets",      counts.widget],
+  ["Loaders",      counts.loader],
+  ["Exporters",    counts.exporter],
+  ["Deployers",    counts.deployer],
 ];
 ---
 
@@ -68,18 +72,11 @@ const filters = [
       </FadeUpOnView>
       <FadeUpOnView client:visible delay={0.12}>
         <div class="mt-8 flex flex-wrap items-center justify-center gap-2">
-          <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
-            42 Transformers
-          </span>
-          <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
-            28 Widgets
-          </span>
-          <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
-            12 Loaders
-          </span>
-          <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
-            8 Exporters
-          </span>
+          {pillCounts.map(([label, count]) => (
+            <span class="rounded-[999px] bg-surface px-4 py-1.5 text-sm text-ink shadow-[var(--shadow-sm)]">
+              {count} {label}
+            </span>
+          ))}
         </div>
       </FadeUpOnView>
     </div>
@@ -140,8 +137,7 @@ const filters = [
                 <p class="mt-2 flex-1 text-sm leading-relaxed" style="color: color-mix(in srgb, var(--c-ink) 80%, transparent)">
                   {p.body}
                 </p>
-                <div class="mt-4 flex items-center justify-between text-xs text-muted">
-                  <span>Used by {p.usedBy} projects</span>
+                <div class="mt-4 flex items-center justify-end text-xs text-muted">
                   <span class="alt-mono">v{p.version}</span>
                 </div>
               </div>
