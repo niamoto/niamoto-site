@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "private": true,
-  "description": "Marketing site for Niamoto — ecological data platform",
+  "description": "Institutional site for Niamoto — ecological data platform",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

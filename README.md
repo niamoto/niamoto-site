@@ -1,6 +1,6 @@
 # niamoto-site
 
-Marketing site for **Niamoto** — open-source ecological data platform.
+Institutional site for **Niamoto** — open-source ecological data platform.
 
 - **Landing** : presentation, partners, deployed regions, features, showcase
 - **Documentation** : guides and recipes

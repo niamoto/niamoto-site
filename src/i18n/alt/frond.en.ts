@@ -18,7 +18,7 @@ export default {
     sub:
       "Niamoto turns occurrence records, taxa inventories, and plot data into shareable static portals. Open source, plugin-based, built for ecologists.",
     ctaPrimary: { label: "Install Niamoto", href: "#download" },
-    ctaSecondary: { label: "See a live portal", href: "https://niamoto.github.io/niamoto-nouvelle-caledonie-2025/" },
+    ctaSecondary: { label: "See a live portal", href: "https://niamoto.github.io/niamoto-static-site/" },
     install: {
       label: "Terminal",
       snippet: "pip install niamoto",
@@ -142,7 +142,7 @@ export default {
         statusLabel: "Active",
         title: "Portail de la forêt",
         partners: "Province Nord, Province Sud, IRD, IAC",
-        href: "https://niamoto.github.io/niamoto-nouvelle-caledonie-2025/",
+        href: "https://niamoto.github.io/niamoto-static-site/",
         image: "/showcase/portail-alt/home-en.png",
       },
       {

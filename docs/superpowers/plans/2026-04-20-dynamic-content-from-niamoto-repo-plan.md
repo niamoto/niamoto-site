@@ -430,7 +430,7 @@ git push -u origin feat/marketing-sync
 Create `.github/workflows/marketing-sync.yml`:
 
 ```yaml
-name: Marketing site sync
+name: Institutional site sync
 
 on:
   push:
@@ -517,14 +517,14 @@ After user confirms secrets:
 cd ~/Dev/clients/niamoto
 git push
 gh pr create --base main --head feat/marketing-sync \
-  --title "Marketing site sync: plugin manifest + auto-redeploy" \
+  --title "Institutional site sync: plugin manifest + auto-redeploy" \
   --body "Adds AST-based plugin extractor and GH Actions workflow that regenerates .marketing/plugins.json and pings the niamoto-site Coolify webhook on push. See spec in niamoto-site repo."
 gh pr merge --squash --auto
 ```
 
 - [ ] **Step 6: Verify first workflow run**
 
-After merge, go to GitHub Actions tab and verify the `Marketing site sync` workflow ran successfully. The Coolify webhook call should show a 2xx response.
+After merge, go to GitHub Actions tab and verify the `Institutional site sync` workflow ran successfully. The Coolify webhook call should show a 2xx response.
 
 ---
 
@@ -1973,7 +1973,7 @@ Walk through every page in both locales:
 After merging to main and deploying:
 
 1. In the niamoto repo, push a trivial change to `ROADMAP.md` (e.g., fix a typo).
-2. Go to GitHub Actions tab — verify `Marketing site sync` workflow runs.
+2. Go to GitHub Actions tab — verify `Institutional site sync` workflow runs.
 3. Verify the workflow's Coolify webhook step returns 2xx.
 4. Wait ~2 minutes, refresh niamoto.org/roadmap, verify the typo fix is live.
 

@@ -122,7 +122,7 @@ Exit codes: `0` on success, `1` on parse error (CI fails loudly).
 ### `.github/workflows/marketing-sync.yml`
 
 ```yaml
-name: Marketing site sync
+name: Institutional site sync
 
 on:
   push:

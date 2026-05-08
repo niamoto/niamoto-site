@@ -1,6 +1,6 @@
 # Niamoto Site Development
 
-Marketing site for **Niamoto** — the open-source ecological data platform. Deployed at [niamoto.org](https://niamoto.org).
+Institutional site for **Niamoto** — the open-source ecological data platform. Deployed at [niamoto.org](https://niamoto.org).
 
 **Golden rule**: scientific, calm, data-forward. No emojis. No gradient text. No "revolutionary" language.
 
@@ -134,6 +134,6 @@ Production: Coolify deploys from the git repo. Domain `niamoto.org` points to th
 ## References
 
 - Design system source: `../niamoto/docs/DESIGN_SYSTEM.md`
-- Marketing site plan: `../niamoto/docs/plans/2026-04-14-feat-niamoto-marketing-site-plan.md`
+- Institutional site plan: `../niamoto/docs/plans/2026-04-14-feat-niamoto-marketing-site-plan.md`
 - Partner manifest: `public/funders/manifest.yaml` (mirror of `../niamoto/docs/assets/funders/manifest.yaml`)
 - Stitch project (design source): Stitch Labs project `3994834925262801582` "Niamoto"
